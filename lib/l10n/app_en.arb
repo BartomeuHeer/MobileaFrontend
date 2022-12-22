@@ -1,0 +1,59 @@
+{
+    "language": "English",
+    "@language": {
+        "description": "The current Language"
+    },
+    "inc_credentials": "Incorrect credentials",
+    "@inc_credentials":{
+        "description": "Summons when the credentials typed are incorrect"
+    },
+    "user_not_found": "User not found or incorrect credentials",
+    "@user_not_found":{
+        "description": "Summons when the credentials typed are incorrect or the user was not found"
+    },
+    "settings": "Settings",
+    "@settings":{
+        "description": "Settings"
+    },
+    "chat": "Chat",
+    "@chat":{
+        "description": "Chat"
+    },
+    "changeLang": "Change the language",
+    "@changeLang":{
+        "description": "Change the language of the app"
+    },
+    "welcomeBack": "Welcome\nBack",
+    "@welcomeBack":{
+        "description": "Welcome"
+    },
+    "email": "Email",
+    "@email":{
+        "description": "Email"
+    },
+    "password": "Password",
+    "@password":{
+        "description": "Password"
+    },
+    "repeatpassword": "Repeat password",
+    "@password":{
+        "description": "Password"
+    },
+    "signin": "Sign in",
+    "@signin":{
+        "description": "Sign in"
+    },
+    "signup": "Sign up",
+    "@signup":{
+        "description": "Sign up"
+    },
+    "forgotpass": "Forgot password",
+    "@forgotpass":{
+        "description": "Forgot password"
+    },
+    "username": "Username",
+    "@username":{
+        "description": "username"
+    }
+    
+}

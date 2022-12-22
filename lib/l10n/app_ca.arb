@@ -1,0 +1,16 @@
+{
+    "language": "Català",
+    "inc_credentials": "Credencials incorrectes",
+    "user_not_found": "Usuari no trobat o credencials incorrectes",
+    "settings":"Preferencies",
+    "changeLang":"Canvia l'idioma de l'aplicació",
+    "welcomeBack":"Benvingut\nDe\nNou",
+    "email":"Correu electrònic",
+    "password": "Contrassenya",
+    "repeatpassword": "Repeteix la contrassenya",
+    "signin": "Entrar",
+    "signup": "Registrar-se",
+    "forgotpass": "M'he oblidat de la contrassenya",
+    "username": "Nom d'Usuari",
+    "chat":"xat"
+}
