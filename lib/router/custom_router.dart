@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_app/views/first_page.dart';
 import 'package:flutter_app/views/login_page.dart';
 import 'package:flutter_app/views/chat_page.dart';
+import 'package:flutter_app/views/myprofile_page.dart';
 import 'package:flutter_app/views/register.dart';
 import 'package:flutter_app/router/route_constants.dart';
 import 'package:flutter_app/views/not_found_page.dart';
@@ -20,6 +21,8 @@ class CustomRouter {
         return MaterialPageRoute(builder: (_) => const FirstPage());
       case chatRoute:
         return MaterialPageRoute(builder: (_) => const ChatPage());
+      case myprofileRoute:
+        return MaterialPageRoute(builder: (_) => const MyprofilePage());
       default:
         return MaterialPageRoute(builder: (_) => const NotFoundPage());
     }

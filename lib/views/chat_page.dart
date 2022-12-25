@@ -43,13 +43,13 @@ class _ChatPageState extends State<ChatPage> {
     IO.Socket socket = IO.io('http://localhost:3000');
     print("22222CONNECT!!!!");
 
-    socket!.connect();
-    socket!.onConnect((_) {
+    socket.connect();
+    socket.onConnect((_) {
       print("onConnect!!!!!");
-      socket!.emit('sendMsg',
+      socket.emit('sendMsg',
           {"type": "ownMsg", "msg": "Hello", "senderName": "HATIM!"});
 
-      socket!.on("sendMsgServer", (msg) {
+      socket.on("sendMsgServer", (msg) {
         print("REBEM un missatge ");
         listMsg.add(MsgModel(
             msg: msg["msg"], type: msg["type"], sender: msg["senderNmae"]));

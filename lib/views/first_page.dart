@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_app/router/route_constants.dart';
 import 'package:flutter_app/services/routeServices.dart';
 /* import 'package:flutter_app/views/my_profile.dart';
 import 'package:flutter_app/views/result_routes.dart';
@@ -43,10 +44,7 @@ class _FirstPage extends State<FirstPage> {
           actions: <Widget>[
             TextButton(
                 onPressed: () {
-                  /*   Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => const MyProfile())); */
+                  Navigator.pushNamed(context, myprofileRoute);
                 },
                 child: const Text(
                   'My Profile',
