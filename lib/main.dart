@@ -54,7 +54,7 @@ class _MyAppState extends State<MyApp> {
       localizationsDelegates: AppLocalizations.localizationsDelegates,
       supportedLocales: AppLocalizations.supportedLocales,
       onGenerateRoute: CustomRouter.generatedRoute,
-      initialRoute: loginRoute,
+      initialRoute: firstPageRoute,
       locale: _locale,
       debugShowCheckedModeBanner: false,
     );
