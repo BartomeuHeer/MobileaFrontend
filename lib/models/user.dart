@@ -21,10 +21,10 @@ class User {
   User(
       {
       //this.id = "", // non nullable but optional with a default value
-      required this.name,
-      required this.id,
-      required this.password,
-      required this.email,
+      this.name,
+      this.id,
+      this.password,
+      this.email,
       this.birthday,
       this.routes,
       this.ratings,
@@ -32,10 +32,10 @@ class User {
       this.vehicle,
       required this.admin});
 
-  String id;
-  String name;
-  String password;
-  String email;
+  String? id;
+  String? name;
+  String? password;
+  String? email;
   String? birthday;
   List<Route2>? routes;
   List<Rating>? ratings;
@@ -59,15 +59,15 @@ class User {
 
     return User(
         id: responseData["_id"],
-        name: responseData["name"],
-        password: responseData["password"],
-        email: responseData["email"],
-        birthday: responseData["birthday"],
+        name: responseData['name'],
+        password: responseData['password'],
+        email: responseData['email'],
+        birthday: responseData['birthday'],
         routes: tmp1,
         ratings: tmp2,
         bookings: tmp3,
-        vehicle: responseData["vehicle"],
-        admin: responseData["admin"]);
+        //vehicle: responseData["vehicle"],
+        admin: responseData['admin']);
   }
 
   Map<String, dynamic> toJson() => {

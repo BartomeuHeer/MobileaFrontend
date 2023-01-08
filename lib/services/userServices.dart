@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:logger/logger.dart';
 
 import '../models/user.dart';
 import 'package:http/http.dart' as http;
@@ -14,7 +15,7 @@ class UserServices extends ChangeNotifier {
   User get userData => _userData;
 
   final LocalStorage storage = LocalStorage('key');
-
+  var logger = Logger();
   void setUserData(User userData) {
     _userData = userData;
   }
@@ -30,8 +31,9 @@ class UserServices extends ChangeNotifier {
     return null;
   }
 
-  Future<String?> logIn(String username, String password) async {
+  Future<Map<String, dynamic>> logIn(String username, String password) async {
     final msg = jsonEncode({"email": username, "password": password});
+    Map<String, dynamic> result;
     var res = await http.post(
         Uri.parse("http://localhost:5432/api/users/login"),
         headers: {'content-type': 'application/json'},
@@ -41,10 +43,27 @@ class UserServices extends ChangeNotifier {
     if (res.statusCode == 200) {
       var token = JWTtoken.fromJson(await jsonDecode(res.body));
       storage.setItem('token', token.toString());
+      var setUsrData = await http.post(
+          Uri.parse("http://localhost:5432/api/users/getUserData"),
+          headers: {'content-type': 'application/json'},
+          body: msg);
+      if (setUsrData.statusCode == 200) {
+        Map<String, dynamic> responseData = jsonDecode(setUsrData.body);
+        logger.i(responseData);
+        _userData = User.fromJson(responseData);
+        _userData.password = password;
+        result = {'status': "200", 'data': _userData};
+      } else {
+        result = {
+          'status': "400",
+        };
+      }
       print(token);
-      return "200";
+      return result;
     } else {
-      return "401";
+      return result = {
+        'status': 400,
+      };
     }
   }
 

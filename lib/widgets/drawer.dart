@@ -70,6 +70,20 @@ class DrawerScreen extends StatelessWidget {
               Navigator.pushNamed(context, chatRoute);
             },
           ),
+          ListTile(
+            leading: const Icon(
+              Icons.route_rounded,
+              color: Colors.white,
+              size: 30,
+            ),
+            title: const Text('Routes'),
+            onTap: () {
+              // To close the Drawer
+              Navigator.pop(context);
+              // Navigating to About Page
+              Navigator.pushNamed(context, routeRoute);
+            },
+          ),
         ],
       ),
     ))));

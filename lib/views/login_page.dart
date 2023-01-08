@@ -5,6 +5,7 @@ import 'package:flutter_app/views/first_page.dart';
 //import 'package:flutter_app/views/route_list_page.dart';
 import 'package:flutter_app/views/register.dart';
 import 'package:http/http.dart' as http;
+import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter_app/models/user.dart';
 //import 'package:flutter_app/views/first_page.dart';
@@ -58,7 +59,7 @@ class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     UserServices userService = UserServices();
-
+    UserServices userServicesProvider = Provider.of<UserServices>(context);
     return Container(
       decoration: const BoxDecoration(
         image: DecorationImage(
@@ -140,19 +141,22 @@ class _LoginPageState extends State<LoginPage> {
                                       });
                                       print(usernameController.text +
                                           passwordController.text);
-                                      var res = await userService.logIn(
-                                          usernameController.text,
-                                          passwordController.text);
-                                      if (res == "401") {
+                                      final Map<String, dynamic> res =
+                                          await userService.logIn(
+                                              usernameController.text,
+                                              passwordController.text);
+                                      if (res['status'] == "401") {
                                         showAlertDialog(context);
                                         return;
                                       }
-                                      if (res == "200") {
+                                      if (res['status'] == "200") {
                                         SharedPreferences prefs =
                                             await SharedPreferences
                                                 .getInstance();
                                         prefs.setString(
                                             "name", usernameController.text);
+                                        userServicesProvider
+                                            .setUserData(res['data']);
                                         Navigator.of(context).push(
                                           MaterialPageRoute(
                                             builder: (context) =>

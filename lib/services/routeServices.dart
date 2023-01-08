@@ -77,4 +77,27 @@ class RouteServices extends ChangeNotifier {
       return "300";
     }
   }
+
+  Future<String> createRoute(Route2 nRoute, User part) async {
+    final Map<String, dynamic> registerData = {'id': part.id, 'route': nRoute};
+    try {
+      Response response = await post(
+        Uri.parse('http://localhost:5432/api/routes/create'),
+        body: json.encode(registerData),
+        headers: {'Content-Type': 'application/json'},
+      );
+      if (response.statusCode == 200) {
+        //Convert from json List of Map to List of Student
+        
+        Map<String, dynamic> responseData = jsonDecode(setUsrData.body);
+        _userData = User.fromJson(responseData);
+        return "200";
+      } else {
+        return "400";
+      }
+    } catch (err) {
+      return "300";
+    }
+  }
+
 }
