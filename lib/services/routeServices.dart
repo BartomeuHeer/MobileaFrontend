@@ -39,7 +39,8 @@ class RouteServices extends ChangeNotifier {
 
   Future<List<Route2>?> getSearchedRoutes(
       String start, String stop, String initDate) async {
-    var msg = jsonEncode({"start": start, "stop": stop, "initDate": initDate});
+    var msg = jsonEncode({"start": start, "stop": stop, "dateInit": initDate});
+    print(msg);
     //print(msg);
     var client = http.Client();
     var uri = Uri.parse('http://localhost:5432/api/routes/search');
@@ -47,8 +48,10 @@ class RouteServices extends ChangeNotifier {
         headers: {'content-type': 'application/json'}, body: msg);
     List<Route2> rec = [];
     if (response.statusCode == 200) {
-      var decodedList = (json.decode(response.body) as List<dynamic>);
-      rec = decodedList.map((i) => Route2.fromJson(i)).toList();
+      //var decodedList = (json.decode(response.body) as List<dynamic>);
+
+      rec = routeFromJson(response.body);
+      print(rec);
       return rec;
     } else {
       return rec;

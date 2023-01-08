@@ -29,6 +29,7 @@ class _FirstPage extends State<FirstPage> {
 
   @override
   Widget build(BuildContext context) {
+    List<Route2>? totalRoutes;
     RouteServices routeprovder = Provider.of<RouteServices>(context);
     return Scaffold(
         drawer: const DrawerScreen(),
@@ -37,76 +38,82 @@ class _FirstPage extends State<FirstPage> {
             Flexible(
               flex: 1,
               child: Container(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 200, vertical: 90),
-                  color: Colors.green,
-                  child: ColoredBox(
-                    color: Colors.white,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [
-                        Flexible(
-                          flex: 2,
-                          child: TextField(
-                            controller: startPointController,
-                            style: const TextStyle(color: Colors.black),
-                            decoration: InputDecoration(
-                              fillColor: Colors.grey.shade100,
-                              filled: true,
-                              labelText: 'From',
-                            ),
-                          ),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 200, vertical: 90),
+                decoration: BoxDecoration(
+                  image: DecorationImage(
+                      image: AssetImage("5660740.jpg"), fit: BoxFit.fill),
+                ),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    Flexible(
+                      flex: 2,
+                      child: TextField(
+                        controller: startPointController,
+                        style: const TextStyle(color: Colors.black),
+                        decoration: InputDecoration(
+                          fillColor: Colors.grey.shade100,
+                          filled: true,
+                          labelText: 'From',
                         ),
-                        Flexible(
-                          flex: 2,
-                          child: TextField(
-                            controller: stopPointController,
-                            style: const TextStyle(color: Colors.black),
-                            decoration: InputDecoration(
-                              fillColor: Colors.grey.shade100,
-                              filled: true,
-                              labelText: "To",
-                            ),
-                          ),
+                      ),
+                    ),
+                    Flexible(
+                      flex: 2,
+                      child: TextField(
+                        controller: stopPointController,
+                        style: const TextStyle(color: Colors.black),
+                        decoration: InputDecoration(
+                          fillColor: Colors.grey.shade100,
+                          filled: true,
+                          labelText: "To",
                         ),
-                        Flexible(
-                            flex: 2,
-                            child: DateTimePicker(
-                              controller: dateInputController,
-                              type: DateTimePickerType.date,
-                              initialValue: null,
-                              dateMask: 'd MMM yyyy',
-                              firstDate: DateTime(1980),
-                              lastDate: DateTime(2100),
-                              icon: const Icon(Icons.event),
-                              dateLabelText: 'Select date',
-                              onChanged: (val) => print(val),
-                              validator: (value) {
-                                print(value);
-                                return null;
-                              },
-                              onSaved: (newValue) => print(newValue),
-                            )),
-                        Flexible(
-                            flex: 1,
-                            child: TextButton(
-                                onPressed: () async {
-                                  print("date: " + dateInputController.text);
+                      ),
+                    ),
+                    Flexible(
+                        flex: 2,
+                        child: DateTimePicker(
+                          controller: dateInputController,
+                          type: DateTimePickerType.date,
+                          initialValue: null,
+                          dateMask: 'd MMM yyyy',
+                          firstDate: DateTime(1980),
+                          lastDate: DateTime(2100),
+                          icon: const Icon(Icons.event),
+                          dateLabelText: 'Select date',
+                          onChanged: (val) => print(val),
+                          validator: (value) {
+                            print(value);
+                            return null;
+                          },
+                          onSaved: (newValue) => print(newValue),
+                        )),
+                    Flexible(
+                        flex: 1,
+                        child: ElevatedButton(
+                            onPressed: () async {
+                              print("date: " + dateInputController.text);
+                              String date =
+                                  dateInputController.text.toString() +
+                                      "T00:00:00.000Z";
+                              print(date);
+                              totalRoutes =
                                   await routeprovder.getSearchedRoutes(
                                       startPointController.text,
                                       stopPointController.text,
-                                      dateInputController.text);
-
-                                },
-                                child: const Text("Search")))
-                      ],
-                    ),
-                  )),
+                                      date);
+                              print(totalRoutes);
+                            },
+                            child: const Text("Search")))
+                  ],
+                ),
+              ),
             ),
             Flexible(
                 flex: 3,
                 child: Container(
-                  color: Colors.red,
+                  color: Colors.grey,
                 ))
           ],
         ));
