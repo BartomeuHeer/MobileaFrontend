@@ -78,8 +78,15 @@ class RouteServices extends ChangeNotifier {
     }
   }
 
-  Future<String> createRoute(Route2 nRoute, User part) async {
-    final Map<String, dynamic> registerData = {'id': part.id, 'route': nRoute};
+  Future<Map<String, dynamic>> createRoute(Route2 nRoute, User part) async {
+    final Map<String, dynamic> registerData = {
+      'creator': part.email,
+      'startPoint': nRoute.startPoint,
+      'endPoint': nRoute.endPoint,
+      'stopPoint': nRoute.stopPoint,
+      'dateOfBeggining': nRoute.dateOfBeggining.toString()
+    };
+    Map<String, dynamic> result;
     try {
       Response response = await post(
         Uri.parse('http://localhost:5432/api/routes/create'),
@@ -88,16 +95,21 @@ class RouteServices extends ChangeNotifier {
       );
       if (response.statusCode == 200) {
         //Convert from json List of Map to List of Student
-        
-        Map<String, dynamic> responseData = jsonDecode(setUsrData.body);
-        _userData = User.fromJson(responseData);
-        return "200";
+
+        Map<String, dynamic> responseData = jsonDecode(response.body);
+        Route2 routeRes = Route2();
+        routeRes = Route2.fromJson(responseData);
+        result = {'status': "200", 'data': routeRes};
       } else {
-        return "400";
+        result = {
+          'status': "400",
+        };
       }
     } catch (err) {
-      return "300";
+      result = {
+        'status': "300",
+      };
     }
+    return result;
   }
-
 }

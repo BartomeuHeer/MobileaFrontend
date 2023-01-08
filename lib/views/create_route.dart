@@ -1,4 +1,7 @@
 import 'dart:math';
+import 'package:flutter_app/models/route.dart';
+import 'package:flutter_app/models/user.dart';
+import 'package:flutter_app/services/routeServices.dart';
 import 'package:flutter_app/widgets/drawer.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter/material.dart';
@@ -40,6 +43,7 @@ class _CreateRoute extends State<CreateRoute> {
   @override
   Widget build(BuildContext context) {
     UserServices userServices = Provider.of<UserServices>(context);
+    RouteServices routeServices = Provider.of<RouteServices>(context);
     ScreenUtil.init(context);
     return Scaffold(
         backgroundColor: Color.fromARGB(195, 159, 191, 198),
@@ -79,12 +83,12 @@ class _CreateRoute extends State<CreateRoute> {
                                           const NeverScrollableScrollPhysics(),
                                       itemBuilder: (context, index) =>
                                           LastRoutesCard(
-                                        inicio: userServices
-                                            .userData.routes![index].startPoint,
+                                        inicio: userServices.userData
+                                            .routes![index].startPoint!,
                                         date: userServices.userData
-                                            .routes![index].dateOfBeggining,
+                                            .routes![index].dateOfBeggining!,
                                         fin: userServices
-                                            .userData.routes![index].endPoint,
+                                            .userData.routes![index].endPoint!,
                                       ),
                                       shrinkWrap: true,
                                       itemCount:
@@ -105,7 +109,8 @@ class _CreateRoute extends State<CreateRoute> {
                       children: [
                         if (!newRoute)
                           Card(
-                            child: Column(mainAxisSize: MainAxisSize.min,
+                            child: Column(
+                                mainAxisSize: MainAxisSize.min,
                                 // ignore: prefer_const_literals_to_create_immutables
                                 children: <Widget>[
                                   ListTile(
@@ -375,7 +380,40 @@ class _CreateRoute extends State<CreateRoute> {
                                         ),
                                         Center(
                                           child: ElevatedButton(
-                                            onPressed: () {},
+                                            onPressed: () {
+                                              User part = userServices.userData;
+                                              List<User> listUser = [];
+                                              listUser.add(part);
+                                              List<String> dateFor =
+                                                  dateController.text
+                                                      .split('-');
+                                              Route2 nroute = Route2(
+                                                  participants: listUser,
+                                                  startPoint:
+                                                      startPointController.text,
+                                                  stopPoint: stopsList,
+                                                  endPoint:
+                                                      endPointController.text,
+                                                  dateOfBeggining:
+                                                      DateTime.parse(
+                                                          "${dateFor[2]}-${dateFor[1]}-${dateFor[0]}"));
+                                              final Future<Map<String, dynamic>>
+                                                  successfulMessage =
+                                                  routeServices.createRoute(
+                                                      nroute, part);
+                                              successfulMessage
+                                                  .then((response) {
+                                                if (response['status'] ==
+                                                    "200") {
+                                                  setState(() => userServices
+                                                      .setRouteToUser(
+                                                          response['data']));
+                                                } else {
+                                                  logger.d(
+                                                      "Error creating Route: ${response['status']}");
+                                                }
+                                              });
+                                            },
                                             style: ElevatedButton.styleFrom(
                                                 foregroundColor: Colors.white,
                                                 fixedSize: Size(

@@ -13,24 +13,24 @@ class Route2 {
   Route2(
       {
       //this.id = "", // non nullable but optional with a default value
-      required this.name,
-      required this.id,
-      required this.creator,
-      required this.participants,
-      required this.startPoint,
-      required this.endPoint,
-      required this.stopPoint,
-      required this.dateOfBeggining
+      this.name,
+      this.id,
+      this.creator,
+      this.participants,
+      this.startPoint,
+      this.endPoint,
+      this.stopPoint,
+      this.dateOfBeggining
       });
 
-  String id;
-  String name;
-  User creator;
+  String? id;
+  String? name;
+  User? creator;
   List<User>? participants;
-  String startPoint;
-  String endPoint;
+  String? startPoint;
+  String? endPoint;
   List<String>? stopPoint;
-  DateTime dateOfBeggining;
+  DateTime? dateOfBeggining;
 
   factory Route2.fromJson(Map<String, dynamic> responseData) {
 
@@ -40,19 +40,20 @@ class Route2 {
           : null;
   List<String>? tmp2 = responseData["stopPoint"] != null
           ? List<String>.from(
-              json.decode(responseData["stopPoint"]))
+              responseData["stopPoint"])
           : null;
 
-return Route2(id: responseData["_id"],
-        name: responseData["name"],
-        creator: User.fromJson(responseData['creator']), //mirar si esta bé
-        participants: tmp1,
-        startPoint: responseData["startPoint"],
-        endPoint: responseData["endPoint"],
-        stopPoint: tmp2,
-        dateOfBeggining: responseData["dateOfBeggining"]
-      );
-  }
+return Route2(
+  id: responseData["_id"],
+  name: responseData["name"],
+  creator: User.fromJson(responseData["creator"]), 
+  participants: tmp1,
+  startPoint: responseData["startPoint"],
+  endPoint: responseData["endPoint"],
+  stopPoint: tmp2,
+  dateOfBeggining: DateTime.parse(responseData["dateOfBeggining"])
+  );
+}
         
 
   Map<String, dynamic> toJson() => {

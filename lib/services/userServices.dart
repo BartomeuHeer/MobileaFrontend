@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_app/models/route.dart';
 import 'package:logger/logger.dart';
 
 import '../models/user.dart';
@@ -18,6 +19,16 @@ class UserServices extends ChangeNotifier {
   var logger = Logger();
   void setUserData(User userData) {
     _userData = userData;
+  }
+
+  void setRouteToUser(Route2 route2) {
+    if (_userData.routes != null) {
+      _userData.routes!.add(route2);
+    } else {
+      List<Route2> newR = [];
+      newR.add(route2);
+      _userData.routes = newR;
+    }
   }
 
   Future<List<User>?> getUsers() async {
