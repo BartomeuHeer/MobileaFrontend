@@ -13,7 +13,7 @@ class Route2 {
   Route2(
       {
       //this.id = "", // non nullable but optional with a default value
-      required this.name,
+      //required this.name,
       required this.id,
       required this.creator,
       required this.participants,
@@ -24,7 +24,7 @@ class Route2 {
       });
 
   String id;
-  String name;
+  //String name;
   User creator;
   List<User>? participants;
   String startPoint;
@@ -44,7 +44,7 @@ class Route2 {
           : null;
 
 return Route2(id: responseData["_id"],
-        name: responseData["name"],
+        //name: responseData["name"],
         creator: User.fromJson(responseData['creator']), //mirar si esta bé
         participants: tmp1,
         startPoint: responseData["startPoint"],
@@ -57,7 +57,7 @@ return Route2(id: responseData["_id"],
 
   Map<String, dynamic> toJson() => {
         "_id": id,
-        "name": name,
+       // "name": name,
         "creator": creator,
         "participants": participants,
         "startPoint": startPoint,

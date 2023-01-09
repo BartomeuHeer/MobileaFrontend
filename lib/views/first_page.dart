@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app/services/routeServices.dart';
+import 'package:flutter_app/views/route_create_page.dart';
 /* import 'package:flutter_app/views/my_profile.dart';
 import 'package:flutter_app/views/result_routes.dart';
 import 'package:flutter_app/views/route_list_page.dart'; */
@@ -41,6 +42,16 @@ class _FirstPage extends State<FirstPage> {
             size: 50,
           ), */
           actions: <Widget>[
+          IconButton(
+            icon: const Icon(Icons.add_road),
+            tooltip: 'Create a new route',
+            onPressed: () {
+              Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const RouteCreatePage()));
+            },
+          ),
             TextButton(
                 onPressed: () {
                   /*   Navigator.push(
