@@ -5,7 +5,6 @@ import 'package:flutter_app/services/routeServices.dart';
 /* import 'package:flutter_app/views/my_profile.dart';
 import 'package:flutter_app/views/result_routes.dart';
 import 'package:flutter_app/views/route_list_page.dart'; */
-import 'package:web_date_picker/web_date_picker.dart';
 import '../models/route.dart';
 import '../widgets/drawer.dart';
 import 'package:intl/intl.dart';
@@ -43,13 +42,13 @@ class _ChatPageState extends State<ChatPage> {
     IO.Socket socket = IO.io('http://localhost:3000');
     print("22222CONNECT!!!!");
 
-    socket!.connect();
-    socket!.onConnect((_) {
+    socket.connect();
+    socket.onConnect((_) {
       print("onConnect!!!!!");
-      socket!.emit('sendMsg',
+      socket.emit('sendMsg',
           {"type": "ownMsg", "msg": "Hello", "senderName": "HATIM!"});
 
-      socket!.on("sendMsgServer", (msg) {
+      socket.on("sendMsgServer", (msg) {
         print("REBEM un missatge ");
         listMsg.add(MsgModel(
             msg: msg["msg"], type: msg["type"], sender: msg["senderNmae"]));
