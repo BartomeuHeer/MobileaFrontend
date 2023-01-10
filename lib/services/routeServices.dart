@@ -25,6 +25,13 @@ class RouteServices extends ChangeNotifier {
     _routeData = routeData;
   }
 
+  List<Route2> _listRoute = [];
+  List<Route2> get listRoute => _listRoute;
+
+  void setListRouteData(List<Route2> listRoute) {
+    _listRoute = listRoute;
+  }
+
   Future<List<Route2>?> getRoutes() async {
     var client = http.Client();
     var uri = Uri.parse('http://localhost:5432/api/routes');
@@ -37,8 +44,9 @@ class RouteServices extends ChangeNotifier {
     return null;
   }
 
-  Future<List<Route2>?> getSearchedRoutes(
+  Future<Map<String, dynamic>> getSearchedRoutes(
       String start, String stop, String initDate) async {
+    //Map<String,dynamic> result;
     var msg = jsonEncode({"start": start, "stop": stop, "dateInit": initDate});
     print(msg);
     //print(msg);
@@ -49,19 +57,17 @@ class RouteServices extends ChangeNotifier {
     List<Route2> rec = [];
     if (response.statusCode == 200) {
       //var decodedList = (json.decode(response.body) as List<dynamic>);
-
-      rec = routeFromJson(response.body);
-      //print(rec);
-      return rec;
-    } else {
-      return rec;
+      _listRoute = routeFromJson(response.body);
+      print(_listRoute);
+      return {'status': "200", 'data': _listRoute};
     }
+    return {'status': "400"};
   }
 
-  Future<String> newParticipant(Route2 nRoute, User part) async {
+  Future<String> newParticipant(Route2 nRoute, String userId) async {
     final Map<String, dynamic> registerData = {
       'id': nRoute.id,
-      'participant': part
+      'participantId': userId
     };
     try {
       Response response = await post(

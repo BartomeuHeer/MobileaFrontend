@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app/services/routeServices.dart';
+import 'package:flutter_app/views/route_info.dart';
 import 'package:provider/provider.dart';
 /* import 'package:flutter_app/views/my_profile.dart';
 import 'package:flutter_app/views/result_routes.dart';
@@ -27,12 +28,19 @@ class _FirstPage extends State<FirstPage> {
     super.dispose();
   }
 
+  void _routesAvaiable() {
+    setState(() {});
+  }
+
   @override
   Widget build(BuildContext context) {
-    List<Route2>? totalRoutes;
-    RouteServices routeprovder = Provider.of<RouteServices>(context);
+    bool isEmpty = false;
+    RouteServices routeProvider = Provider.of<RouteServices>(context);
     return Scaffold(
-        drawer: const DrawerScreen(),
+        drawer: DrawerScreen(),
+        appBar: AppBar(
+          title: const Text("Menu"),
+        ),
         body: Column(
           children: [
             Flexible(
@@ -40,7 +48,7 @@ class _FirstPage extends State<FirstPage> {
               child: Container(
                 padding:
                     const EdgeInsets.symmetric(horizontal: 200, vertical: 90),
-                decoration: BoxDecoration(
+                decoration: const BoxDecoration(
                   image: DecorationImage(
                       image: AssetImage("5660740.jpg"), fit: BoxFit.fill),
                 ),
@@ -93,28 +101,62 @@ class _FirstPage extends State<FirstPage> {
                         flex: 1,
                         child: ElevatedButton(
                             onPressed: () async {
-                              print("date: " + dateInputController.text);
-                              String date =
-                                  dateInputController.text.toString() +
-                                      "T00:00:00.000Z";
-                              print(date);
-                              totalRoutes =
-                                  await routeprovder.getSearchedRoutes(
-                                      startPointController.text,
-                                      stopPointController.text,
-                                      date);
-                              print(totalRoutes);
+                              await routeProvider.getSearchedRoutes(
+                                  startPointController.text,
+                                  stopPointController.text,
+                                  dateInputController.text);
+                              isEmpty = false;
+                              setState(() {});
+                              print(routeProvider.listRoute);
                             },
                             child: const Text("Search")))
                   ],
                 ),
               ),
             ),
-            Flexible(
+            Expanded(
                 flex: 3,
                 child: Container(
-                  color: Colors.grey,
-                ))
+                    color: Colors.white,
+                    child: Visibility(
+                        visible: !isEmpty,
+                        replacement: const Center(
+                          child: Text("There are no routes for this data."),
+                        ),
+                        child: ListView.builder(
+                            itemCount: routeProvider.listRoute.length,
+                            itemBuilder: (context, index) {
+                              return Card(
+                                color: const Color(0xFF4cbfa6),
+                                child: ListTile(
+                                  title: Text(
+                                      routeProvider.listRoute[index].name!),
+                                  subtitle: Text(
+                                      "Inicio:${routeProvider.listRoute[index].startPoint}| Final: ${routeProvider.listRoute[index].endPoint}"),
+                                  trailing: SizedBox(
+                                      width: 120,
+                                      child: Row(
+                                        children: <Widget>[
+                                          Expanded(
+                                            child: IconButton(
+                                              icon: const Icon(Icons.article),
+                                              onPressed: () {
+                                                routeProvider.setRouteData(
+                                                    routeProvider
+                                                        .listRoute[index]);
+                                                Navigator.of(context).push(
+                                                    MaterialPageRoute(
+                                                        builder: (context) =>
+                                                            const RouteInfo()));
+                                              },
+                                              tooltip: 'Details',
+                                            ),
+                                          ),
+                                        ],
+                                      )),
+                                ),
+                              );
+                            }))))
           ],
         ));
   }
