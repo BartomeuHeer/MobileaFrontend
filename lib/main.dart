@@ -12,7 +12,7 @@ import 'package:flutter_app/router/route_constants.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 void main() {
-   runApp(
+  runApp(
     MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (_) => UserServices()),
@@ -21,7 +21,6 @@ void main() {
       child: const MyApp(),
     ),
   );
-
 }
 
 class MyApp extends StatefulWidget {
@@ -35,6 +34,7 @@ class MyApp extends StatefulWidget {
     state?.setLocale(newLocale);
   }
 }
+
 class _MyAppState extends State<MyApp> {
   Locale? _locale;
 
@@ -45,7 +45,7 @@ class _MyAppState extends State<MyApp> {
   }
 
   @override
-    Widget build(BuildContext context) {
+  Widget build(BuildContext context) {
     return MaterialApp(
       title: 'MobilEA',
       theme: ThemeData(
@@ -59,7 +59,7 @@ class _MyAppState extends State<MyApp> {
       debugShowCheckedModeBanner: false,
     );
   }
-  }
+}
 
 class MyHomePage extends StatefulWidget {
   const MyHomePage({super.key, required this.title});

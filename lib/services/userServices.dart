@@ -19,6 +19,7 @@ class UserServices extends ChangeNotifier {
   var logger = Logger();
   void setUserData(User userData) {
     _userData = userData;
+    storage.setItem('userId', userData.id);
   }
 
   void setRouteToUser(Route2 route2) {
@@ -54,6 +55,7 @@ class UserServices extends ChangeNotifier {
     if (res.statusCode == 200) {
       var token = JWTtoken.fromJson(await jsonDecode(res.body));
       storage.setItem('token', token.toString());
+      storage.setItem('isLogged', true);
       var setUsrData = await http.post(
           Uri.parse("http://localhost:5432/api/users/getUserData"),
           headers: {'content-type': 'application/json'},
@@ -76,6 +78,25 @@ class UserServices extends ChangeNotifier {
         'status': 400,
       };
     }
+  }
+
+  Future<Map<String, dynamic>> getUserData(String userId) async {
+    final msg = jsonEncode({"userId": userId});
+    Map<String, dynamic> result;
+    var setUsrData = await http.post(
+        Uri.parse("http://localhost:5432/api/users/getUserData"),
+        headers: {'content-type': 'application/json'},
+        body: msg);
+    if (setUsrData.statusCode == 200) {
+      Map<String, dynamic> responseData = jsonDecode(setUsrData.body);
+      logger.i(responseData);
+      _userData = User.fromJson(responseData);
+      result = {'status': "200", 'data': User.fromJson(responseData)};
+    } else {
+      result = {'status': '401'};
+    }
+
+    return result;
   }
 
   Future<void> deleteUsers(String name) async {
