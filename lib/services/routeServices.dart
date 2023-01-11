@@ -59,8 +59,8 @@ class RouteServices extends ChangeNotifier {
     }
   }
 
-  Future<String> newRouteInUser(Route2 nRoute, String id) async {
-    final Map<String, dynamic> registerData = {'id': id, 'route': nRoute};
+  Future<String> newRouteInUser(Route2 nRoute, User part) async {
+    final Map<String, dynamic> registerData = {'id': part.id, 'route': nRoute};
     try {
       Response response = await post(
         Uri.parse('http://localhost:5432/api/routes/newRouteInUser'),

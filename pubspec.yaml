@@ -41,6 +41,14 @@ dependencies:
   socket_io_client: ^2.0.0 
   mapbox_search: ^2.0.0
   mapbox_search_flutter: any
+  maplibre_gl:
+    git:
+      url: https://github.com/m0nac0/flutter-maplibre-gl.git
+      ref: main
+  flutter_svg_provider: ^1.0.3
+  debounce_throttle: ^2.0.0
+  bottom_drawer: ^0.0.5
+  recase: ^4.0.0
 
 dev_dependencies:
   flutter_test:

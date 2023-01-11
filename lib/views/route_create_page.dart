@@ -1,9 +1,18 @@
+import 'package:bottom_drawer/bottom_drawer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_app/views/first_page.dart';
 import 'package:intl/intl.dart';
-import 'package:mapbox_search/mapbox_search.dart';
+
+import 'package:maplibre_gl/mapbox_gl.dart';
 import 'package:web_date_picker/web_date_picker.dart';
-import 'package:mapbox_search_flutter/mapbox_search_flutter.dart';
+import '../models/location.dart';
+import '../models/search.dart';
+import '../widgets/location_map.dart';
+import '../widgets/search_results_drawer.dart';
+import '../widgets/location_search_delegate.dart';
+import '../widgets/searchbar.dart';
+//import 'package:mapbox_search_flutter/mapbox_search_flutter.dart';
+const apiKey = 'ztWk2zGkhANxHz840iqq9EZ37PW61G97'; // https://developer.tomtom.com
 class RouteCreatePage extends StatefulWidget {
   const RouteCreatePage({Key? key}) : super(key: key);
 
@@ -12,6 +21,11 @@ class RouteCreatePage extends StatefulWidget {
 }
 
 class _RouteCreatePageState extends State<RouteCreatePage> {
+  final BottomDrawerController _bottomDrawerController =
+      BottomDrawerController();
+   LatLng _mapCenter = const LatLng(0.0, 0.0);
+  Location? _selected;
+  Search? _search;
   int currentStep = 0;
   int seats=1;
   List<String> stopPoints=[];
@@ -83,8 +97,14 @@ class _RouteCreatePageState extends State<RouteCreatePage> {
         content: Column(
           children: [
             SizedBox(
-              width: 300,
-              height: 50,
+              width: MediaQuery.of(context)
+              .size
+              .width*
+              0.2,
+              height:MediaQuery.of(context)
+              .size
+              .height*
+              0.2,
               child: Flexible(
                 child: TextField(
                   controller: StartPointController,
@@ -180,44 +200,90 @@ class _RouteCreatePageState extends State<RouteCreatePage> {
         state: currentStep > 1 ? StepState.complete : StepState.indexed,
         isActive: currentStep >= 1,
         title: const Text("Stop points"),
-        content: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            Row(
-              children: [
-                SizedBox(
-                  width: 600,
-                  child: MapBoxPlaceSearchWidget(
-                    fontSize: 20,
-                    searchHint: "Choose a stop point",
-                    popOnSelect: true,
-                    apiKey: "sk.eyJ1IjoibmduZWVyMSIsImEiOiJjbGNqZ3FodHEwazNlM29wNjFmaW1rcmFrIn0.APrvt6eV8nNSXDiZoC5-Hg",
-                    onSelected: (place) {
-                      
+        content: Container(
+          width: MediaQuery.of(context)
+              .size
+              .width*
+              1,
+              height:MediaQuery.of(context)
+              .size
+              .height*
+              1,
+          child: Column(
+             children: <Widget>[
+            Positioned(
+              top: 0,
+              right: 8,
+              left: 8,
+              child: Container(
+                width: MediaQuery.of(context)
+              .size
+              .width*
+              0.8,
+              height:MediaQuery.of(context)
+              .size
+              .height*
+              0.2,
+                child: SafeArea(
+                  child: SearchBar(
+                    query: _search?.query,
+                    onTap: (context) async {
+                      await showSearch(
+                        context: context,
+                        delegate: LocationSearchDelegate(
+                          apiKey: apiKey,
+                          mapCenter: _mapCenter,
+                          onSearchResults: _onSearchResults,
+                          onClear: _onClear,
+                        ),
+                      );
                     },
-                    context: context,
                   ),
-                )
-              ],
-            )
-            
+                ),
+              ),
+            ),
+            if (_search != null)
+              SearchResultsDrawer(
+                controller: _bottomDrawerController,
+                search: _search!,
+                selectedId: _selected?.id,
+                onItemTap: _onLocationSelected,
+                onClear: _onClear,
+              ),
           ],
-        ),
+            ),
+        ) 
       ),
-      /* Step(
-        state: currentStep > 2 ? StepState.complete : StepState.indexed,
-        isActive: currentStep >= 2,
-        title: const Text("Misc"),
-        content: Column(
-          children: const [
-            /* CustomInput(
-              hint: "Bio",
-              inputBorder: OutlineInputBorder(),
-            ), */
-          ],
-        ),
-      ), */
     ];
+  }
+   void _onMapCenterChange(LatLng mapCenter) {
+    setState(() {
+      _mapCenter = mapCenter;
+    });
+  }
+
+  void _onSearchResults(Search search) {
+    setState(() {
+      _search = search;
+    });
+
+    // Delay opening the drawer until it's been rendered.
+    Future.delayed(
+      const Duration(milliseconds: 300),
+      () => _bottomDrawerController.open(),
+    );
+  }
+
+  void _onLocationSelected(Location location) {
+    setState(() {
+      _selected = location;
+    });
+  }
+
+  void _onClear() {
+    setState(() {
+      _selected = null;
+      _search = null;
+    });
   }
 }
