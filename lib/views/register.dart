@@ -3,7 +3,6 @@ import 'package:flutter_app/models/language_constants.dart';
 import 'package:flutter_app/services/userServices.dart';
 import 'package:flutter_app/views/login_page.dart';
 
-
 import '../models/user.dart';
 
 class RegisterPage extends StatefulWidget {
@@ -143,7 +142,8 @@ class _RegisterPageState extends State<RegisterPage> {
                                 decoration: InputDecoration(
                                     fillColor: Colors.grey.shade100,
                                     filled: true,
-                                    hintText: translation(context).repeatpassword,
+                                    hintText:
+                                        translation(context).repeatpassword,
                                     errorText: validatePassword(
                                         passwordController.text,
                                         repeatPasswordController.text),
@@ -188,7 +188,9 @@ class _RegisterPageState extends State<RegisterPage> {
                                               password: passwordController.text,
                                               email: emailController.text,
                                               admin: false,
-                                              birthday: DateTime.parse("20220101").toString());
+                                              birthday:
+                                                  DateTime.parse("20220101")
+                                                      .toString());
                                           var res = await userService
                                               .createUser(newUser);
                                           if (res == "400") {
@@ -203,7 +205,7 @@ class _RegisterPageState extends State<RegisterPage> {
                                           }
                                         }
                                       },
-                                      child:Text(
+                                      child: Text(
                                         translation(context).signup,
                                         style: TextStyle(
                                             color: Colors.black, fontSize: 25),
