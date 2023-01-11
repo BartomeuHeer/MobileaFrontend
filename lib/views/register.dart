@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_app/models/language_constants.dart';
 import 'package:flutter_app/services/userServices.dart';
 import 'package:flutter_app/views/login_page.dart';
-
+import 'package:date_time_picker/date_time_picker.dart';
 
 import '../models/user.dart';
 
@@ -18,7 +18,10 @@ class _RegisterPageState extends State<RegisterPage> {
   final passwordController = TextEditingController();
   final repeatPasswordController = TextEditingController();
   final emailController = TextEditingController();
+  final dateInputController = TextEditingController();
+  final _formKey = GlobalKey<FormState>();
   bool buttonEnabled = false;
+
   @override
   void dispose() {
     usernameController.dispose();
@@ -63,12 +66,12 @@ class _RegisterPageState extends State<RegisterPage> {
     UserServices userService = UserServices();
 
     return Container(
-        decoration: BoxDecoration(
-          image: DecorationImage(
+        /* decoration: BoxDecoration(
+          /* image: DecorationImage(
               image: AssetImage(
                   'assets/gray-abstract-wireframe-technology-background_53876-101941.webp'),
-              fit: BoxFit.cover),
-        ),
+              fit: BoxFit.cover), */
+        ), */
         child: Scaffold(
             backgroundColor: Colors.transparent,
             body: Stack(
@@ -89,9 +92,20 @@ class _RegisterPageState extends State<RegisterPage> {
                       children: [
                         Container(
                           margin: EdgeInsets.only(left: 35, right: 35),
-                          child: Column(
+                          child: Form(
+                            key: _formKey,
+                              child: Column(
                             children: [
-                              TextField(
+                              TextFormField(
+                                validator:(value){
+                                  if(value==null || value.isEmpty){
+                                    return "Enter a valid username";
+                                  }
+                                  return null;
+                                
+                                }
+
+                                ,
                                 controller: usernameController,
                                 style: TextStyle(color: Colors.black),
                                 decoration: InputDecoration(
@@ -105,15 +119,20 @@ class _RegisterPageState extends State<RegisterPage> {
                               SizedBox(
                                 height: 30,
                               ),
-                              TextField(
+                              TextFormField(
+                                validator:(value){
+                                  String? cositas = validateEmail(value!);
+                                  print (cositas);
+                                  return cositas;
+
+                                  //return validateEmail(value!);
+                                },
                                 controller: emailController,
                                 style: TextStyle(color: Colors.black),
                                 decoration: InputDecoration(
                                     fillColor: Colors.grey.shade100,
                                     filled: true,
                                     hintText: translation(context).email,
-                                    errorText:
-                                        validateEmail(emailController.text),
                                     border: OutlineInputBorder(
                                       borderRadius: BorderRadius.circular(10),
                                     )),
@@ -121,7 +140,14 @@ class _RegisterPageState extends State<RegisterPage> {
                               SizedBox(
                                 height: 30,
                               ),
-                              TextField(
+                              TextFormField(
+                                validator:(value){
+                                  if(value==null || value.isEmpty){
+                                    return "Enter a password";
+                                  }
+                                  return null;
+                                
+                                },
                                 controller: passwordController,
                                 style: TextStyle(),
                                 obscureText: true,
@@ -136,21 +162,46 @@ class _RegisterPageState extends State<RegisterPage> {
                               SizedBox(
                                 height: 40,
                               ),
-                              TextField(
+                              TextFormField(
+                                validator:(value){
+                                  String? cositas2 = validatePassword(passwordController.text, value!);
+                                  print (cositas2);
+                                  return cositas2;
+                                 //return validatePassword(passwordController.text, value!);
+                                },
                                 controller: repeatPasswordController,
                                 style: TextStyle(),
                                 obscureText: true,
                                 decoration: InputDecoration(
                                     fillColor: Colors.grey.shade100,
                                     filled: true,
-                                    hintText: translation(context).repeatpassword,
-                                    errorText: validatePassword(
-                                        passwordController.text,
-                                        repeatPasswordController.text),
+                                    hintText:
+                                        translation(context).repeatpassword,
                                     border: OutlineInputBorder(
                                       borderRadius: BorderRadius.circular(10),
                                     )),
                               ),
+                              SizedBox(
+                                height: 40,
+                              ),
+                              //Datepicker
+                              Container(
+                                  child: DateTimePicker(
+                                controller: dateInputController,
+                                type: DateTimePickerType.date,
+                                initialValue: null,
+                                dateMask: 'd MMM yyyy',
+                                firstDate: DateTime(1900),
+                                lastDate: DateTime(2100),
+                                icon: const Icon(Icons.event),
+                                dateLabelText: 'Select date',
+                                onChanged: (val) => print(val),
+                                /* validator: (value) {
+                                  return validateAge(value!);
+                                
+                                }, */
+                                onSaved: (newValue) => print(newValue),
+                              )),
                               SizedBox(
                                 height: 40,
                               ),
@@ -171,12 +222,14 @@ class _RegisterPageState extends State<RegisterPage> {
                                             BorderRadius.circular(20)),
                                     child: TextButton(
                                       onPressed: () async {
-                                        if ((usernameController.text.isNotEmpty) &&
-                                            (passwordController
-                                                .text.isNotEmpty) &&
-                                            (repeatPasswordController
-                                                .text.isNotEmpty) &&
-                                            (emailController.text.isNotEmpty)) {
+                                        print(dateInputController.text);
+                                        print(passwordController.text);
+                                        print(emailController.text);
+                                        print(repeatPasswordController.text);
+                                        print(usernameController.text);
+                                     
+                                        if (_formKey.currentState!.validate())
+                                        {
                                           setState(() {
                                             buttonEnabled = true;
                                           });
@@ -188,7 +241,8 @@ class _RegisterPageState extends State<RegisterPage> {
                                               password: passwordController.text,
                                               email: emailController.text,
                                               admin: false,
-                                              birthday: DateTime.parse("20220101").toString());
+                                              birthday: dateInputController.text
+                                          );
                                           var res = await userService
                                               .createUser(newUser);
                                           if (res == "400") {
@@ -203,7 +257,7 @@ class _RegisterPageState extends State<RegisterPage> {
                                           }
                                         }
                                       },
-                                      child:Text(
+                                      child: Text(
                                         translation(context).signup,
                                         style: TextStyle(
                                             color: Colors.black, fontSize: 25),
@@ -212,8 +266,9 @@ class _RegisterPageState extends State<RegisterPage> {
                                   ),
                                 ],
                               ),
+                              //Aqui va el Flexible(
                             ],
-                          ),
+                          )),
                         ),
                       ],
                     ),
@@ -223,29 +278,33 @@ class _RegisterPageState extends State<RegisterPage> {
             )));
   }
 
-  String validateEmail(String value) {
-    bool found = false;
-    if (value != "") {
-      for (int character in value.codeUnits) {
-        if (character == "@") {
-          found = true;
-        }
-      }
-      if (found == true) {
-        return "";
-      } else {
-        return "It must be an email.";
-      }
-    } else {
-      return "";
+  String? validateEmail(String email) {
+    final bool emailValid = RegExp(
+            r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+.[a-zA-Z]+")
+        .hasMatch(email);
+
+    if (emailValid) {
+      return null;
     }
+
+    return "Email is not valid";
   }
 
-  String validatePassword(String pass1, String pass2) {
+  String? validatePassword(String pass1, String pass2) {
     if ((pass1 == pass2) || (pass1 == "") || (pass2 == "")) {
-      return "";
+      return null;
     } else {
       return "The passwords don't coincide.";
     }
+  }
+  String validateAge(String value) {
+    var dateNow = DateTime.now();
+    var underAge = dateNow.subtract(const Duration(days:6574));
+    var userAge = DateTime.parse(value);
+
+    if (userAge.compareTo(underAge)<0){
+      return "";
+    } 
+    return "User must be of legal age";
   }
 }
