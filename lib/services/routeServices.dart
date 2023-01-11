@@ -44,14 +44,9 @@ class RouteServices extends ChangeNotifier {
     return null;
   }
 
-<<<<<<< HEAD
-  Future<List<Route2>?> getSearchedRoutes(
-      String start, String stop, String initDate) async {
-=======
   Future<Map<String, dynamic>> getSearchedRoutes(
       String start, String stop, String initDate) async {
     //Map<String,dynamic> result;
->>>>>>> mainpage
     var msg = jsonEncode({"start": start, "stop": stop, "dateInit": initDate});
     print(msg);
     //print(msg);
@@ -62,18 +57,6 @@ class RouteServices extends ChangeNotifier {
     List<Route2> rec = [];
     if (response.statusCode == 200) {
       //var decodedList = (json.decode(response.body) as List<dynamic>);
-<<<<<<< HEAD
-
-      rec = routeFromJson(response.body);
-      //print(rec);
-      return rec;
-    } else {
-      return rec;
-    }
-  }
-
-  Future<String> newParticipant(Route2 nRoute, User part) async {
-=======
       _listRoute = routeFromJson(response.body);
       print(_listRoute);
       return {'status': "200", 'data': _listRoute};
@@ -82,7 +65,6 @@ class RouteServices extends ChangeNotifier {
   }
 
   Future<String> newParticipant(Route2 nRoute, String userId) async {
->>>>>>> mainpage
     final Map<String, dynamic> registerData = {
       'id': nRoute.id,
       'participantId': userId
