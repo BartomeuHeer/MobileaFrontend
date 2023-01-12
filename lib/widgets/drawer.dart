@@ -144,6 +144,20 @@ class _DrawerScreen extends State<DrawerScreen> {
                       Navigator.pushNamed(context, routeRoute);
                     },
                   ),
+                   ListTile(
+                    leading: const Icon(
+                      Icons.notification_important,
+                      color: Colors.white,
+                      size: 30,
+                    ),
+                    title: const Text('Complaints'),
+                    onTap: () {
+                      // To close the Drawer
+                      Navigator.pop(context);
+                      // Navigating to About Page
+                      Navigator.pushNamed(context, complaintRoute);
+                    },
+                  ),
                   ListTile(
                     leading: const Icon(
                       Icons.logout,

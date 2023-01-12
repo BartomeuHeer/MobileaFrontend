@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_app/models/route.dart';
 import 'package:logger/logger.dart';
 
+import '../models/complaint.dart';
 import '../models/user.dart';
 import 'package:http/http.dart' as http;
 import 'package:localstorage/localstorage.dart';
@@ -21,8 +22,7 @@ class UserServices extends ChangeNotifier {
     _userData = userData;
     storage.setItem('userId', userData.id);
   }
-
-  void setRouteToUser(Route2 route2) {
+void setRouteToUser(Route2 route2) {
     if (_userData.routes != null) {
       _userData.routes!.add(route2);
     } else {
@@ -31,6 +31,15 @@ class UserServices extends ChangeNotifier {
       _userData.routes = newR;
     }
   }
+  
+// Complaints
+  List<Complaint> _listComplaint = [];
+  List<Complaint> get listComplaint => _listComplaint;
+
+  void setComplaint(Complaint complaint) {
+    _listComplaint.add(complaint);
+  }
+
 
   Future<List<User>?> getUsers() async {
     var client = http.Client();
@@ -140,6 +149,30 @@ class UserServices extends ChangeNotifier {
       return false;
     }
   }
+
+ Future<Map<String, dynamic>> createComplaint(Complaint complaint) async {
+    final Map<String, dynamic> registerData = {
+      'date': complaint.date.toString(),
+      'name': complaint.name,
+      'comment': complaint.comment,
+      'category': complaint.category,
+    };
+    Map<String, dynamic> result;
+    var createComplaint = await http.post(
+        Uri.parse("http://localhost:5432/api/users/createComplaint"),
+        headers: {'content-type': 'application/json'},
+        body: json.encode(registerData));
+    if (createComplaint.statusCode == 200) {
+      Map<String, dynamic> responseData = jsonDecode(createComplaint.body);
+      Complaint comResult = Complaint();
+      comResult = Complaint.fromJson(responseData);      
+      result = {'status': "200", 'data': comResult};
+    } else {
+      result = {'status': '401'};
+    }
+    return result;
+  }
+
 }
 
 class JWTtoken {
