@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_app/services/routeServices.dart';
 
 import 'package:flutter_app/views/route_info.dart';
+import 'package:flutter_app/views/videocall_lobby.dart';
 
 import 'package:provider/provider.dart';
 /* import 'package:flutter_app/views/my_profile.dart';
@@ -44,6 +45,29 @@ class _FirstPage extends State<FirstPage> {
         drawer: DrawerScreen(),
         appBar: AppBar(
           title: const Text("Menu"),
+          actions: <Widget>[
+          IconButton(
+            icon: const Icon(Icons.video_call),
+            tooltip: 'Initiate a video call',
+            onPressed: () {
+              Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => VideocallPage()));
+            },
+          ),
+            TextButton(
+                onPressed: () {
+                  /*   Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const MyProfile())); */
+                },
+                child: const Text(
+                  'My Profile',
+                  style: TextStyle(color: Colors.black, fontSize: 25),
+                ))
+          ],
         ),
         body: Column(
           children: [

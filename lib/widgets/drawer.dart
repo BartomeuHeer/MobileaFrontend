@@ -1,12 +1,6 @@
 import 'dart:html';
 
 import 'package:flutter/material.dart';
-/* import 'package:flutter_app/views/first_page.dart';
-import 'package:flutter_front/views/profile_page.dart';
-import 'package:flutter_front/views/route_list_page.dart';
-import 'package:flutter_app/views/register.dart';
-import 'package:flutter_app/views/login_page.dart';
-import 'package:flutter_front/views/update_page.dart'; */
 import 'package:flutter_app/models/language.dart';
 import 'package:flutter_app/models/language_constants.dart';
 import 'package:flutter_app/main.dart';
