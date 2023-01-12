@@ -1,0 +1,12 @@
+{
+  "type": "service_account",
+  "project_id": "mobilea-372216",
+  "private_key_id": "e99bf55424b598c016855917edc414d0962364f4",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvwIBADANBgkqhkiG9w0BAQEFAASCBKkwggSlAgEAAoIBAQC9kpLcHUf1wBr5\nJB0UhVTppXFIzzuYKYg5QfMDw992j60ZytAW0HXTg1/emh7KaFgz1kbaivLBURzQ\nUcRJ1U3b9x1L6+C3YmSLf4p0WJtE+KF4Z3nrbmFvbWbwS7YvAg1TAr+xrYubt4LM\nlUjRAeAmSY1obdhGruK87vde1Vb9HXyvRWgs7Xi3Lu6MW2p6NrwC5gs3AEghE3L+\nuc2UzI4LVUJIEuGkSqLVZvDvg1+BLskaJDBUXZ5yO9+oQ0yD0VdRjmuZnMfdsHW/\n6v8ENXBpDcUjkDAqap75fZ4p9YGbnmajhDE1349skQQDYME+oAspNOuD3cJaR/Mm\nb1Mi2qvvAgMBAAECggEABoccj8k9MUB0WwlS4wa5eWB4nk6BFPr8kN1RyH9DwDL4\n62O7dutdSipCp0k4L6M9DAGgMPhTnQ8aHVP+5eo/tWN9/zGzbD0p1ga8/1l8B0Kv\n65PoBiLxCx8UARH8orqcXEZnPgHBIaWzVzBnp1mp5dnm0e+cF6QkmTCegpgwDskq\npswBhCp98ZGAlhQ2h5wcl1T8jTg23+z8pHl0ttqvM8RHD2D6tLLt729dGlCIb6PA\n7dYTDJoN/3fPdX0/ZRNxhF558xA6WoE6F+mqpilZG7jx+wiub3/JnXmvTZxkJ7ke\nYdIAOPTlslvcrU77JTneKQCzbt6Vig0nF8SSdMyxeQKBgQDtVdDmyJGNC1qlAagg\nJKhN2tRkyuxQx2txQORXZvdp0Bm4MMSTNR1cWkTY+UaLuBfCffDANIdN/tl3t91H\nymcvQYC4rrecjvtZM3DF7AyTood1bB7tHf0mTkILdkbmRYohJNSPVMpd0Kxn+8b2\n+GQlT9jU73NZYzW8xsnsbThP0wKBgQDMeytRWvV49ghjEIRB6UM2po2SRXyQDlUE\nq8ksLnOojDCi8NhzGG/r/wNOh72Pfd/YlYo/i1VYyTLZ0HVH9QE9Kt/hxYVpW0xW\n1zZnVQ+ExWJaOF0ts5RRxytopa7DUZdxpVdz6KMhIZc5QNyN6tlbOYogpL+8G9xD\nhn8dRas99QKBgQDbul6su7Zdkcx7BfykvauAYP/QzTpaUzZ65OxCqxaWxU56g9QK\nwdsL/JrPEoIoquh8bWLuX/OA11h5CSX56D79tjQ5R7DAZnP4ErLu2uqN6KRmpxI+\nz0vnIf7tY7SiTnFi3BlbFdJBZwenQafkUPVOwgzqn0H42OwQeS7LEBdZdwKBgQDA\nuYItbqaYOIPVIvcUzE7+TmJ2r6lkeS2mdmbojmuSO3eHy6qmaCzs6HDsbkG64a++\nCcvAcomhYhjcdH5lsMVXKnbS64D/uP4thzAOmnxC7mrxj9g6v9wWa7s9KZObIea0\nRVs0sto12twWKUz3MZdlRMksVTslh7jFqBlctJJelQKBgQDNzoTeCuCs6yFjeGt4\nMF3Yl/68gtaZKQIGOJfzlJRCkf+SjeLclDQHwwoCEMQmNXuhkLN5p222BZCmMoVa\nC9v13JmYA4+D8aKCcrhDfxshKG2XE91IEWmvt7Ndghpi+NMk42A7en2XvvWnGXJA\n12efGQ7s44HohpQFsJdZiiFXuA==\n-----END PRIVATE KEY-----\n",
+  "client_email": "cuenta-de-servicio-flutter-cha@mobilea-372216.iam.gserviceaccount.com",
+  "client_id": "115677015863108644286",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/cuenta-de-servicio-flutter-cha%40mobilea-372216.iam.gserviceaccount.com"
+}
