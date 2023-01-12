@@ -5,6 +5,7 @@ import 'package:flutter_app/views/login_page.dart';
 import 'package:date_time_picker/date_time_picker.dart';
 
 import '../models/user.dart';
+import 'first_page.dart';
 
 class RegisterPage extends StatefulWidget {
   const RegisterPage({Key? key}) : super(key: key);
@@ -222,12 +223,6 @@ class _RegisterPageState extends State<RegisterPage> {
                                             BorderRadius.circular(20)),
                                     child: TextButton(
                                       onPressed: () async {
-                                        print(dateInputController.text);
-                                        print(passwordController.text);
-                                        print(emailController.text);
-                                        print(repeatPasswordController.text);
-                                        print(usernameController.text);
-                                     
                                         if (_formKey.currentState!.validate())
                                         {
                                           setState(() {
@@ -253,7 +248,7 @@ class _RegisterPageState extends State<RegisterPage> {
                                             Navigator.of(context).push(
                                                 MaterialPageRoute(
                                                     builder: (context) =>
-                                                        const LoginPage()));
+                                                        const FirstPage()));
                                           }
                                         }
                                       },

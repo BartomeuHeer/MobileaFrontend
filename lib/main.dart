@@ -10,6 +10,7 @@ import 'package:flutter_app/l10n/l10n.dart';
 import 'package:flutter_app/router/custom_router.dart';
 import 'package:flutter_app/router/route_constants.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:syncfusion_flutter_calendar/calendar.dart';
 
 void main() {
   runApp(
@@ -80,7 +81,19 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: SfCalendar(
+        view: CalendarView.week,
+        firstDayOfWeek: 1,
+
+        dataSource: MeetingDataSource(getAppointments()),
+
+      ),
+    );
+  }
+  /* int _counter = 0;
 
   void _incrementCounter() {
     setState(() {
@@ -91,9 +104,9 @@ class _MyHomePageState extends State<MyHomePage> {
       // called again, and so nothing would appear to happen.
       _counter++;
     });
-  }
+  } */
 
-  @override
+  /* @override
   Widget build(BuildContext context) {
     // This method is rerun every time setState is called, for instance as done
     // by the _incrementCounter method above.
@@ -143,5 +156,31 @@ class _MyHomePageState extends State<MyHomePage> {
         child: const Icon(Icons.add),
       ), // This trailing comma makes auto-formatting nicer for build methods.
     );
+  } */
+}
+List<Appointment> getAppointments() {
+  List<Appointment> meetings = <Appointment>[];
+  final DateTime today = DateTime.now();
+
+  //Aqui has de posar com a start time la hora a la qual comença (actualment no está implementat el crear rutes amb hores)
+  // llavors sha de fer o un appointment de tot el dia o posar una hora com les 7:00 per entrar a la feina a les 9
+  final DateTime startTime =
+      DateTime(today.year, today.month, today.day, 7, 0, 0);
+  final DateTime endTime = startTime.add(const Duration(hours: 2));
+
+  meetings.add(Appointment(
+      startTime: startTime,
+      endTime: endTime,
+      subject: 'Board Meeting',
+      color: Colors.blue,
+      recurrenceRule: 'FREQ=DAILY;COUNT=10',
+      isAllDay: false));
+
+  return meetings;
+}
+
+class MeetingDataSource extends CalendarDataSource {
+  MeetingDataSource(List<Appointment> source) {
+    appointments = source;
   }
 }
