@@ -26,6 +26,7 @@ class ChatMessages extends StatelessWidget {
           /// Diferenciamos si es un mensaje o una respuesta
           isUserMsg: obj['isUserMessage']);
       },
+      reverse: true,
     );
   }
 }
