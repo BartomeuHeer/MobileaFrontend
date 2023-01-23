@@ -34,7 +34,8 @@ class _FirstPage extends State<FirstPage> {
   final startPointController = TextEditingController();
   final stopPointController = TextEditingController();
   final dateInputController = TextEditingController();
-  final selectedStart = TextEditingController();
+  final selectedStartText = TextEditingController();
+  final selectedPrediciton = AutocompletePrediction();
 
   late PredictionList _predictionList = PredictionList();
   bool fullPrediction = false;
@@ -52,11 +53,13 @@ class _FirstPage extends State<FirstPage> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    selectedStart.addListener(_printLatestValue());
+    selectedStartText.addListener((){
+      _printLatestValue();
+    });
   }
 
   _printLatestValue() {
-    print("Textfield value: ${selectedStart.text}");
+    print("heoeoo");
   }
 
   void _determinePosition() async {
@@ -156,7 +159,20 @@ class _FirstPage extends State<FirstPage> {
                         child: TextFieldSearcher(
                             label: "Start point",
                             apiKey: apiKey,
-                            controller: selectedStart),
+                            controller: selectedStartText,
+                            getSelectedValue: (value){
+                              print(value);
+                            },
+                            ),
+
+                         /* child: TextFieldSearch(
+                          label: "label",
+                          controller: selectedStartText,
+                          initialList: const ["hoa", "wuuuu", "djsd"],
+                          getSelectedValue: (value){
+                            print(value);
+                          },
+                        ),  */
                         /* child: TextField(
                           controller: startPointController,
                           style: const TextStyle(color: Colors.black),

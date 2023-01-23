@@ -37,6 +37,8 @@ class TextFieldSearcher extends StatefulWidget {
   /// The number of matched items that are viewable in results
   final int itemsInView;
 
+  // final AutocompletePrediction predicitonSelected;
+
   final String apiKey;
 
   /// Creates a TextFieldSearch for displaying selected elements and retrieving a selected element
@@ -46,6 +48,7 @@ class TextFieldSearcher extends StatefulWidget {
       required this.label,
       required this.controller,
       required this.apiKey,
+      // required this.predicitonSelected,
       this.textStyle,
       this.future,
       this.getSelectedValue,
@@ -168,18 +171,24 @@ class _TextFieldSearcherState extends State<TextFieldSearcher> {
   } */
 
   void getPredict(String value) async {
-    setLoading();
-    List<AutocompletePrediction> tempList = <AutocompletePrediction>[];
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    String language = prefs.getString("languageCode") ?? 'en';
-    String uri =
-        "https://api.mapbox.com/geocoding/v5/mapbox.places/$value.json?access_token=${widget.apiKey}&cachebuster=1566806258853&autocomplete=true&language=$language&limit=5";
-    final response = await http.get(Uri.parse(uri));
-    if (response.statusCode == 200) {
-      print(response.body);
-      tempList = PredictionList.parsePredictionList(response.body).predictions!;
+    _overlayEntry.markNeedsBuild();
+    if (widget.controller.text.length > widget.minStringLength) {
+      setLoading();
+      List<AutocompletePrediction> tempList = <AutocompletePrediction>[];
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      String language = prefs.getString("languageCode") ?? 'en';
+      String uri =
+          "https://api.mapbox.com/geocoding/v5/mapbox.places/$value.json?access_token=${widget.apiKey}&cachebuster=1566806258853&autocomplete=true&language=$language&limit=5";
+      final response = await http.get(Uri.parse(uri));
+      if (response.statusCode == 200) {
+        //print(response.body);
+        tempList =
+            PredictionList.parsePredictionList(response.body).predictions!;
+      }
+      resetState(tempList);
+    } else {
+      resetList();
     }
-    resetState(tempList);
   }
 
   @override
@@ -202,11 +211,13 @@ class _TextFieldSearcherState extends State<TextFieldSearcher> {
     // add event listener to the focus node and only give an overlay if an entry
     // has focus and insert the overlay into Overlay context otherwise remove it
     _focusNode.addListener(() {
+            print("objectFocus");
+      
       if (_focusNode.hasFocus) {
         _overlayEntry = _createOverlayEntry();
         Overlay.of(context).insert(_overlayEntry);
       } else {
-        _overlayEntry.remove();
+        
         // check to see if itemsFound is false, if it is clear the input
         // check to see if we are currently loading items when keyboard exists, and clear the input
         if (itemsFound == false || loading == true) {
@@ -248,11 +259,15 @@ class _TextFieldSearcherState extends State<TextFieldSearcher> {
         children: <Widget>[
           GestureDetector(
             onTap: () {
+              print("objectOntap");
+
               // clear the text field controller to reset it
               widget.controller.clear();
               setState(() {
                 itemsFound = false;
               });
+            _overlayEntry.remove();
+
               // reset the list so it's empty and not visible
               resetList();
               // remove the focus node so we aren't editing the text
@@ -273,18 +288,21 @@ class _TextFieldSearcherState extends State<TextFieldSearcher> {
         return ListTile(
           title: Text(filteredList![i].textName!),
           onTap: () {
-            print("object");
+            print("objectOntap: ${filteredList![i].textName!}");
             // set the controller value to what was selected
             setState(() {
               // if we have a label property, and getSelectedValue function
               // send getSelectedValue to parent widget using the label property
               if (widget.getSelectedValue != null) {
+                print("objectOntap22: ${filteredList![i].textName!}");
                 widget.controller.text = filteredList![i].textName!;
                 widget.getSelectedValue!(filteredList![i]);
               } else {
+                print("objectOntap32: ${filteredList![i].textName!}");
                 widget.controller.text = filteredList![i].textName!;
               }
             });
+            _overlayEntry.remove();
             // reset the list so it's empty and not visible
             resetList();
             // remove the focus node so we aren't editing the text
@@ -413,7 +431,10 @@ class _TextFieldSearcherState extends State<TextFieldSearcher> {
             widget.decoration ?? InputDecoration(labelText: widget.label),
         //style: widget.textStyle,
         onChanged: (String value) {
-          getPredict(value);
+          setState(() {
+            getPredict(value);
+          });
+
           // every time we make a change to the input, update the list
           /* _debouncer.run(() {
             setState(() {

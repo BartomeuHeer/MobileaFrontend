@@ -6,7 +6,7 @@ class PredictionList {
   PredictionList({this.predictions});
 
   factory PredictionList.fromJson(Map<String, dynamic> json) {
-    print(json);
+    //print(json);
     return PredictionList(
       predictions: json['features']
           ?.map<AutocompletePrediction>(
@@ -16,10 +16,10 @@ class PredictionList {
   }
 
   static PredictionList parsePredictionList(String response) {
-    print(response);
+    //print(response);
     final parse = json.decode(response);
     var res = parse["features"] as List;
-    print(res);
+    //print(res);
     return PredictionList(
         predictions: res
             .map<AutocompletePrediction>(
