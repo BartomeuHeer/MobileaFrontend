@@ -53,14 +53,10 @@ class _FirstPage extends State<FirstPage> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    selectedStartText.addListener((){
-      _printLatestValue();
-    });
+    _determinePosition();
   }
 
-  _printLatestValue() {
-    print("heoeoo");
-  }
+  
 
   void _determinePosition() async {
     bool serviceEnabled;
@@ -72,7 +68,10 @@ class _FirstPage extends State<FirstPage> {
       // Location services are not enabled don't continue
       // accessing the position and request users of the
       // App to enable the location services.
-      return Future.error('Location services are disabled.');
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+          content: Text(
+              'Location services are disabled. Please enable the services')));
+      return;
     }
 
     permission = await Geolocator.checkPermission();
@@ -84,14 +83,18 @@ class _FirstPage extends State<FirstPage> {
         // Android's shouldShowRequestPermissionRationale
         // returned true. According to Android guidelines
         // your App should show an explanatory UI now.
-        return Future.error('Location permissions are denied');
+        ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(content: Text('Location permissions are denied')));
+        return;
       }
     }
 
     if (permission == LocationPermission.deniedForever) {
       // Permissions are denied forever, handle appropriately.
-      return Future.error(
-          'Location permissions are permanently denied, we cannot request permissions.');
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+          content: Text(
+              'Location permissions are permanently denied, we cannot request permissions.')));
+      return;
     }
 
     // When we reach here, permissions are granted and we can
@@ -103,25 +106,6 @@ class _FirstPage extends State<FirstPage> {
     }).catchError((e) {
       print(e);
     });
-  }
-
-  void getPredict(String value) async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    String language = prefs.getString("languageCode") ?? 'en';
-    String uri =
-        "https://api.mapbox.com/geocoding/v5/mapbox.places/$value.json?access_token=$apiKey&cachebuster=1566806258853&autocomplete=true&language=$language&limit=5";
-    final response = await http.get(Uri.parse(uri));
-    if (response.statusCode == 200) {
-      setState(() {
-        print(response.body);
-        _predictionList = PredictionList.parsePredictionList(response.body);
-        if (_predictionList.predictions!.isNotEmpty) {
-          fullPrediction = true;
-        }
-        print(_predictionList.predictions![0].textName);
-        print(_predictionList.predictions![0].coordinates);
-      });
-    }
   }
 
   @override
@@ -157,15 +141,16 @@ class _FirstPage extends State<FirstPage> {
                       Flexible(
                         flex: 2,
                         child: TextFieldSearcher(
-                            label: "Start point",
-                            apiKey: apiKey,
-                            controller: selectedStartText,
-                            getSelectedValue: (value){
-                              print(value);
-                            },
-                            ),
+                          label: "Start point",
+                          apiKey: apiKey,
+                          controller: selectedStartText,
+                          getSelectedValue: (value) {
+                            print(value);
+                          },
+                          currentPos: _currentPosition,
+                        ),
 
-                         /* child: TextFieldSearch(
+                        /* child: TextFieldSearch(
                           label: "label",
                           controller: selectedStartText,
                           initialList: const ["hoa", "wuuuu", "djsd"],
@@ -258,41 +243,25 @@ class _FirstPage extends State<FirstPage> {
             Expanded(
                 flex: 3,
                 child: Container(
-                  margin: const EdgeInsets.only(left: 50, right: 50),
+                  height: double.infinity,
+                  //margin: const EdgeInsets.only(left: 50, right: 50),
                   color: Colors.white,
-                  child: Visibility(
-                    visible: _predictionList.predictions!.isNotEmpty,
-                    child: Expanded(
-                      child: ListView.separated(
-                        itemCount: _predictionList.predictions!.length,
-                        separatorBuilder: (cx, _) => const Divider(),
-                        itemBuilder: (cx, index) {
-                          AutocompletePrediction _prediction =
-                              _predictionList.predictions![index];
-
-                          return ListTile(
-                            title: Text(_prediction.textName!),
-                            //subtitle: Text(_prediction.coordinates![0]),
-                          );
-                        },
-                      ),
-                    ),
-                  ),
-                  /* child: FlutterMap(
+                  child: FlutterMap(
                     options: MapOptions(
-                      minZoom: 5,
-                      maxZoom: 15,
-                      zoom: 13,
-                    ),
-                    /* center: LatLng(_currentPosition.latitude,
-                            _currentPosition.longitude)), */
+                        minZoom: 5,
+                        maxZoom: 15,
+                        zoom: 13,
+                        center: LatLng(_currentPosition.latitude,
+                            _currentPosition.longitude)),
                     children: [
                       TileLayer(
                         urlTemplate:
                             'https://api.mapbox.com/styles/v1/ngneer1/cld1klsog001701s1lusu2jhs/tiles/256/{z}/{x}/{y}@2x?access_token=$apiKey',
-                      )
+                      ),
+                      
                     ],
-                  ), */
+                    
+                  ),
                 ))
           ],
         ));

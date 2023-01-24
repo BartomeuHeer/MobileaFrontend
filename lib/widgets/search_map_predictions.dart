@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:geolocator/geolocator.dart';
 import 'dart:async';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
@@ -38,7 +39,7 @@ class TextFieldSearcher extends StatefulWidget {
   final int itemsInView;
 
   // final AutocompletePrediction predicitonSelected;
-
+  final Position? currentPos;
   final String apiKey;
 
   /// Creates a TextFieldSearch for displaying selected elements and retrieving a selected element
@@ -48,6 +49,7 @@ class TextFieldSearcher extends StatefulWidget {
       required this.label,
       required this.controller,
       required this.apiKey,
+      this.currentPos,
       // required this.predicitonSelected,
       this.textStyle,
       this.future,
@@ -177,7 +179,12 @@ class _TextFieldSearcherState extends State<TextFieldSearcher> {
       List<AutocompletePrediction> tempList = <AutocompletePrediction>[];
       SharedPreferences prefs = await SharedPreferences.getInstance();
       String language = prefs.getString("languageCode") ?? 'en';
-      String uri =
+      String uri;
+      if (widget.currentPos != null) {
+        uri =
+            "https://api.mapbox.com/geocoding/v5/mapbox.places/$value.json?access_token=${widget.apiKey}&proximity${widget.currentPos!.longitude},${widget.currentPos!.latitude}cachebuster=1566806258853&autocomplete=true&language=$language&limit=5";
+      }
+      uri =
           "https://api.mapbox.com/geocoding/v5/mapbox.places/$value.json?access_token=${widget.apiKey}&cachebuster=1566806258853&autocomplete=true&language=$language&limit=5";
       final response = await http.get(Uri.parse(uri));
       if (response.statusCode == 200) {
@@ -211,17 +218,18 @@ class _TextFieldSearcherState extends State<TextFieldSearcher> {
     // add event listener to the focus node and only give an overlay if an entry
     // has focus and insert the overlay into Overlay context otherwise remove it
     _focusNode.addListener(() {
-            print("objectFocus");
-      
+      print("objectFocus");
+
       if (_focusNode.hasFocus) {
         _overlayEntry = _createOverlayEntry();
         Overlay.of(context).insert(_overlayEntry);
       } else {
-        
+          _overlayEntry.remove();
         // check to see if itemsFound is false, if it is clear the input
         // check to see if we are currently loading items when keyboard exists, and clear the input
         if (itemsFound == false || loading == true) {
           // reset the list so it's empty and not visible
+
           resetList();
           widget.controller.clear();
         }
@@ -266,7 +274,7 @@ class _TextFieldSearcherState extends State<TextFieldSearcher> {
               setState(() {
                 itemsFound = false;
               });
-            _overlayEntry.remove();
+              _overlayEntry.remove();
 
               // reset the list so it's empty and not visible
               resetList();
@@ -302,7 +310,6 @@ class _TextFieldSearcherState extends State<TextFieldSearcher> {
                 widget.controller.text = filteredList![i].textName!;
               }
             });
-            _overlayEntry.remove();
             // reset the list so it's empty and not visible
             resetList();
             // remove the focus node so we aren't editing the text
