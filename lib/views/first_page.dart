@@ -34,8 +34,10 @@ class _FirstPage extends State<FirstPage> {
   final startPointController = TextEditingController();
   final stopPointController = TextEditingController();
   final dateInputController = TextEditingController();
-  final selectedStartText = TextEditingController();
-  final selectedPrediciton = AutocompletePrediction();
+
+  final selectedStart = AutocompletePrediction();
+  final selectedStop = AutocompletePrediction();
+  List<Marker> markerList = [];
 
   late PredictionList _predictionList = PredictionList();
   bool fullPrediction = false;
@@ -56,7 +58,31 @@ class _FirstPage extends State<FirstPage> {
     _determinePosition();
   }
 
-  
+  void setMarker(AutocompletePrediction pos, String type) {
+    print(pos.placeName);
+    setState(() {
+      Marker marker = Marker(
+          width: 45.0,
+          height: 45.0,
+          point: LatLng(pos.coordinates![0], pos.coordinates![1]),
+          builder: (context) => const Icon(
+                Icons.location_on,
+                color: Colors.green,
+              ));
+      markerList.add(marker);
+    });
+  }
+
+  /* List<Marker>? addMarker(){
+    List<LatLng> markers = [];
+    if(startMarkerPos != null){
+      return startMarkerPos;
+    }
+    else if (type == "stop" && stopMarkerPos != null){
+      return stopMarkerPos;
+    }
+    return null;
+  } */
 
   void _determinePosition() async {
     bool serviceEnabled;
@@ -134,7 +160,9 @@ class _FirstPage extends State<FirstPage> {
                   /* margin:
                       const EdgeInsets.symmetric(horizontal: 40, vertical: 20), */
                   padding: const EdgeInsets.all(20),
-                  decoration: const BoxDecoration(color: Colors.white),
+                  decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(50)),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
@@ -143,9 +171,10 @@ class _FirstPage extends State<FirstPage> {
                         child: TextFieldSearcher(
                           label: "Start point",
                           apiKey: apiKey,
-                          controller: selectedStartText,
+                          controller: startPointController,
                           getSelectedValue: (value) {
-                            print(value);
+                            print("lloc es: ${value.textName}");
+                            setMarker(value, "start");
                           },
                           currentPos: _currentPosition,
                         ),
@@ -158,47 +187,18 @@ class _FirstPage extends State<FirstPage> {
                             print(value);
                           },
                         ),  */
-                        /* child: TextField(
-                          controller: startPointController,
-                          style: const TextStyle(color: Colors.black),
-                          decoration: InputDecoration(
-                            fillColor: Colors.grey.shade100,
-                            filled: true,
-                            labelText: 'From',
-                          ),
-                          onChanged: (value) {
-                            getPredict(value);
-                          },
-                          /* onTap: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) =>
-                                    MapBoxAutoCompleteWidget(
-                                  apiKey: apiKey,
-                                  hint: "Select starting point",
-                                  onSelect: (place) {
-                                    // TODO : Process the result gotten
-                                    startPointController.text =
-                                        place.placeName!;
-                                  },
-                                  limit: 10,
-                                ),
-                              ),
-                            );
-                          }, */
-                        ), */
                       ),
                       Flexible(
                         flex: 2,
-                        child: TextField(
+                        child: TextFieldSearcher(
+                          label: "Start point",
+                          apiKey: apiKey,
                           controller: stopPointController,
-                          style: const TextStyle(color: Colors.black),
-                          decoration: InputDecoration(
-                            fillColor: Colors.grey.shade100,
-                            filled: true,
-                            labelText: "To",
-                          ),
+                          getSelectedValue: (value) {
+                            print("lloc es: ${value.textName}");
+                            setMarker(value, "start");
+                          },
+                          currentPos: _currentPosition,
                         ),
                       ),
                       Flexible(
@@ -258,9 +258,10 @@ class _FirstPage extends State<FirstPage> {
                         urlTemplate:
                             'https://api.mapbox.com/styles/v1/ngneer1/cld1klsog001701s1lusu2jhs/tiles/256/{z}/{x}/{y}@2x?access_token=$apiKey',
                       ),
-                      
+                      MarkerLayer(
+                        markers: markerList,
+                      )
                     ],
-                    
                   ),
                 ))
           ],

@@ -224,7 +224,6 @@ class _TextFieldSearcherState extends State<TextFieldSearcher> {
         _overlayEntry = _createOverlayEntry();
         Overlay.of(context).insert(_overlayEntry);
       } else {
-          _overlayEntry.remove();
         // check to see if itemsFound is false, if it is clear the input
         // check to see if we are currently loading items when keyboard exists, and clear the input
         if (itemsFound == false || loading == true) {
@@ -294,23 +293,24 @@ class _TextFieldSearcherState extends State<TextFieldSearcher> {
       itemCount: filteredList!.length,
       itemBuilder: (context, i) {
         return ListTile(
-          title: Text(filteredList![i].textName!),
+          title: Text(filteredList![i].placeName!),
           onTap: () {
-            print("objectOntap: ${filteredList![i].textName!}");
+            print("objectOntap: ${filteredList![i].placeName!}");
             // set the controller value to what was selected
             setState(() {
               // if we have a label property, and getSelectedValue function
               // send getSelectedValue to parent widget using the label property
               if (widget.getSelectedValue != null) {
-                print("objectOntap22: ${filteredList![i].textName!}");
-                widget.controller.text = filteredList![i].textName!;
+                print("objectOntap22: ${filteredList![i].placeName!}");
+                widget.controller.text = filteredList![i].placeName!;
                 widget.getSelectedValue!(filteredList![i]);
               } else {
-                print("objectOntap32: ${filteredList![i].textName!}");
-                widget.controller.text = filteredList![i].textName!;
+                print("objectOntap32: ${filteredList![i].placeName!}");
+                widget.controller.text = filteredList![i].placeName!;
               }
             });
             // reset the list so it's empty and not visible
+            _overlayEntry.remove();
             resetList();
             // remove the focus node so we aren't editing the text
             FocusScope.of(context).unfocus();
