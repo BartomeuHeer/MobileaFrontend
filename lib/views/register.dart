@@ -93,182 +93,186 @@ class _RegisterPageState extends State<RegisterPage> {
                         Container(
                           margin: EdgeInsets.only(left: 35, right: 35),
                           child: Form(
-                            key: _formKey,
+                              key: _formKey,
                               child: Column(
-                            children: [
-                              TextFormField(
-                                validator:(value){
-                                  if(value==null || value.isEmpty){
-                                    return "Enter a valid username";
-                                  }
-                                  return null;
-                                
-                                }
+                                children: [
+                                  TextFormField(
+                                    validator: (value) {
+                                      if (value == null || value.isEmpty) {
+                                        return "Enter a valid username";
+                                      }
+                                      return null;
+                                    },
+                                    controller: usernameController,
+                                    style: TextStyle(color: Colors.black),
+                                    decoration: InputDecoration(
+                                        fillColor: Colors.grey.shade100,
+                                        filled: true,
+                                        hintText: translation(context).username,
+                                        border: OutlineInputBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(10),
+                                        )),
+                                  ),
+                                  SizedBox(
+                                    height: 30,
+                                  ),
+                                  TextFormField(
+                                    validator: (value) {
+                                      String? cositas = validateEmail(value!);
+                                      print(cositas);
+                                      return cositas;
 
-                                ,
-                                controller: usernameController,
-                                style: TextStyle(color: Colors.black),
-                                decoration: InputDecoration(
-                                    fillColor: Colors.grey.shade100,
-                                    filled: true,
-                                    hintText: translation(context).username,
-                                    border: OutlineInputBorder(
-                                      borderRadius: BorderRadius.circular(10),
-                                    )),
-                              ),
-                              SizedBox(
-                                height: 30,
-                              ),
-                              TextFormField(
-                                validator:(value){
-                                  String? cositas = validateEmail(value!);
-                                  print (cositas);
-                                  return cositas;
-
-                                  //return validateEmail(value!);
-                                },
-                                controller: emailController,
-                                style: TextStyle(color: Colors.black),
-                                decoration: InputDecoration(
-                                    fillColor: Colors.grey.shade100,
-                                    filled: true,
-                                    hintText: translation(context).email,
-                                    border: OutlineInputBorder(
-                                      borderRadius: BorderRadius.circular(10),
-                                    )),
-                              ),
-                              SizedBox(
-                                height: 30,
-                              ),
-                              TextFormField(
-                                validator:(value){
-                                  if(value==null || value.isEmpty){
-                                    return "Enter a password";
-                                  }
-                                  return null;
-                                
-                                },
-                                controller: passwordController,
-                                style: TextStyle(),
-                                obscureText: true,
-                                decoration: InputDecoration(
-                                    fillColor: Colors.grey.shade100,
-                                    filled: true,
-                                    hintText: translation(context).password,
-                                    border: OutlineInputBorder(
-                                      borderRadius: BorderRadius.circular(10),
-                                    )),
-                              ),
-                              SizedBox(
-                                height: 40,
-                              ),
-                              TextFormField(
-                                validator:(value){
-                                  String? cositas2 = validatePassword(passwordController.text, value!);
-                                  print (cositas2);
-                                  return cositas2;
-                                 //return validatePassword(passwordController.text, value!);
-                                },
-                                controller: repeatPasswordController,
-                                style: TextStyle(),
-                                obscureText: true,
-                                decoration: InputDecoration(
-                                    fillColor: Colors.grey.shade100,
-                                    filled: true,
-                                    hintText:
-                                        translation(context).repeatpassword,
-                                    border: OutlineInputBorder(
-                                      borderRadius: BorderRadius.circular(10),
-                                    )),
-                              ),
-                              SizedBox(
-                                height: 40,
-                              ),
-                              //Datepicker
-                              Container(
-                                  child: DateTimePicker(
-                                controller: dateInputController,
-                                type: DateTimePickerType.date,
-                                initialValue: null,
-                                dateMask: 'd MMM yyyy',
-                                firstDate: DateTime(1900),
-                                lastDate: DateTime(2100),
-                                icon: const Icon(Icons.event),
-                                dateLabelText: 'Select date',
-                                onChanged: (val) => print(val),
-                                /* validator: (value) {
+                                      //return validateEmail(value!);
+                                    },
+                                    controller: emailController,
+                                    style: TextStyle(color: Colors.black),
+                                    decoration: InputDecoration(
+                                        fillColor: Colors.grey.shade100,
+                                        filled: true,
+                                        hintText: translation(context).email,
+                                        border: OutlineInputBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(10),
+                                        )),
+                                  ),
+                                  SizedBox(
+                                    height: 30,
+                                  ),
+                                  TextFormField(
+                                    validator: (value) {
+                                      if (value == null || value.isEmpty) {
+                                        return "Enter a password";
+                                      }
+                                      return null;
+                                    },
+                                    controller: passwordController,
+                                    style: TextStyle(),
+                                    obscureText: true,
+                                    decoration: InputDecoration(
+                                        fillColor: Colors.grey.shade100,
+                                        filled: true,
+                                        hintText: translation(context).password,
+                                        border: OutlineInputBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(10),
+                                        )),
+                                  ),
+                                  SizedBox(
+                                    height: 40,
+                                  ),
+                                  TextFormField(
+                                    validator: (value) {
+                                      String? cositas2 = validatePassword(
+                                          passwordController.text, value!);
+                                      print(cositas2);
+                                      return cositas2;
+                                      //return validatePassword(passwordController.text, value!);
+                                    },
+                                    controller: repeatPasswordController,
+                                    style: TextStyle(),
+                                    obscureText: true,
+                                    decoration: InputDecoration(
+                                        fillColor: Colors.grey.shade100,
+                                        filled: true,
+                                        hintText:
+                                            translation(context).repeatpassword,
+                                        border: OutlineInputBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(10),
+                                        )),
+                                  ),
+                                  SizedBox(
+                                    height: 40,
+                                  ),
+                                  //Datepicker
+                                  Container(
+                                      child: DateTimePicker(
+                                    controller: dateInputController,
+                                    type: DateTimePickerType.date,
+                                    initialValue: null,
+                                    dateMask: 'd MMM yyyy',
+                                    firstDate: DateTime(1900),
+                                    lastDate: DateTime(2100),
+                                    icon: const Icon(Icons.event),
+                                    dateLabelText: 'Select date',
+                                    onChanged: (val) => print(val),
+                                    /* validator: (value) {
                                   return validateAge(value!);
                                 
                                 }, */
-                                onSaved: (newValue) => print(newValue),
-                              )),
-                              SizedBox(
-                                height: 40,
-                              ),
-                              Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Text(
-                                    translation(context).signup,
-                                    style: TextStyle(
-                                        fontSize: 27,
-                                        fontWeight: FontWeight.w700),
+                                    onSaved: (newValue) => print(newValue),
+                                  )),
+                                  SizedBox(
+                                    height: 40,
                                   ),
-                                  Container(
-                                    decoration: BoxDecoration(
-                                        color: Colors.blue,
-                                        borderRadius:
-                                            BorderRadius.circular(20)),
-                                    child: TextButton(
-                                      onPressed: () async {
-                                        print(dateInputController.text);
-                                        print(passwordController.text);
-                                        print(emailController.text);
-                                        print(repeatPasswordController.text);
-                                        print(usernameController.text);
-                                     
-                                        if (_formKey.currentState!.validate())
-                                        {
-                                          setState(() {
-                                            buttonEnabled = true;
-                                          });
-                                          print(usernameController.text +
-                                              passwordController.text);
-                                          var newUser = User(
-                                              id: "",
-                                              name: usernameController.text,
-                                              password: passwordController.text,
-                                              email: emailController.text,
-                                              admin: false,
-                                              birthday: dateInputController.text
-                                          );
-                                          var res = await userService
-                                              .createUser(newUser);
-                                          if (res == "400") {
-                                            showAlertDialog(context);
-                                            return;
-                                          }
-                                          if (res == "200") {
-                                            Navigator.of(context).push(
-                                                MaterialPageRoute(
-                                                    builder: (context) =>
-                                                        const LoginPage()));
-                                          }
-                                        }
-                                      },
-                                      child: Text(
+                                  Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Text(
                                         translation(context).signup,
                                         style: TextStyle(
-                                            color: Colors.black, fontSize: 25),
+                                            fontSize: 27,
+                                            fontWeight: FontWeight.w700),
                                       ),
-                                    ),
+                                      Container(
+                                        decoration: BoxDecoration(
+                                            color: Colors.blue,
+                                            borderRadius:
+                                                BorderRadius.circular(20)),
+                                        child: TextButton(
+                                          onPressed: () async {
+                                            print(dateInputController.text);
+                                            print(passwordController.text);
+                                            print(emailController.text);
+                                            print(
+                                                repeatPasswordController.text);
+                                            print(usernameController.text);
+
+                                            if (_formKey.currentState!
+                                                .validate()) {
+                                              setState(() {
+                                                buttonEnabled = true;
+                                              });
+                                              print(usernameController.text +
+                                                  passwordController.text);
+                                              var newUser = User(
+                                                  id: "",
+                                                  name: usernameController.text,
+                                                  password:
+                                                      passwordController.text,
+                                                  email: emailController.text,
+                                                  admin: false,
+                                                  birthday:
+                                                      dateInputController.text);
+                                              var res = await userService
+                                                  .createUser(newUser);
+                                              if (res == "400") {
+                                                showAlertDialog(context);
+                                                return;
+                                              }
+                                              if (res == "200") {
+                                                Navigator.of(context).push(
+                                                    MaterialPageRoute(
+                                                        builder: (context) =>
+                                                            const LoginPage()));
+                                              }
+                                            }
+                                          },
+                                          child: Text(
+                                            translation(context).signup,
+                                            style: TextStyle(
+                                                color: Colors.black,
+                                                fontSize: 25),
+                                          ),
+                                        ),
+                                      ),
+                                    ],
                                   ),
+                                  //Aqui va el Flexible(
                                 ],
-                              ),
-                              //Aqui va el Flexible(
-                            ],
-                          )),
+                              )),
                         ),
                       ],
                     ),
@@ -297,14 +301,15 @@ class _RegisterPageState extends State<RegisterPage> {
       return "The passwords don't coincide.";
     }
   }
+
   String validateAge(String value) {
     var dateNow = DateTime.now();
-    var underAge = dateNow.subtract(const Duration(days:6574));
+    var underAge = dateNow.subtract(const Duration(days: 6574));
     var userAge = DateTime.parse(value);
 
-    if (userAge.compareTo(underAge)<0){
+    if (userAge.compareTo(underAge) < 0) {
       return "";
-    } 
+    }
     return "User must be of legal age";
   }
 }
