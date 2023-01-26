@@ -5,7 +5,7 @@ import 'package:flutter_app/services/userServices.dart';
 import 'package:flutter_app/utils/authentication.dart';
 import 'package:flutter_app/views/first_page.dart';
 import 'package:provider/provider.dart';
-import '../models/user.dart';
+import '../models/userclient.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class GoogleSignInButton extends StatefulWidget {
@@ -70,10 +70,10 @@ class _GoogleSignInButtonState extends State<GoogleSignInButton> {
 
                 print("r111111111111111111111");
 
-                UserGog? usergog =
+                User? usergog =
                     await Authentication.signInWithGoogle(context: context);
                 print("r22222222222222222222222");
-                var newUser = User(
+                var newUser = UserClient(
                     id: "",
                     name: usergog?.displayName,
                     password: "aaaaaaaaaaaaaaaaaaaaaaaa",
