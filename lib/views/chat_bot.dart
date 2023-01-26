@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:dialog_flowtter/dialog_flowtter.dart';
 import 'package:flutter_app/widgets/chat_messages.dart';
 
+import '../widgets/drawer.dart';
+
 class ChatBotPage extends StatefulWidget {
   const ChatBotPage({super.key});
 
@@ -27,7 +29,7 @@ class _ChatBotPageState extends State<ChatBotPage> {
     }
 
     setState(() {
-      addMessage(Message(text: DialogText(text: [msg])),true);
+      addMessage(Message(text: DialogText(text: [msg])), true);
     });
 
     DialogAuthCredentials credentials =
@@ -41,7 +43,7 @@ class _ChatBotPageState extends State<ChatBotPage> {
     DetectIntentResponse res = await dialogFlowtter.detectIntent(
       queryInput: query,
     );
-    
+
     print(res.text);
 
     if (res.message == null) {
@@ -50,7 +52,6 @@ class _ChatBotPageState extends State<ChatBotPage> {
 
     setState(() {
       addMessage(res.message!);
-      
     });
   }
 
@@ -70,6 +71,7 @@ class _ChatBotPageState extends State<ChatBotPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      /* drawer: DrawerScreen(), */
       appBar: AppBar(
         title: const Text("Chat Bot"),
       ),

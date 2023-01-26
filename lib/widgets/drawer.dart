@@ -97,20 +97,6 @@ class _DrawerScreen extends State<DrawerScreen> {
                     Navigator.pushNamed(context, registerRoute);
                   },
                 ),
-                ListTile(
-                  leading: const Icon(
-                    Icons.chat,
-                    color: Colors.white,
-                    size: 30,
-                  ),
-                  title: const Text('Chat Bot'),
-                  onTap: () {
-                    // To close the Drawer
-                    Navigator.pop(context);
-                    // Navigating to About Page
-                    Navigator.pushNamed(context, chatBotRoute);
-                  },
-                ),
               ]),
               child: Column(
                 children: [
@@ -158,20 +144,6 @@ class _DrawerScreen extends State<DrawerScreen> {
                       Navigator.pushNamed(context, routeRoute);
                     },
                   ),
-                  ListTile(
-                  leading: const Icon(
-                    Icons.chat,
-                    color: Colors.white,
-                    size: 30,
-                  ),
-                  title: const Text('Chat Bot'),
-                  onTap: () {
-                    // To close the Drawer
-                    Navigator.pop(context);
-                    // Navigating to About Page
-                    Navigator.pushNamed(context, chatBotRoute);
-                  },
-                ),
                   ListTile(
                     leading: const Icon(
                       Icons.logout,

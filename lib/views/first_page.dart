@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app/models/autocomplete_prediction.dart';
 import 'package:flutter_app/services/routeServices.dart';
+import 'package:flutter_app/views/chat_bot.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter_app/views/route_info.dart';
 import 'package:flutter_app/views/route_list_result.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:provider/provider.dart';
+import '../router/route_constants.dart';
 import '../widgets/search_map_predictions.dart';
 import 'package:textfield_search/textfield_search.dart';
 import '../data/constants.dart';
@@ -142,6 +144,16 @@ class _FirstPage extends State<FirstPage> {
     _predictionList = PredictionList(predictions: predictions);
     return Scaffold(
         drawer: DrawerScreen(),
+        floatingActionButton: FloatingActionButton(
+          onPressed: () {
+            Navigator.of(context).push(
+              MaterialPageRoute(
+                builder: (context) => const ChatBotPage(),
+              ),
+            );
+          },
+          child: const Icon(Icons.help_outline),
+        ),
         appBar: AppBar(
           title: const Text("Menu"),
         ),
