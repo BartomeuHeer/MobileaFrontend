@@ -103,6 +103,11 @@ class _GoogleSignInButtonState extends State<GoogleSignInButton> {
                       prefs.setString("name", newUser.id!);
                       userServicesProvider.setUserData(res['data']);
                       print("looggggiiiinn");
+                      Navigator.of(context).push(
+                        MaterialPageRoute(
+                          builder: (context) => const FirstPage(),
+                        ),
+                      );
                     }
                   }
                   return;
@@ -170,11 +175,7 @@ class _GoogleSignInButtonState extends State<GoogleSignInButton> {
                   //     ),
                   //   );
                   // }
-                  Navigator.of(context).pushReplacement(
-                    MaterialPageRoute(
-                      builder: (context) => const FirstPage(),
-                    ),
-                  );
+
                 }
               },
               child: Padding(
