@@ -62,11 +62,11 @@ class _LoginPageState extends State<LoginPage> {
     UserServices userServicesProvider = Provider.of<UserServices>(context);
     return Container(
       decoration: const BoxDecoration(
-        image: DecorationImage(
+          /* image: DecorationImage(
             image: AssetImage(
                 'assets/gray-abstract-wireframe-technology-background_53876-101941.webp'),
-            fit: BoxFit.cover),
-      ),
+            fit: BoxFit.cover), */
+          ),
       child: Scaffold(
         backgroundColor: Colors.transparent,
         body: Stack(
