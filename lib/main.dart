@@ -1,3 +1,4 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_app/router/custom_router.dart';
@@ -11,7 +12,19 @@ import 'package:flutter_app/router/custom_router.dart';
 import 'package:flutter_app/router/route_constants.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+      options: const FirebaseOptions(
+          apiKey: "AIzaSyAJQ4aHT4HNrmhw7sJs9bDrPZn8zOfJ0S8",
+          authDomain: "mobilea-1d828.firebaseapp.com",
+          projectId: "mobilea-1d828",
+          storageBucket: "mobilea-1d828.appspot.com",
+          messagingSenderId: "916599739918",
+          appId: "1:916599739918:web:787b329093d02b41cece5f"
+//
+          ));
+
   runApp(
     MultiProvider(
       providers: [

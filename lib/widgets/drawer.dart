@@ -11,6 +11,7 @@ import 'package:flutter_app/models/language.dart';
 import 'package:flutter_app/models/language_constants.dart';
 import 'package:flutter_app/main.dart';
 import 'package:flutter_app/router/route_constants.dart';
+import 'package:flutter_app/utils/authentication.dart';
 import 'package:provider/provider.dart';
 import 'package:localstorage/localstorage.dart';
 import '../services/userServices.dart';
@@ -36,6 +37,8 @@ class _DrawerScreen extends State<DrawerScreen> {
     setState(() {});
     return true;
   }
+
+  bool _isSigningOut = false;
 
   @override
   Widget build(BuildContext context) {
@@ -151,11 +154,18 @@ class _DrawerScreen extends State<DrawerScreen> {
                       size: 30,
                     ),
                     title: const Text('Logout'),
-                    onTap: () {
+                    onTap: () async {
                       // To close the Drawer
                       Navigator.pop(context);
                       // Navigating to About Page
                       storage.deleteItem('token');
+                      setState(() {
+                        _isSigningOut = true;
+                      });
+                      await Authentication.signOut(context: context);
+                      setState(() {
+                        _isSigningOut = false;
+                      });
                     },
                   ),
                 ],
