@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app/models/language_constants.dart';
 import 'package:flutter_app/services/userServices.dart';
+import 'package:flutter_app/utils/authentication.dart';
 import 'package:flutter_app/views/first_page.dart';
 //import 'package:flutter_app/views/route_list_page.dart';
 import 'package:flutter_app/views/register.dart';
+import 'package:flutter_app/widgets/google_sign_in_button.dart';
 import 'package:http/http.dart' as http;
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -209,6 +211,23 @@ class _LoginPageState extends State<LoginPage> {
                           )
                         ],
                       ),
+                    ),
+                    FutureBuilder(
+                      future:
+                          Authentication.initializeFirebase(context: context),
+                      builder: (context, snapshot) {
+                        if (snapshot.hasError) {
+                          return Text('Error initializing Firebase');
+                        } else if (snapshot.connectionState ==
+                            ConnectionState.done) {
+                          return GoogleSignInButton();
+                        }
+                        return const CircularProgressIndicator(
+                          valueColor: AlwaysStoppedAnimation<Color>(
+                            Color(0xFF4cbfa6),
+                          ),
+                        );
+                      },
                     ),
                   ],
                 ),

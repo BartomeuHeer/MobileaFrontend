@@ -50,8 +50,9 @@ class UserServices extends ChangeNotifier {
         Uri.parse("http://localhost:5432/api/users/login"),
         headers: {'content-type': 'application/json'},
         body: msg);
-    print(msg);
+
     print(res.body);
+    print(res.statusCode);
     if (res.statusCode == 200) {
       var token = JWTtoken.fromJson(await jsonDecode(res.body));
       storage.setItem('token', token.toString());
@@ -71,7 +72,7 @@ class UserServices extends ChangeNotifier {
           'status': "400",
         };
       }
-      print(token);
+
       return result;
     } else {
       return result = {
