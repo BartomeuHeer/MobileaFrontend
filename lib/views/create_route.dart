@@ -592,7 +592,10 @@ class LastRoutesCard extends StatelessWidget {
         subtitle: Text("Fecha: ${df.format(date)}"),
         trailing: const Icon(Icons.arrow_forward),
         onTap: (() {
-          //showEntrieInfo();
+          /*Navigator.of(context).push(
+                                          MaterialPageRoute(
+                                            builder: (context) =>
+                                                const LoginPage(),*/
         }),
       )),
     );
