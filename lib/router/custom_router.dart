@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_app/views/chat_bot.dart';
 import 'package:flutter_app/views/create_route.dart';
 import 'package:flutter_app/views/first_page.dart';
 import 'package:flutter_app/views/login_page.dart';
@@ -23,6 +24,8 @@ class CustomRouter {
         return MaterialPageRoute(builder: (_) => const ChatPage());
       case routeRoute:
         return MaterialPageRoute(builder: (_) => const CreateRoute());
+      case chatBotRoute:
+        return MaterialPageRoute(builder: (_) => const ChatBotPage());
       default:
         return MaterialPageRoute(builder: (_) => const NotFoundPage());
     }
