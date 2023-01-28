@@ -49,6 +49,8 @@ dependencies:
   google_sign_in: ^5.0.0 
   geolocator: ^9.0.2
   textfield_search: ^0.10.0
+  agora_rtc_engine: ^5.2.0
+  permission_handler: ^9.2.0
 
 
 dev_dependencies:
