@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_app/models/points.dart';
 import 'package:flutter_app/models/route.dart';
 import 'package:flutter_app/models/userclient.dart';
 
@@ -15,8 +16,8 @@ class RouteServices extends ChangeNotifier {
       creator:
           UserClient(name: "", id: "", password: "", email: "", admin: false),
       participants: [],
-      startPoint: "",
-      endPoint: "",
+      startPoint: PointLoc(placeName: "", coordinates: [], type: ""),
+      endPoint: PointLoc(placeName: "", coordinates: [], type: ""),
       stopPoint: [],
       dateOfBeggining: DateTime(2017));
 
