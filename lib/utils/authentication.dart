@@ -11,15 +11,7 @@ class Authentication {
       {required BuildContext context}) async {
     FirebaseApp firebaseApp = await Firebase.initializeApp();
 
-    UserGog? user = FirebaseAuth.instance.currentUser;
-
-    if (user != null) {
-      Navigator.of(context).pushReplacement(
-        MaterialPageRoute(
-          builder: (context) => const FirstPage(),
-        ),
-      );
-    }
+    User? user = FirebaseAuth.instance.currentUser;
 
     return firebaseApp;
   }
@@ -34,10 +26,9 @@ class Authentication {
     );
   }
 
-  static Future<UserGog?> signInWithGoogle(
-      {required BuildContext context}) async {
+  static Future<User?> signInWithGoogle({required BuildContext context}) async {
     FirebaseAuth auth = FirebaseAuth.instance;
-    UserGog? userGog;
+    User? user;
 
     if (kIsWeb) {
       GoogleAuthProvider authProvider = GoogleAuthProvider();
@@ -46,7 +37,7 @@ class Authentication {
         final UserCredential userCredential =
             await auth.signInWithPopup(authProvider);
 
-        userGog = userCredential.user;
+        user = userCredential.user;
       } catch (e) {
         print(e);
       }
@@ -69,7 +60,7 @@ class Authentication {
           final UserCredential userCredential =
               await auth.signInWithCredential(credential);
 
-          userGog = userCredential.user;
+          user = userCredential.user;
         } on FirebaseAuthException catch (e) {
           if (e.code == 'account-exists-with-different-credential') {
             ScaffoldMessenger.of(context).showSnackBar(
@@ -96,7 +87,7 @@ class Authentication {
       }
     }
 
-    return userGog;
+    return user;
   }
 
   static Future<void> signOut({required BuildContext context}) async {

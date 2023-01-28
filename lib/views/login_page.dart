@@ -9,7 +9,7 @@ import 'package:flutter_app/widgets/google_sign_in_button.dart';
 import 'package:http/http.dart' as http;
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:flutter_app/models/user.dart';
+import 'package:flutter_app/models/userclient.dart';
 //import 'package:flutter_app/views/first_page.dart';
 
 class LoginPage extends StatefulWidget {

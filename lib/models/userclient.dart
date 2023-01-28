@@ -9,16 +9,17 @@ import 'package:flutter_app/models/rating.dart';
 import 'package:flutter_app/models/route.dart';
 import 'package:flutter_app/models/vehicle.dart';
 
-List<User> userFromJson(String str) =>
-    List<User>.from(json.decode(str).map((x) => User.fromJson(x)));
+List<UserClient> userFromJson(String str) =>
+    List<UserClient>.from(json.decode(str).map((x) => UserClient.fromJson(x)));
 
-User userJson(String str) => (json.decode(str).map((x) => User.fromJson(x)));
+UserClient userJson(String str) =>
+    (json.decode(str).map((x) => UserClient.fromJson(x)));
 
-String userToJson(List<User> data) =>
+String userToJson(List<UserClient> data) =>
     json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
 
-class User {
-  User(
+class UserClient {
+  UserClient(
       {
       //this.id = "", // non nullable but optional with a default value
       this.name,
@@ -43,7 +44,7 @@ class User {
   Vehicle? vehicle;
   bool admin;
 
-  factory User.fromJson(Map<String, dynamic> responseData) {
+  factory UserClient.fromJson(Map<String, dynamic> responseData) {
     List<Route2>? tmp1 = responseData["routes"] != null
         ? List<Route2>.from(
             responseData["ratings"].map((x) => Route2.fromJson(x)))
@@ -57,7 +58,7 @@ class User {
             responseData["bookings"].map((x) => Booking.fromJson(x)))
         : null;
 
-    return User(
+    return UserClient(
         id: responseData["_id"],
         name: responseData['name'],
         password: responseData['password'],

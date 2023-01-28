@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app/models/msg.dart';
-import 'package:flutter_app/models/user.dart';
+import 'package:flutter_app/models/userclient.dart';
 import 'package:flutter_app/services/routeServices.dart';
 /* import 'package:flutter_app/views/my_profile.dart';
 import 'package:flutter_app/views/result_routes.dart';

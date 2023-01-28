@@ -4,7 +4,7 @@ import 'package:flutter_app/services/userServices.dart';
 import 'package:flutter_app/views/login_page.dart';
 import 'package:date_time_picker/date_time_picker.dart';
 
-import '../models/user.dart';
+import '../models/userclient.dart';
 
 class RegisterPage extends StatefulWidget {
   const RegisterPage({Key? key}) : super(key: key);
@@ -237,7 +237,7 @@ class _RegisterPageState extends State<RegisterPage> {
                                               });
                                               print(usernameController.text +
                                                   passwordController.text);
-                                              var newUser = User(
+                                              var newUser = UserClient(
                                                   id: "",
                                                   name: usernameController.text,
                                                   password:
