@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:flutter_app/models/points.dart';
 import 'package:flutter_app/models/userclient.dart';
 
 List<Route2> routeFromJson(String str) =>
@@ -19,24 +20,28 @@ class Route2 {
       this.startPoint,
       this.endPoint,
       this.stopPoint,
-      this.dateOfBeggining});
+      this.dateOfBeggining,
+      this.maxParticipants,
+      this.price});
 
   String? id;
   String? name;
   UserClient? creator;
   List<UserClient>? participants;
-  String? startPoint;
-  String? endPoint;
-  List<String>? stopPoint;
+  PointLoc? startPoint;
+  PointLoc? endPoint;
+  List<PointLoc>? stopPoint;
   DateTime? dateOfBeggining;
+  int? maxParticipants;
+  double? price;
 
   factory Route2.fromJson(Map<String, dynamic> responseData) {
     List<UserClient>? tmp1 = responseData["participants"] != null
         ? List<UserClient>.from(
             responseData["participants"].map((x) => UserClient.fromJson(x)))
         : null;
-    List<String>? tmp2 = responseData["stopPoint"] != null
-        ? List<String>.from(responseData["stopPoint"])
+    List<PointLoc>? tmp2 = responseData["stopPoint"] != null
+        ? List<PointLoc>.from(responseData["stopPoint"])
         : null;
 
     return Route2(
@@ -44,10 +49,11 @@ class Route2 {
         name: responseData["name"],
         creator: UserClient.fromJson(responseData["creator"]),
         participants: tmp1,
-        startPoint: responseData["startPoint"],
-        endPoint: responseData["endPoint"],
+        startPoint: PointLoc.fromJson(responseData["startPoint"]),
+        endPoint: PointLoc.fromJson(responseData["endPoint"]),
         stopPoint: tmp2,
-        dateOfBeggining: DateTime.parse(responseData["dateOfBeggining"]));
+        dateOfBeggining: DateTime.parse(responseData["dateOfBeggining"]),
+        maxParticipants: responseData["maxParticipants"]);
   }
 
   Map<String, dynamic> toJson() => {
@@ -58,6 +64,8 @@ class Route2 {
         "startPoint": startPoint,
         "endPoint": endPoint,
         "stopPoint": stopPoint,
-        "dateOfBeggining": dateOfBeggining
+        "dateOfBeggining": dateOfBeggining,
+        "maxParticipants": maxParticipants,
+        "price": price
       };
 }

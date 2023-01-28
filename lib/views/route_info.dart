@@ -58,14 +58,14 @@ class _RoutePageState extends State<RouteInfo> {
                 SizedBox(
                   width: 150,
                   height: 100,
-                  child: Text(routeProvider.routeData.startPoint!,
-                      style: const TextStyle(fontSize: 16)),
+                  /* //child: Text(routeProvider.routeData.startPoint!,
+                      style: const TextStyle(fontSize: 16)), */
                 ),
                 SizedBox(
                   width: 150,
                   height: 100,
-                  child: Text(routeProvider.routeData.endPoint!,
-                      style: const TextStyle(fontSize: 16)),
+                  /* child: Text(routeProvider.routeData.endPoint!,
+                      style: const TextStyle(fontSize: 16)), */
                 ),
               ],
             ),

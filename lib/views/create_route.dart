@@ -112,10 +112,10 @@ class _CreateRoute extends State<CreateRoute> {
                                         width:
                                             MediaQuery.of(context).size.width *
                                                 0.85,
-                                        child: ListView(children: [
+                                        /* child: ListView(children: [
                                           if (userServices.userData.routes !=
                                               null)
-                                            ListView.builder(
+                                            /* ListView.builder(
                                               physics:
                                                   const NeverScrollableScrollPhysics(),
                                               itemBuilder: (context, index) =>
@@ -132,8 +132,8 @@ class _CreateRoute extends State<CreateRoute> {
                                               shrinkWrap: true,
                                               itemCount: userServices
                                                   .userData.routes!.length,
-                                            ),
-                                        ]),
+                                            ), */
+                                        ]), */
                                       ),
                                     ]),
                               )),
@@ -522,7 +522,8 @@ class _CreateRoute extends State<CreateRoute> {
                                                       List<String> dateFor =
                                                           dateController.text
                                                               .split('-');
-                                                      Route2 nroute = Route2(
+
+                                                      /*  Route2 nroute = Route2(
                                                           participants:
                                                               listUser,
                                                           startPoint:
@@ -541,8 +542,8 @@ class _CreateRoute extends State<CreateRoute> {
                                                           successfulMessage =
                                                           routeServices
                                                               .createRoute(
-                                                                  nroute, part);
-                                                      successfulMessage
+                                                                  nroute, part); */
+                                                      /* successfulMessage
                                                           .then((response) {
                                                         if (response[
                                                                 'status'] ==
@@ -555,7 +556,7 @@ class _CreateRoute extends State<CreateRoute> {
                                                           logger.d(
                                                               "Error creating Route: ${response['status']}");
                                                         }
-                                                      });
+                                                      }); */
                                                     },
                                                     style: ElevatedButton
                                                         .styleFrom(
@@ -676,7 +677,6 @@ class StopsCard extends StatelessWidget {
     required this.price,
   }) : super(key: key);
 
-
   @override
   Widget build(BuildContext context) {
     return SizedBox(
@@ -685,7 +685,7 @@ class StopsCard extends StatelessWidget {
           child: ListTile(
         leading: const Icon(Icons.location_on),
         title: Text(city),
-        subtitle: Text(price +" €"),
+        subtitle: Text(price + " €"),
       )),
     );
   }
