@@ -26,10 +26,13 @@ class _CreateRoute extends State<CreateRoute> {
   final startPointController = TextEditingController();
   final endPointController = TextEditingController();
   final stopsController = TextEditingController();
+  final priceStopPointController = TextEditingController();
+  final destinationPriceController = TextEditingController();
   late UserClient userData;
   final LocalStorage storage = LocalStorage('key');
   UserServices serrvice = UserServices();
   List<String> stopsList = [];
+  List<String> pricesList = [];
 
   void dispose() {
     // Clean up the controller when the widget is disposed.
@@ -38,6 +41,8 @@ class _CreateRoute extends State<CreateRoute> {
     startPointController.dispose();
     endPointController.dispose();
     stopsController.dispose();
+    priceStopPointController.dispose();
+    destinationPriceController.dispose();
     super.dispose();
   }
 
@@ -280,6 +285,43 @@ class _CreateRoute extends State<CreateRoute> {
                                                   width: MediaQuery.of(context)
                                                           .size
                                                           .width *
+                                                      0.1,
+                                                  child: Card(
+                                                    child: Column(
+                                                      mainAxisSize:
+                                                          MainAxisSize.min,
+                                                      children: <Widget>[
+                                                        const ListTile(
+                                                          title: Text('Price'),
+                                                        ),
+                                                        Container(
+                                                          margin:
+                                                              const EdgeInsets
+                                                                      .only(
+                                                                  bottom: 5,
+                                                                  left: 15,
+                                                                  right: 15),
+                                                          child: TextField(
+                                                            controller:
+                                                                destinationPriceController,
+                                                            decoration: InputDecoration(
+                                                                hintText: "€",
+                                                                hintStyle: TextStyle(
+                                                                    color: Colors
+                                                                        .grey,
+                                                                    fontSize: ScreenUtil()
+                                                                        .setSp(
+                                                                            4))),
+                                                          ),
+                                                        ),
+                                                      ],
+                                                    ),
+                                                  ),
+                                                ),
+                                                SizedBox(
+                                                  width: MediaQuery.of(context)
+                                                          .size
+                                                          .width *
                                                       0.05,
                                                 ),
                                                 SizedBox(
@@ -381,6 +423,10 @@ class _CreateRoute extends State<CreateRoute> {
                                                                     stopsList.add(
                                                                         stopsController
                                                                             .text));
+                                                                setState(() =>
+                                                                    pricesList.add(
+                                                                        priceStopPointController
+                                                                            .text));
                                                               }),
                                                             ),
                                                             Container(
@@ -391,17 +437,32 @@ class _CreateRoute extends State<CreateRoute> {
                                                                       left: 15,
                                                                       right:
                                                                           15),
-                                                              child: TextField(
-                                                                controller:
-                                                                    stopsController,
-                                                                decoration: InputDecoration(
-                                                                    hintText:
-                                                                        "City",
-                                                                    hintStyle: TextStyle(
-                                                                        color: Colors
-                                                                            .grey,
-                                                                        fontSize:
-                                                                            ScreenUtil().setSp(4))),
+                                                              child: Column(
+                                                                children: <
+                                                                    Widget>[
+                                                                  TextField(
+                                                                    controller:
+                                                                        stopsController,
+                                                                    decoration: InputDecoration(
+                                                                        hintText:
+                                                                            "City",
+                                                                        hintStyle: TextStyle(
+                                                                            color:
+                                                                                Colors.grey,
+                                                                            fontSize: ScreenUtil().setSp(4))),
+                                                                  ),
+                                                                  TextField(
+                                                                    controller:
+                                                                        priceStopPointController,
+                                                                    decoration: InputDecoration(
+                                                                        hintText:
+                                                                            "€",
+                                                                        hintStyle: TextStyle(
+                                                                            color:
+                                                                                Colors.grey,
+                                                                            fontSize: ScreenUtil().setSp(4))),
+                                                                  ),
+                                                                ],
                                                               ),
                                                             ),
                                                           ],
@@ -428,6 +489,8 @@ class _CreateRoute extends State<CreateRoute> {
                                                                   index) =>
                                                               StopsCard(
                                                             city: stopsList[
+                                                                index],
+                                                            price: pricesList[
                                                                 index],
                                                           ),
                                                           shrinkWrap: true,
@@ -605,11 +668,14 @@ class LastRoutesCard extends StatelessWidget {
 
 class StopsCard extends StatelessWidget {
   final String city;
+  final String price;
 
   const StopsCard({
     Key? key,
     required this.city,
+    required this.price,
   }) : super(key: key);
+
 
   @override
   Widget build(BuildContext context) {
@@ -619,6 +685,7 @@ class StopsCard extends StatelessWidget {
           child: ListTile(
         leading: const Icon(Icons.location_on),
         title: Text(city),
+        subtitle: Text(price +" €"),
       )),
     );
   }
