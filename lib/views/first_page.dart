@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app/models/autocomplete_prediction.dart';
 import 'package:flutter_app/services/routeServices.dart';
+import 'package:flutter_app/views/chat_bot.dart';
+import 'package:flutter_app/views/videocall_lobby.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter_app/views/route_info.dart';
 import 'package:flutter_app/views/route_list_result.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:provider/provider.dart';
+import '../router/route_constants.dart';
 import '../widgets/search_map_predictions.dart';
 import 'package:textfield_search/textfield_search.dart';
 import '../data/constants.dart';
@@ -22,6 +25,7 @@ import '../models/autocomplete_prediction.dart';
 import '../widgets/drawer.dart';
 import 'package:intl/intl.dart';
 import 'package:latlong2/latlong.dart';
+import 'package:localstorage/localstorage.dart';
 
 class FirstPage extends StatefulWidget {
   const FirstPage({super.key});
@@ -29,8 +33,17 @@ class FirstPage extends StatefulWidget {
   @override
   State<FirstPage> createState() => _FirstPage();
 }
-
+final LocalStorage storage = LocalStorage('key');
 class _FirstPage extends State<FirstPage> {
+  bool userLogged() {
+    var isLogged = storage.getItem('token');
+    if (isLogged == null) {
+      setState(() {});
+      return false;
+    }
+    setState(() {});
+    return true;
+  }
   final startPointController = TextEditingController();
   final stopPointController = TextEditingController();
   final dateInputController = TextEditingController();
@@ -142,8 +155,33 @@ class _FirstPage extends State<FirstPage> {
     _predictionList = PredictionList(predictions: predictions);
     return Scaffold(
         drawer: DrawerScreen(),
+        floatingActionButton: FloatingActionButton(
+          onPressed: () {
+            Navigator.of(context).push(
+              MaterialPageRoute(
+                builder: (context) => const ChatBotPage(),
+              ),
+            );
+          },
+          child: const Icon(Icons.help_outline),
+        ),
         appBar: AppBar(
           title: const Text("Menu"),
+          actions: <Widget>[
+          Visibility(
+            visible: userLogged(),
+            child: IconButton(
+              icon: const Icon(Icons.video_call),
+              tooltip: 'Initiate a video call',
+              onPressed: () {
+                Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => VideocallPage()));
+              },
+            ),
+          ),
+          ],
         ),
         body: Column(
           children: [

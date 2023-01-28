@@ -5,19 +5,19 @@ import 'package:flutter/material.dart';
 import 'package:flutter_app/models/route.dart';
 import 'package:logger/logger.dart';
 
-import '../models/user.dart';
+import '../models/userclient.dart';
 import 'package:http/http.dart' as http;
 import 'package:localstorage/localstorage.dart';
 
 class UserServices extends ChangeNotifier {
-  User _userData =
-      User(name: "", id: "", password: "", email: "", admin: false);
+  UserClient _userData =
+      UserClient(name: "", id: "", password: "", email: "", admin: false);
 
-  User get userData => _userData;
+  UserClient get userData => _userData;
 
   final LocalStorage storage = LocalStorage('key');
   var logger = Logger();
-  void setUserData(User userData) {
+  void setUserData(UserClient userData) {
     _userData = userData;
     storage.setItem('userId', userData.id);
   }
@@ -32,7 +32,7 @@ class UserServices extends ChangeNotifier {
     }
   }
 
-  Future<List<User>?> getUsers() async {
+  Future<List<UserClient>?> getUsers() async {
     var client = http.Client();
     var uri = Uri.parse('http://localhost:5432/api/users');
     var response = await client.get(uri);
@@ -50,8 +50,9 @@ class UserServices extends ChangeNotifier {
         Uri.parse("http://localhost:5432/api/users/login"),
         headers: {'content-type': 'application/json'},
         body: msg);
-    print(msg);
+
     print(res.body);
+    print(res.statusCode);
     if (res.statusCode == 200) {
       var token = JWTtoken.fromJson(await jsonDecode(res.body));
       storage.setItem('token', token.toString());
@@ -63,7 +64,7 @@ class UserServices extends ChangeNotifier {
       if (setUsrData.statusCode == 200) {
         Map<String, dynamic> responseData = jsonDecode(setUsrData.body);
         logger.i(responseData);
-        _userData = User.fromJson(responseData);
+        _userData = UserClient.fromJson(responseData);
         _userData.password = password;
         result = {'status': "200", 'data': _userData};
       } else {
@@ -71,7 +72,7 @@ class UserServices extends ChangeNotifier {
           'status': "400",
         };
       }
-      print(token);
+
       return result;
     } else {
       return result = {
@@ -90,8 +91,8 @@ class UserServices extends ChangeNotifier {
     if (setUsrData.statusCode == 200) {
       Map<String, dynamic> responseData = jsonDecode(setUsrData.body);
       logger.i(responseData);
-      _userData = User.fromJson(responseData);
-      result = {'status': "200", 'data': User.fromJson(responseData)};
+      _userData = UserClient.fromJson(responseData);
+      result = {'status': "200", 'data': UserClient.fromJson(responseData)};
     } else {
       result = {'status': '401'};
     }
@@ -105,7 +106,7 @@ class UserServices extends ChangeNotifier {
     await client.delete(uri);
   }
 
-  Future<String?> createUser(User user) async {
+  Future<String?> createUser(UserClient user) async {
     var client = http.Client();
     var uri = Uri.parse('http://localhost:5432/api/users/register');
     var userJS = json.encode(user.toJson());
@@ -118,7 +119,7 @@ class UserServices extends ChangeNotifier {
     }
   }
 
-  Future<void> loginUser(User user) async {
+  Future<void> loginUser(UserClient user) async {
     var client = http.Client();
     var uri = Uri.parse('http://localhost:5432/api/users/login');
     var userJS = json.encode(user.toJson());
@@ -126,7 +127,7 @@ class UserServices extends ChangeNotifier {
         headers: {'content-type': 'application/json'}, body: userJS);
   }
 
-  Future<bool> updateUser(User user) async {
+  Future<bool> updateUser(UserClient user) async {
     var client = http.Client();
     var name = user.name;
     var uri = Uri.parse('http://localhost:5432/api/users//update/$name');

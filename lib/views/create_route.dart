@@ -1,6 +1,6 @@
 import 'dart:math';
 import 'package:flutter_app/models/route.dart';
-import 'package:flutter_app/models/user.dart';
+import 'package:flutter_app/models/userclient.dart';
 import 'package:flutter_app/services/routeServices.dart';
 import 'package:flutter_app/widgets/drawer.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -26,7 +26,7 @@ class _CreateRoute extends State<CreateRoute> {
   final startPointController = TextEditingController();
   final endPointController = TextEditingController();
   final stopsController = TextEditingController();
-  late User userData;
+  late UserClient userData;
   final LocalStorage storage = LocalStorage('key');
   UserServices serrvice = UserServices();
   List<String> stopsList = [];
@@ -451,9 +451,10 @@ class _CreateRoute extends State<CreateRoute> {
                                                 Center(
                                                   child: ElevatedButton(
                                                     onPressed: () {
-                                                      User part =
+                                                      UserClient part =
                                                           userServices.userData;
-                                                      List<User> listUser = [];
+                                                      List<UserClient>
+                                                          listUser = [];
                                                       listUser.add(part);
                                                       List<String> dateFor =
                                                           dateController.text

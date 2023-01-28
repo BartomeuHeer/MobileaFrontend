@@ -2,7 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_app/models/route.dart';
-import 'package:flutter_app/models/user.dart';
+import 'package:flutter_app/models/userclient.dart';
 
 import 'package:http/http.dart' as http;
 import 'package:http/http.dart';
@@ -12,7 +12,8 @@ class RouteServices extends ChangeNotifier {
   Route2 _routeData = Route2(
       name: "",
       id: "",
-      creator: User(name: "", id: "", password: "", email: "", admin: false),
+      creator:
+          UserClient(name: "", id: "", password: "", email: "", admin: false),
       participants: [],
       startPoint: "",
       endPoint: "",
@@ -86,7 +87,7 @@ class RouteServices extends ChangeNotifier {
     }
   }
 
-  Future<String> newRouteInUser(Route2 nRoute, User part) async {
+  Future<String> newRouteInUser(Route2 nRoute, UserClient part) async {
     final Map<String, dynamic> registerData = {'id': part.id, 'route': nRoute};
     try {
       Response response = await post(
@@ -105,7 +106,8 @@ class RouteServices extends ChangeNotifier {
     }
   }
 
-  Future<Map<String, dynamic>> createRoute(Route2 nRoute, User part) async {
+  Future<Map<String, dynamic>> createRoute(
+      Route2 nRoute, UserClient part) async {
     final Map<String, dynamic> registerData = {
       'creator': part.email,
       'startPoint': nRoute.startPoint,

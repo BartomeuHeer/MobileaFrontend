@@ -39,12 +39,18 @@ dependencies:
   flutter_mapbox_autocomplete: ^2.0.0
   mapbox_search: any
   flutter_map: ^3.1.0
+  dialog_flowtter: ^0.3.1
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.2
   socket_io_client: ^2.0.0 
+  firebase_core: ^2.4.1
+  firebase_auth: ^4.2.5
+  google_sign_in: ^5.0.0 
   geolocator: ^9.0.2
   textfield_search: ^0.10.0
+  agora_rtc_engine: ^5.2.0
+  permission_handler: ^9.2.0
 
 
 dev_dependencies:
@@ -81,6 +87,7 @@ flutter:
   generate: true
   assets:
     - assets/
+
   # To add assets to your application, add an assets section, like this:
   # assets:
   #   - images/a_dot_burr.jpeg

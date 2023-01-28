@@ -1,7 +1,6 @@
-
 import 'dart:convert';
 
-import 'package:flutter_app/models/user.dart';
+import 'package:flutter_app/models/userclient.dart';
 
 List<Route2> routeFromJson(String str) =>
     List<Route2>.from(json.decode(str).map((x) => Route2.fromJson(x)));
@@ -20,41 +19,36 @@ class Route2 {
       this.startPoint,
       this.endPoint,
       this.stopPoint,
-      this.dateOfBeggining
-      });
+      this.dateOfBeggining});
 
   String? id;
   String? name;
-  User? creator;
-  List<User>? participants;
+  UserClient? creator;
+  List<UserClient>? participants;
   String? startPoint;
   String? endPoint;
   List<String>? stopPoint;
   DateTime? dateOfBeggining;
 
   factory Route2.fromJson(Map<String, dynamic> responseData) {
+    List<UserClient>? tmp1 = responseData["participants"] != null
+        ? List<UserClient>.from(
+            responseData["participants"].map((x) => UserClient.fromJson(x)))
+        : null;
+    List<String>? tmp2 = responseData["stopPoint"] != null
+        ? List<String>.from(responseData["stopPoint"])
+        : null;
 
-  List<User>? tmp1 = responseData["participants"] != null
-          ? List<User>.from(
-              responseData["participants"].map((x) => User.fromJson(x)))
-          : null;
-  List<String>? tmp2 = responseData["stopPoint"] != null
-          ? List<String>.from(
-              responseData["stopPoint"])
-          : null;
-
-return Route2(
-  id: responseData["_id"],
-  name: responseData["name"],
-  creator: User.fromJson(responseData["creator"]), 
-  participants: tmp1,
-  startPoint: responseData["startPoint"],
-  endPoint: responseData["endPoint"],
-  stopPoint: tmp2,
-  dateOfBeggining: DateTime.parse(responseData["dateOfBeggining"])
-  );
-}
-        
+    return Route2(
+        id: responseData["_id"],
+        name: responseData["name"],
+        creator: UserClient.fromJson(responseData["creator"]),
+        participants: tmp1,
+        startPoint: responseData["startPoint"],
+        endPoint: responseData["endPoint"],
+        stopPoint: tmp2,
+        dateOfBeggining: DateTime.parse(responseData["dateOfBeggining"]));
+  }
 
   Map<String, dynamic> toJson() => {
         "_id": id,

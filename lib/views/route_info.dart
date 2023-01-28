@@ -3,7 +3,7 @@ import 'package:flutter_app/services/routeServices.dart';
 import 'package:flutter_app/services/userServices.dart';
 import 'package:provider/provider.dart';
 
-import '../models/user.dart';
+import '../models/userclient.dart';
 import '../widgets/drawer.dart';
 
 class RouteInfo extends StatefulWidget {
