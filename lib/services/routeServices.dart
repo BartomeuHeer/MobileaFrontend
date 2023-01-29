@@ -19,7 +19,9 @@ class RouteServices extends ChangeNotifier {
       startPoint: PointLoc(placeName: "", coordinates: [], type: ""),
       endPoint: PointLoc(placeName: "", coordinates: [], type: ""),
       stopPoint: [],
-      dateOfBeggining: DateTime(2017));
+      dateOfBeggining: DateTime(2017),
+      price: 0,
+      duration: 0);
 
   Route2 get routeData => _routeData;
   final LocalStorage storage = LocalStorage('key');
@@ -116,7 +118,8 @@ class RouteServices extends ChangeNotifier {
       'stopPoint': nRoute.stopPoint,
       'dateOfBeggining': nRoute.dateOfBeggining.toString(),
       'price':nRoute.price,
-      'maxParticipants':nRoute.maxParticipants
+      'maxParticipants':nRoute.maxParticipants,
+      'duration':nRoute.duration
     };
     print(registerData);
     print("${nRoute.startPoint!.coordinates},${nRoute.startPoint!.placeName}");

@@ -28,7 +28,7 @@ class RouteCreatePage extends StatefulWidget {
 
 class _RouteCreatePageState extends State<RouteCreatePage> {
   int currentStep = 0;
-  int seats = 1;
+  int seats=1;
   List<PointLoc> stopPoints = [];
   final StartPointController = TextEditingController();
   final EndPointController = TextEditingController();
@@ -38,6 +38,8 @@ class _RouteCreatePageState extends State<RouteCreatePage> {
   final stopPointController = TextEditingController();
   final priceEndPointController = TextEditingController();
   final priceStopPointController = TextEditingController();
+  final durationController = TextEditingController();
+  final durationStopController = TextEditingController();
   PointLoc selectedStart = PointLoc();
   PointLoc selectedEnd = PointLoc();
   PointLoc selectedStop = PointLoc();
@@ -61,6 +63,8 @@ class _RouteCreatePageState extends State<RouteCreatePage> {
     seatsInputController.dispose();
     priceEndPointController.dispose();
     priceStopPointController.dispose();
+    durationStopController.dispose();
+    durationController.dispose();
     super.dispose();
   }
 
@@ -85,9 +89,10 @@ class _RouteCreatePageState extends State<RouteCreatePage> {
     print(prediction.coordinates);
   }
 
-  void setStopPoint(PointLoc point, double price) {
+  void setStopPoint(PointLoc point, double price, int duration){
     print(point.placeName);
     point.price = price;
+    point.duration=duration;
     stopPoints.add(point);
     print(stopPoints);
   }
@@ -100,6 +105,7 @@ class _RouteCreatePageState extends State<RouteCreatePage> {
     int seats,
     String dateOfbeg,
     List<PointLoc> listStopPoints,
+    int duration
   ) {
     route.endPoint = selectedEnd;
     route.startPoint = selectedStart;
@@ -107,6 +113,7 @@ class _RouteCreatePageState extends State<RouteCreatePage> {
     route.maxParticipants = seats;
     route.stopPoint = listStopPoints;
     route.dateOfBeggining = DateTime.parse(dateOfbeg);
+    route.duration=duration;
     print(route.dateOfBeggining);
   }
 
@@ -151,7 +158,8 @@ class _RouteCreatePageState extends State<RouteCreatePage> {
                       double.parse(priceEndPointController.text),
                       seats,
                       dateInputController.text,
-                      stopPoints);
+                      stopPoints,
+                      int.parse(durationController.text));
                   final Map<String, dynamic> res =
                       await routeServices.createRoute(ruta, id);
                   if (res['status'] == "401") {
@@ -300,6 +308,18 @@ class _RouteCreatePageState extends State<RouteCreatePage> {
             SizedBox(
               height: 30,
             ),
+            SizedBox(
+                      width: MediaQuery.of(context).size.width * 0.3,
+                    height: MediaQuery.of(context).size.height * 0.1,
+                      child: TextFormField(
+                        controller: durationController,
+                        style: TextStyle(color: Colors.black),
+                        decoration: InputDecoration(
+                          hintText: "Enter a duration in minutes",
+                          icon: Icon(Icons.timer),
+                        ),
+                      ),
+                    ),
           ],
         ),
       ),
@@ -342,15 +362,27 @@ class _RouteCreatePageState extends State<RouteCreatePage> {
                       ),
                     ),
                     Flexible(
+                      flex: 2,
+                      child: TextFormField(
+                        controller: durationStopController,
+                        style: TextStyle(color: Colors.black),
+                        decoration: InputDecoration(
+                          hintText: "Enter a duration in minutes",
+                          icon: Icon(Icons.timer),
+                        ),
+                      ),
+                    ),
+                    Flexible(
                       flex: 1,
                       child: ElevatedButton(
                         child: Text("Add stop point"),
                         onPressed: () async {
                           setState(() {
                             setStopPoint(selectedStop,
-                                double.parse(priceStopPointController.text));
+                                double.parse(priceStopPointController.text),int.parse(durationStopController.text));
                             stopPointController.clear();
                             priceStopPointController.clear();
+                            durationStopController.clear();
                             selectedStop=PointLoc();
                           });
                         },
@@ -373,7 +405,8 @@ class _RouteCreatePageState extends State<RouteCreatePage> {
                         index: index,
                         address: stopPoints[index].placeName!,
                         price: stopPoints[index].price.toString(),
-                        stopPoints: stopPoints),
+                        stopPoints: stopPoints, 
+                        duration: stopPoints[index].duration.toString(),),
                     shrinkWrap: true,
                     itemCount: stopPoints.length,
                   ),
@@ -392,6 +425,7 @@ class StopsCard extends StatefulWidget {
   final String price;
   final int index;
   final List<PointLoc> stopPoints;
+  final String duration;
   final Function() deleteItem;
   const StopsCard(
       {Key? key,
@@ -399,7 +433,8 @@ class StopsCard extends StatefulWidget {
       required this.price,
       required this.index,
       required this.stopPoints, 
-      required this.deleteItem})
+      required this.deleteItem, 
+      required this.duration})
       : super(key: key);
 
   @override
@@ -415,7 +450,12 @@ class _StopsCardState extends State<StopsCard> {
           child: ListTile(
         leading: const Icon(Icons.location_on),
         title: Text(widget.address),
-        subtitle: Text(widget.price + " €"),
+        subtitle: Row(
+          children: [
+            Text(widget.price + " €"),
+            Text(widget.duration+" minutes")
+          ],
+        ),
         trailing: IconButton(
           icon: Icon(Icons.delete),
           onPressed: () {

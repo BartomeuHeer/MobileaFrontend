@@ -11,21 +11,24 @@ class PointLoc {
   String? type;
   List<double>? coordinates;
   double? price;
+  int? duration;
 
-  PointLoc({this.placeName, this.type, this.coordinates, this.price});
+  PointLoc({this.placeName, this.type, this.coordinates, this.price, this.duration});
 
   factory PointLoc.fromJson(Map<String, dynamic> responseData) {
     return PointLoc(
         placeName: responseData["placeName"],
         type: responseData["type"],
         coordinates: responseData["coordinates"],
-        price: responseData["price"]);
+        price: responseData["price"],
+        duration: responseData["duration"]);
   }
 
   Map<String, dynamic> toJson() => {
         "placeName": placeName,
         "type": type,
         "coordinates": coordinates,
-        "price": price
+        "price": price,
+        "duration":duration
       };
 }
