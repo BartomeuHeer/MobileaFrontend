@@ -54,6 +54,7 @@ class Route2 {
         endPoint: PointLoc.fromJson(responseData["endPoint"]),
         stopPoint: tmp2,
         dateOfBeggining: DateTime.parse(responseData["dateOfBeggining"]),
+        price:double.parse(responseData["price"]),
         maxParticipants: responseData["maxParticipants"]);
   }
 
