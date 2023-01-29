@@ -8,12 +8,12 @@ class AutocompletePrediction {
   AutocompletePrediction({this.placeName, this.coordinates, this.type});
 
   factory AutocompletePrediction.fromJson(Map<String, dynamic> json) {
-    //print(json);
+    print(json);
     return AutocompletePrediction(
         /* id: json['id'] as String,
         placeType: json['place_type'] as String?, */
-        type: json['geometry.type'],
+        type: "Point",
         placeName: json['place_name'] as String?,
-        coordinates: json['geometry.coordinates'] as List<dynamic>?);
+        coordinates: json['center'] as List<dynamic>?);
   }
 }

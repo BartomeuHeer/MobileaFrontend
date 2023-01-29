@@ -22,6 +22,7 @@ class Route2 {
       this.stopPoint,
       this.dateOfBeggining,
       this.maxParticipants,
+      this.duration,
       this.price});
 
   String? id;
@@ -34,6 +35,7 @@ class Route2 {
   DateTime? dateOfBeggining;
   int? maxParticipants;
   double? price;
+  int? duration;
 
   factory Route2.fromJson(Map<String, dynamic> responseData) {
     List<UserClient>? tmp1 = responseData["participants"] != null
@@ -41,7 +43,8 @@ class Route2 {
             responseData["participants"].map((x) => UserClient.fromJson(x)))
         : null;
     List<PointLoc>? tmp2 = responseData["stopPoint"] != null
-        ? List<PointLoc>.from(responseData["stopPoint"])
+        ? List<PointLoc>.from(
+          responseData["stopPoint"].map((x) => PointLoc.fromJson(x)))
         : null;
 
     return Route2(
@@ -53,7 +56,10 @@ class Route2 {
         endPoint: PointLoc.fromJson(responseData["endPoint"]),
         stopPoint: tmp2,
         dateOfBeggining: DateTime.parse(responseData["dateOfBeggining"]),
-        maxParticipants: responseData["maxParticipants"]);
+        maxParticipants: responseData["maxParticipants"],
+        price:double.parse(responseData["price"]),
+        duration: int.parse(responseData["duration"]));
+        
   }
 
   Map<String, dynamic> toJson() => {
@@ -66,6 +72,7 @@ class Route2 {
         "stopPoint": stopPoint,
         "dateOfBeggining": dateOfBeggining,
         "maxParticipants": maxParticipants,
-        "price": price
+        "price": price,
+        "duration": duration
       };
 }
