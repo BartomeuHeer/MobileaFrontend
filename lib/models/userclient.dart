@@ -57,7 +57,7 @@ class UserClient {
         ? List<Booking>.from(
             responseData["bookings"].map((x) => Booking.fromJson(x)))
         : null;
-
+    print(responseData);
     return UserClient(
         id: responseData["_id"],
         name: responseData['name'],

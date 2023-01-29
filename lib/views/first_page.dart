@@ -33,7 +33,9 @@ class FirstPage extends StatefulWidget {
   @override
   State<FirstPage> createState() => _FirstPage();
 }
+
 final LocalStorage storage = LocalStorage('key');
+
 class _FirstPage extends State<FirstPage> {
   bool userLogged() {
     var isLogged = storage.getItem('token');
@@ -44,6 +46,7 @@ class _FirstPage extends State<FirstPage> {
     setState(() {});
     return true;
   }
+
   final startPointController = TextEditingController();
   final stopPointController = TextEditingController();
   final dateInputController = TextEditingController();
@@ -56,7 +59,7 @@ class _FirstPage extends State<FirstPage> {
   bool fullPrediction = false;
 
   final String apiKey = mapBoxKey;
-  late Position _currentPosition;
+  Position? _currentPosition;
   @override
   void dispose() {
     startPointController.dispose();
@@ -168,19 +171,17 @@ class _FirstPage extends State<FirstPage> {
         appBar: AppBar(
           title: const Text("Menu"),
           actions: <Widget>[
-          Visibility(
-            visible: userLogged(),
-            child: IconButton(
-              icon: const Icon(Icons.video_call),
-              tooltip: 'Initiate a video call',
-              onPressed: () {
-                Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => VideocallPage()));
-              },
+            Visibility(
+              visible: userLogged(),
+              child: IconButton(
+                icon: const Icon(Icons.video_call),
+                tooltip: 'Initiate a video call',
+                onPressed: () {
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => VideocallPage()));
+                },
+              ),
             ),
-          ),
           ],
         ),
         body: Column(
@@ -233,7 +234,7 @@ class _FirstPage extends State<FirstPage> {
                           apiKey: apiKey,
                           controller: stopPointController,
                           getSelectedValue: (value) {
-                            print("lloc es: ${value.textName}");
+                            print("lloc es: ${value.coordinates}");
                             setMarker(value, "start");
                           },
                           currentPos: _currentPosition,
@@ -270,7 +271,9 @@ class _FirstPage extends State<FirstPage> {
                                 print(routeProvider.listRoute);
 
                                 Navigator.of(context).push(MaterialPageRoute(
-                                    builder: (context) => const RouteResult()));
+                                    builder: (context) => RouteResult(
+                                        stopPoint: stopPointController.text,
+                                        date: dateInputController.text)));
                               },
                               child: const Text("Search")))
                     ],
@@ -289,8 +292,8 @@ class _FirstPage extends State<FirstPage> {
                         minZoom: 5,
                         maxZoom: 15,
                         zoom: 13,
-                        center: LatLng(_currentPosition.latitude,
-                            _currentPosition.longitude)),
+                        center: LatLng(_currentPosition!.latitude,
+                            _currentPosition!.longitude)),
                     children: [
                       TileLayer(
                         urlTemplate:

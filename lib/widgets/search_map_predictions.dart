@@ -191,6 +191,7 @@ class _TextFieldSearcherState extends State<TextFieldSearcher> {
         //print(response.body);
         tempList =
             PredictionList.parsePredictionList(response.body).predictions!;
+        print(tempList[0].coordinates);
       }
       resetState(tempList);
     } else {

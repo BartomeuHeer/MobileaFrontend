@@ -41,7 +41,8 @@ class Route2 {
             responseData["participants"].map((x) => UserClient.fromJson(x)))
         : null;
     List<PointLoc>? tmp2 = responseData["stopPoint"] != null
-        ? List<PointLoc>.from(responseData["stopPoint"])
+        ? List<PointLoc>.from(
+            responseData["stopPoint"].map((x) => PointLoc.fromJson(x)))
         : null;
 
     return Route2(
@@ -53,6 +54,7 @@ class Route2 {
         endPoint: PointLoc.fromJson(responseData["endPoint"]),
         stopPoint: tmp2,
         dateOfBeggining: DateTime.parse(responseData["dateOfBeggining"]),
+        price: responseData["price"],
         maxParticipants: responseData["maxParticipants"]);
   }
 
