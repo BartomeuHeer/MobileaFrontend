@@ -4,6 +4,8 @@ import 'package:flutter_app/services/userServices.dart';
 import 'package:flutter_app/views/login_page.dart';
 import 'package:date_time_picker/date_time_picker.dart';
 
+import 'package:flutter_app/models/language_constants.dart';
+
 import '../models/userclient.dart';
 
 class RegisterPage extends StatefulWidget {
@@ -42,11 +44,11 @@ class _RegisterPageState extends State<RegisterPage> {
 
     // set up the AlertDialog
     AlertDialog alert = AlertDialog(
-      title: const Text(
-        "Incorrect credentials",
+      title: Text(
+        translation(context).inc_credentials, // Falta trad
         style: TextStyle(color: Colors.red),
       ),
-      content: const Text("User already exists."),
+      content: Text(translation(context).user_already_exists), //Falta trad
       actions: [
         okButton,
       ],
@@ -99,7 +101,7 @@ class _RegisterPageState extends State<RegisterPage> {
                                   TextFormField(
                                     validator: (value) {
                                       if (value == null || value.isEmpty) {
-                                        return "Enter a valid username";
+                                        return translation(context).invalid_username; //Falta trad
                                       }
                                       return null;
                                     },
@@ -142,7 +144,7 @@ class _RegisterPageState extends State<RegisterPage> {
                                   TextFormField(
                                     validator: (value) {
                                       if (value == null || value.isEmpty) {
-                                        return "Enter a password";
+                                        return translation(context).introduce_password; // Falta comprobar
                                       }
                                       return null;
                                     },
@@ -195,7 +197,7 @@ class _RegisterPageState extends State<RegisterPage> {
                                     firstDate: DateTime(1900),
                                     lastDate: DateTime(2100),
                                     icon: const Icon(Icons.event),
-                                    dateLabelText: 'Select date',
+                                    dateLabelText: translation(context).enter_date,  // Ja traduit
                                     onChanged: (val) => print(val),
                                     /* validator: (value) {
                                   return validateAge(value!);
@@ -291,14 +293,14 @@ class _RegisterPageState extends State<RegisterPage> {
       return null;
     }
 
-    return "Email is not valid";
+    return translation(context).invalid_email; // Falta comprob
   }
 
   String? validatePassword(String pass1, String pass2) {
     if ((pass1 == pass2) || (pass1 == "") || (pass2 == "")) {
       return null;
     } else {
-      return "The passwords don't coincide.";
+      return translation(context).passwords_different;  // Falta comprob
     }
   }
 
@@ -310,6 +312,6 @@ class _RegisterPageState extends State<RegisterPage> {
     if (userAge.compareTo(underAge) < 0) {
       return "";
     }
-    return "User must be of legal age";
+    return translation(context).legal_age; // Falta comprob
   }
 }

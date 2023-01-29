@@ -5,6 +5,8 @@ import 'package:agora_rtc_engine/rtc_local_view.dart' as RtcLocalView;
 import 'package:agora_rtc_engine/rtc_remote_view.dart' as RtcRemoteView;
 import 'package:permission_handler/permission_handler.dart';
 import './call.dart';
+import 'package:flutter_app/models/language_constants.dart';
+
 
 class VideocallPage extends StatefulWidget {
   @override
@@ -31,7 +33,7 @@ class VideocallState extends State<VideocallPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Video Call'),
+        title: Text(translation(context).videocall), //traduit
       ),
       body: Center(
         child: Container(
@@ -50,7 +52,7 @@ class VideocallState extends State<VideocallPage> {
                       border: UnderlineInputBorder(
                         borderSide: BorderSide(width: 1),
                       ),
-                      hintText: 'Channel',
+                      hintText: translation(context).channel, // traduit
                     ),
                   ))
                 ],
@@ -90,7 +92,7 @@ class VideocallState extends State<VideocallPage> {
                     Expanded(
                         child: ElevatedButton(
                         onPressed: JoinCall, 
-                        child: Text('Join the call'),
+                        child: Text(translation(context).join_call), //traduit
                         style: ButtonStyle(
                           backgroundColor: MaterialStateProperty.all(Colors.blueAccent),
                           foregroundColor: MaterialStateProperty.all(Colors.white) 

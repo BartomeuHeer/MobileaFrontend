@@ -2,9 +2,9 @@
     "language": "Español",
     "inc_credentials": "Credenciales incorrectos",
     "user_not_found": "Usuario no encontrado o credenciales incorrectos",
-    "settings":"Preferencias",
+    "settings":"Idiomas",
     "changeLang":"Cambia el idioma de la aplicación",
-    "welcomeBack":"Bienvenido\nDe\nNuevo",
+    "welcomeBack":"Bienvenido a Mobilea\nUna nueva forma de desplazarse",
     "email":"Correo electrónico",
     "password": "Contraseña",
     "repeatpassword": "Repite la contraseña",
@@ -12,6 +12,68 @@
     "signup": "Registrarse",
     "forgotpass": "Me olvidé de la contraseña",
     "username": "Nombre de usuario",
-    "chat": "Chat"
-    
+    "chat": "Chat",
+    "loading_message": "Espere por favor mientras lo preparamos todo",
+    "my_routes": "Mis Rutas",
+    "routes": "Rutas",
+    "create_new_route": "Crear una nueva Ruta",
+    "insert_new_route_info": "Introduce información de la nueva ruta",
+    "from": "Origen",
+    "city": "Ciudad",
+    "destination": "Destinación",
+    "price": "Precio",
+    "enter_date": "Introduce la fecha",
+    "empty_value": "Debes introducir una fecha",
+    "date_not_selected": "No has seleccionado ninguna fecha",
+    "stops": "Paradas",
+    "create_route": "Crear Ruta",
+    "location_disabled": "Los servicios de localización están desactivados, por favor actívelos",
+    "location_permissions": "Los permisos de localización nos han sido denegados",
+    "location_permissions_permanent": "Los permisos de localización nos han sido denegados de forma permanente, no podemos hacer la petición nuevamente",
+    "menu": "Menú",
+    "iniciate_videocall": "Iniciar una videollamada",
+    "start_point": "Punto de inicio",
+    "select_date": "Selecciona una fecha",
+    "search": "Incia la búsqueda",
+    "videocall": "Videollamada",
+    "hang_call": "Finaliza la videollamada",
+    "waiting_user": "Esperando a otro usuario",
+    "chat_bot": "Chat Bot",
+    "type_here": "Escribe aquí",
+    "message_received": "Has recibido un mensaje",
+    "route_chat": "Chat de  Ruta",
+    "incorrect_credents": "Credenciales incorrectas",
+    "user_already_exists": "El usuario ya existe",
+    "invalid_username": "Introduce un nombre de usuario válido",
+    "introduce_password": "Introduce una contraseña",
+    "invalid_email": "El correo electrónico no es válido",
+    "passwords_different": "Las contraseñas no coinciden.",
+    "legal_age": "El usuario debe ser mayor de edad",
+    "join_route": "Unirse a la ruta",
+    "cancel": "Cancelar",
+    "routes_result": "Listado de Rutas",
+    "no_routes": "No hay rutas para esta fecha.",
+    "details": "Detalles",
+    "languages": "Idiomas",
+    "channel": "Canal",
+    "join_call": "Únete a la llamada",
+    "log_in": "Iniciar Sesión",
+    "register": "Registrarse",
+    "log_out": "Cerrar Sesión",
+    "sigin_google": "Iniciar Sesión con Google"
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 }

@@ -8,6 +8,8 @@ import 'package:agora_rtc_engine/rtc_remote_view.dart' as RtcRemoteView;
 import 'package:flutter/material.dart';
 import 'package:flutter_app/widgets/agoraSettings.dart';
 import '../services/callService.dart';
+import 'package:flutter_app/models/language_constants.dart';
+
 
 
 class CallPage extends StatefulWidget {
@@ -30,7 +32,7 @@ class _CallPageState extends State<CallPage> {
   Future<void> getToken() async {
     print(widget.channel);
     String response = await VideocallService.getAgoraToken(widget.channel!);
-    if (response != 'Failed to fetch the token') {
+    if (response != 'Failed to fetch the token')  {
       setState(() {
         token = response;
         print(token);
@@ -124,7 +126,7 @@ class _CallPageState extends State<CallPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Video Call'),
+        title: Text(translation(context).videocall), // Feta trad
       ),
       body: Stack(
         children: [
@@ -165,7 +167,7 @@ class _CallPageState extends State<CallPage> {
                 height: 50,
                 width: 50,
                 child: FloatingActionButton(
-                  tooltip: "Hang up the call",
+                  tooltip: translation(context).hang_call, //Feta trad
                     heroTag: null,
                     backgroundColor: Colors.red,
                     onPressed: () {
@@ -206,7 +208,7 @@ class _CallPageState extends State<CallPage> {
       );
     } else {
       return Text(
-        'Waiting for another user',
+        translation(context).waiting_user, //Feta trad
         textAlign: TextAlign.center,
       );
     }

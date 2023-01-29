@@ -11,9 +11,9 @@
     "@user_not_found":{
         "description": "Summons when the credentials typed are incorrect or the user was not found"
     },
-    "settings": "Settings",
+    "settings": "Languages",
     "@settings":{
-        "description": "Settings"
+        "description": "Languages"
     },
     "chat": "Chat",
     "@chat":{
@@ -23,7 +23,7 @@
     "@changeLang":{
         "description": "Change the language of the app"
     },
-    "welcomeBack": "Welcome\nBack",
+    "welcomeBack": "Welcome to Mobilea\nAn innovative transport method",
     "@welcomeBack":{
         "description": "Welcome"
     },
@@ -54,6 +54,199 @@
     "username": "Username",
     "@username":{
         "description": "username"
+    },
+    "loading_message": "Please wait its loading...",
+    "@loading_message" :{
+        "description": "Please wait its loading..."
+    },
+    "my_routes": "My Routes",
+    "@my_routes" :{
+        "description": "My Routes"
+    },
+    "routes": "Routes",
+    "@routes" :{
+        "description": "Routes: "
+    },
+
+    "create_new_route": "Create New Route",
+    "@create_new_route" :{
+        "description": "Create New Route"
+    },
+    "insert_new_route_info": "Insert route information",
+    "@insert_new_route_info" :{
+        "description": "Insert route information"
+    },
+    "from": "From",
+    "@from" :{
+        "description": "From"
+    },
+    "city": "City",
+    "@city" :{
+        "description": "City"
+    },
+    "destination": "Destination",
+    "@destination" :{
+        "description": "Destination"
+    },
+    "price": "Price",
+    "@price" :{
+        "description": "Price"
+    },
+    "enter_date": "Enter Date",
+    "@enter_date" :{
+        "description": "Enter Date"
+    },
+    "empty_value": "Value can't be empty",
+    "@empty_value" :{
+        "description": "Value can't be empty"
+    },
+    "date_not_selected": "Date is not selected",
+    "@date_not_selected" :{
+        "description": "Date is not selected"
+    },
+    "stops": "Stops",
+    "@stops" :{
+        "description": "Stops"
+    },
+    "create_route": "Create Route",
+    "@create_route" :{
+        "description": "Create Route"
+    },
+    "location_disabled": "Location services are disabled. Please enable the services",
+    "@location_disabled" :{
+        "description": "Location services are disabled. Please enable the services"
+    },
+    "location_permissions": "Location permission are denied",
+    "@location_permissions" :{
+        "description": "Location permission are denied"
+    },
+    "location_permissions_permanent": "Location permissions are permanently denied, we cannot request permissions.",
+    "@location_permissions_permanent" :{
+        "description": "Location permissions are permanently denied, we cannot request permissions."
+    },
+    "menu": "Menu",
+    "@menu" :{
+        "description": "Menu"
+    },
+    "iniciate_videocall": "Inititate a video call",
+    "@initiate_videocall" :{
+        "description": "Initiate a video call"
+    },
+    "start_point": "Start point",
+    "@start_point" :{
+        "description": "Start point"
+    },
+    "select_date": "Select date",
+    "@select_date" :{
+        "description": "Select date"
+    },
+    "search": "Search",
+    "@search" :{
+        "description": "Search"
+    },
+    "videocall": "Video call",
+    "@videocall" :{
+        "description": "Video call"
+    },
+    "hang_call": "Hang up the call",
+    "@hang_call" :{
+        "description": "Hang up the call"
+    },
+     "waiting_user": "Waiting for another user",
+    "@waiting_user" :{
+        "description": "Waiting for another user"
+    },
+     "chat_bot": "Chat Bot",
+    "@chat_bot" :{
+        "description": "Chat Bot"
+    },
+     "type_here": "Type Here",
+    "@type_here" :{
+        "description": "Type Here"
+    },
+     "message_received": "You have received a message",
+    "@message_received" :{
+        "description": "You have received a message"
+    },
+     "route_chat": "Route Chat",
+    "@route_chat" :{
+        "description": "Route Chat"
+    },
+     "incorrect_credents": "Incorrect credentials",
+    "@incorrect_credents" :{
+        "description": "Incorrect credentials"
+    },
+     "user_already_exists": "User already exists",
+    "@user_already_exists" :{
+        "description": "User already exists"
+    },
+     "invalid_username": "Enter a valid username",
+    "@invalid_username" :{
+        "description": "Enter a valid username"
+    },
+     "introduce_password": "Enter a password",
+    "@introduce_password" :{
+        "description": "Enter a password"
+    },
+     "invalid_email": "Email is not valid",
+    "@invalid_email" :{
+        "description": "Email is not valid"
+    },
+     "passwords_different": "The passwords don't coincide.",
+    "@passwords_different" :{
+        "description": "The passwords don't coincide."
+    },
+     "legal_age": "User must be of legal age",
+    "@legal_age" :{
+        "description": "User must be of legal age"
+    },
+     "join_route": "Join route",
+    "@join_route" :{
+        "description": "Join route"
+    },
+     "cancel": "Cancel",
+    "@cancel" :{
+        "description": "Cancel"
+    },
+     "routes_result": "Routes result",
+    "@routes_result" :{
+        "description": "Routes result"
+    },
+     "no_routes": "There are no routes for this data.",
+    "@no_routes" :{
+        "description": "There are no routes for this data."
+    },
+     "details": "Details",
+    "@details" :{
+        "description": "Details"
+    },
+     "languages": "Languages",
+    "@languages" :{
+        "description": "Languages"
+    },
+     "channel": "Channel",
+    "@channel" :{
+        "description": "Channel"
+    },
+     "join_call": "Join the call",
+    "@join_call" :{
+        "description": "Join the call"
+    },
+     "log_in": "Log in",
+    "@log_in" :{
+        "description": "Log in"
+    },
+     "register": "Register",
+    "@register" :{
+        "description": "Register"
+    },
+     "log_out": "Log out",
+    "@log_out" :{
+        "description": "Log out"
+    },
+     "sigin_google": "Sign in with Google",
+    "@sigin_google" :{
+        "description": "ign in with Google"
     }
-    
+
 }

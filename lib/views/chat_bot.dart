@@ -3,6 +3,8 @@ import 'package:dialog_flowtter/dialog_flowtter.dart';
 import 'package:flutter_app/widgets/chat_messages.dart';
 
 import '../widgets/drawer.dart';
+import 'package:flutter_app/models/language_constants.dart';
+
 
 class ChatBotPage extends StatefulWidget {
   const ChatBotPage({super.key});
@@ -73,7 +75,7 @@ class _ChatBotPageState extends State<ChatBotPage> {
     return Scaffold(
       /* drawer: DrawerScreen(), */
       appBar: AppBar(
-        title: const Text("Chat Bot"),
+        title: Text(translation(context).chat_bot), //Falta trans
       ),
       body: Column(
         children: [
@@ -88,7 +90,7 @@ class _ChatBotPageState extends State<ChatBotPage> {
                   child: TextFormField(
                     controller: _msgController,
                     decoration: InputDecoration(
-                      hintText: "Type here",
+                      hintText: translation(context).type_here, // Falta trans
                       border: const OutlineInputBorder(
                         borderRadius: BorderRadius.all(Radius.circular(20.0)),
                         borderSide: BorderSide(

@@ -11,6 +11,8 @@ import 'package:date_time_picker/date_time_picker.dart';
 import '../models/route.dart';
 import '../widgets/drawer.dart';
 import 'package:intl/intl.dart';
+import 'package:flutter_app/models/language_constants.dart';
+
 
 class RouteResult extends StatefulWidget {
   const RouteResult({super.key});
@@ -25,14 +27,14 @@ class _RouteResultState extends State<RouteResult> {
     RouteServices routeProvider = Provider.of<RouteServices>(context);
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Routes result"),
+        title: Text(translation(context).routes_result), //Traduit
       ),
       body: Container(
           color: Colors.white,
           child: Visibility(
               visible: routeProvider.listRoute.isNotEmpty,
-              replacement: const Center(
-                child: Text("There are no routes for this data."),
+              replacement: Center(
+                child: Text(translation(context).no_routes), //traduit
               ),
               child: ListView.builder(
                   itemCount: routeProvider.listRoute.length,
@@ -58,7 +60,7 @@ class _RouteResultState extends State<RouteResult> {
                                               builder: (context) =>
                                                   const RouteInfo()));
                                     },
-                                    tooltip: 'Details',
+                                    tooltip: translation(context).details, //traduit
                                   ),
                                 ),
                               ],
