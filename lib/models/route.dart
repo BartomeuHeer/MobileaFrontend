@@ -41,7 +41,8 @@ class Route2 {
             responseData["participants"].map((x) => UserClient.fromJson(x)))
         : null;
     List<PointLoc>? tmp2 = responseData["stopPoint"] != null
-        ? List<PointLoc>.from(responseData["stopPoint"])
+        ? List<PointLoc>.from(
+          responseData["stopPoint"].map((x) => PointLoc.fromJson(x)))
         : null;
 
     return Route2(

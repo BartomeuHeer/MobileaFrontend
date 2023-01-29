@@ -108,14 +108,21 @@ class RouteServices extends ChangeNotifier {
   }
 
   Future<Map<String, dynamic>> createRoute(
-      Route2 nRoute, UserClient part) async {
+      Route2 nRoute, String userId) async {
     final Map<String, dynamic> registerData = {
-      'creator': part.email,
+      'creator': userId,
       'startPoint': nRoute.startPoint,
       'endPoint': nRoute.endPoint,
       'stopPoint': nRoute.stopPoint,
-      'dateOfBeggining': nRoute.dateOfBeggining.toString()
+      'dateOfBeggining': nRoute.dateOfBeggining.toString(),
+      'price':nRoute.price,
+      'maxParticipants':nRoute.maxParticipants
     };
+    print(registerData);
+    print("${nRoute.startPoint!.coordinates},${nRoute.startPoint!.placeName}");
+    print("${nRoute.endPoint!.coordinates},${nRoute.endPoint!.placeName}");
+    print(registerData["endPoint"]);
+    print(registerData["stopPoint"]);
     Map<String, dynamic> result;
     try {
       Response response = await post(

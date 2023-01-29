@@ -17,15 +17,15 @@ class PointLoc {
   factory PointLoc.fromJson(Map<String, dynamic> responseData) {
     return PointLoc(
         placeName: responseData["placeName"],
-        type: responseData["location.type"],
-        coordinates: responseData["location.coordinates"],
+        type: responseData["type"],
+        coordinates: responseData["coordinates"],
         price: responseData["price"]);
   }
 
   Map<String, dynamic> toJson() => {
         "placeName": placeName,
-        "location.type": type,
-        "location.coordinates": coordinates,
+        "type": type,
+        "coordinates": coordinates,
         "price": price
       };
 }

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_app/models/autocomplete_prediction.dart';
 import 'package:flutter_app/services/routeServices.dart';
 import 'package:flutter_app/views/chat_bot.dart';
+import 'package:flutter_app/views/route_create_page.dart';
 import 'package:flutter_app/views/videocall_lobby.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter_app/views/route_info.dart';
@@ -70,6 +71,7 @@ class _FirstPage extends State<FirstPage> {
     super.initState();
     _determinePosition();
   }
+  
 
   void setMarker(AutocompletePrediction pos, String type) {
     print(pos.placeName);
@@ -178,6 +180,19 @@ class _FirstPage extends State<FirstPage> {
                         context,
                         MaterialPageRoute(
                             builder: (context) => VideocallPage()));
+              },
+            ),
+          ),
+          Visibility(
+            visible:userLogged(),
+            child: IconButton(
+              icon: const Icon(Icons.add_road),
+              tooltip: 'Create a new route',
+              onPressed: () {
+                Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const RouteCreatePage()));
               },
             ),
           ),
