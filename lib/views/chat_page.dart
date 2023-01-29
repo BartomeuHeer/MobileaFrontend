@@ -9,6 +9,8 @@ import '../models/route.dart';
 import '../widgets/drawer.dart';
 import 'package:intl/intl.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:flutter_app/models/language_constants.dart';
+
 
 import 'package:socket_io_client/socket_io_client.dart' as IO;
 
@@ -28,7 +30,7 @@ class _ChatPageState extends State<ChatPage> {
   void initState() {
     super.initState();
 
-    print("abans connect");
+    print("abans connect"); // Aquests connects he pensat que millor no fer-los
     connect();
     print("DESP connect");
   }
@@ -49,7 +51,7 @@ class _ChatPageState extends State<ChatPage> {
           {"type": "ownMsg", "msg": "Hello", "senderName": "HATIM!"});
 
       socket.on("sendMsgServer", (msg) {
-        print("REBEM un missatge ");
+        print(translation(context).message_received); // Fet trad
         listMsg.add(MsgModel(
             msg: msg["msg"], type: msg["type"], sender: msg["senderNmae"]));
       });
@@ -82,7 +84,7 @@ class _ChatPageState extends State<ChatPage> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Color(0xFF4cbfa6),
-        title: const Text("Route chat"),
+        title: Text(translation(context).route_chat), // Feta trad
       ),
       body: Column(
         children: [
@@ -96,8 +98,8 @@ class _ChatPageState extends State<ChatPage> {
                 Expanded(
                   child: TextFormField(
                     controller: _msgController,
-                    decoration: const InputDecoration(
-                      hintText: "Type here",
+                    decoration: InputDecoration(
+                      hintText: translation(context).type_here,
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.all(Radius.circular(20.0)),
                         borderSide: BorderSide(

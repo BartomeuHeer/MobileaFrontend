@@ -13,24 +13,16 @@ import '../models/points.dart';
 import '../models/route.dart';
 import '../widgets/drawer.dart';
 import 'package:intl/intl.dart';
+import 'package:flutter_app/models/language_constants.dart';
 
 class RouteResult extends StatefulWidget {
-  final String stopPoint;
-  final String date;
-  const RouteResult({super.key, required this.stopPoint, required this.date});
+  const RouteResult({super.key});
 
   @override
   State<RouteResult> createState() => _RouteResultState();
 }
 
 class _RouteResultState extends State<RouteResult> {
-  String formatDate(String dateTo) {
-    DateFormat dateFormat = DateFormat("yMMMMEEEd");
-    String result = dateFormat.format(dateFormat.parse(dateTo));
-    print(result);
-    return result;
-  }
-
   String formatTextbox(List<PointLoc> stopPoints) {
     String text = "";
     stopPoints.forEach((element) {
@@ -44,16 +36,12 @@ class _RouteResultState extends State<RouteResult> {
     RouteServices routeProvider = Provider.of<RouteServices>(context);
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Routes result"),
+        title: Text(translation(context).routes_result), //Traduit
       ),
       body: Row(
         children: [
           Column(
             children: [
-              Flexible(
-                flex: 1,
-                child: Text(widget.date),
-              ),
               Expanded(
                 flex: 3,
                 child: Container(
@@ -62,8 +50,8 @@ class _RouteResultState extends State<RouteResult> {
                     color: Colors.white,
                     child: Visibility(
                         visible: routeProvider.listRoute.isNotEmpty,
-                        replacement: const Center(
-                          child: Text("There are no routes for this data."),
+                        replacement: Center(
+                          child: Text(translation(context).no_routes), //traduit
                         ),
                         child: Container(
                           padding: const EdgeInsets.symmetric(

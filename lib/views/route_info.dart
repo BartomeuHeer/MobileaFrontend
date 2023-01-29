@@ -5,6 +5,8 @@ import 'package:provider/provider.dart';
 
 import '../models/userclient.dart';
 import '../widgets/drawer.dart';
+import 'package:flutter_app/models/language_constants.dart';
+
 
 class RouteInfo extends StatefulWidget {
   const RouteInfo({super.key});
@@ -81,8 +83,8 @@ class _RoutePageState extends State<RouteInfo> {
                       _userprovider.userData, "selectedStopPoint"); */
                   Navigator.pop(context);
                 },
-                child: const Text(
-                  'JOIN IN',
+                child: Text(
+                  translation(context).join_route, //trad feta
                   style: TextStyle(color: Color(0xFF4cbfa6), fontSize: 25),
                 ),
               ),
@@ -90,8 +92,8 @@ class _RoutePageState extends State<RouteInfo> {
                 onPressed: () {
                   Navigator.pop(context);
                 },
-                child: const Text(
-                  'CANCEL',
+                child: Text(
+                  translation(context).cancel, //trad feta
                   style: TextStyle(color: Color(0xFF4cbfa6), fontSize: 25),
                 ),
               ),

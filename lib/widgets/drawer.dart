@@ -51,10 +51,10 @@ class _DrawerScreen extends State<DrawerScreen> {
       color: const Color.fromARGB(222, 57, 215, 250),
       child: ListView(
         children: [
-          const DrawerHeader(
+          DrawerHeader(
             child: Center(
               child: Text(
-                'Menu',
+                translation(context).menu, //traduit
                 style: TextStyle(fontSize: 35),
               ),
             ),
@@ -78,7 +78,7 @@ class _DrawerScreen extends State<DrawerScreen> {
                     color: Colors.white,
                     size: 30,
                   ),
-                  title: const Text('Log In'),
+                  title: Text(translation(context).log_in), //traduir
                   onTap: () {
                     // To close the Drawer
                     Navigator.pop(context);
@@ -92,7 +92,7 @@ class _DrawerScreen extends State<DrawerScreen> {
                     color: Colors.white,
                     size: 30,
                   ),
-                  title: const Text('Register'),
+                  title: Text(translation(context).register), //traduir
                   onTap: () {
                     // To close the Drawer
                     Navigator.pop(context);
@@ -125,7 +125,7 @@ class _DrawerScreen extends State<DrawerScreen> {
                       color: Colors.white,
                       size: 30,
                     ),
-                    title: const Text('Chat'),
+                    title: Text(translation(context).chat), //traduit
                     onTap: () {
                       // To close the Drawer
                       Navigator.pop(context);
@@ -139,7 +139,7 @@ class _DrawerScreen extends State<DrawerScreen> {
                       color: Colors.white,
                       size: 30,
                     ),
-                    title: const Text('Routes'),
+                    title: Text(translation(context).routes), //traduit
                     onTap: () {
                       // To close the Drawer
                       Navigator.pop(context);
@@ -153,7 +153,7 @@ class _DrawerScreen extends State<DrawerScreen> {
                       color: Colors.white,
                       size: 30,
                     ),
-                    title: const Text('Logout'),
+                    title: Text(translation(context).log_out), //traduit
                     onTap: () async {
                       // To close the Drawer
                       Navigator.pop(context);

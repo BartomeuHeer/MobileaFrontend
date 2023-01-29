@@ -98,7 +98,8 @@ class _LoginPageState extends State<LoginPage> {
                           decoration: InputDecoration(
                               fillColor: Colors.grey.shade100,
                               filled: true,
-                              hintText: "Email",
+                              hintText:
+                                  translation(context).email, //tradducio feta,
                               icon: Icon(Icons.mail),
                               border: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(10),
@@ -114,7 +115,8 @@ class _LoginPageState extends State<LoginPage> {
                           decoration: InputDecoration(
                               fillColor: Colors.grey.shade100,
                               filled: true,
-                              hintText: "Password",
+                              hintText: translation(context)
+                                  .password, //traduccio feta
                               icon: Icon(Icons.password),
                               border: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(10),

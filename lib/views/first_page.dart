@@ -28,6 +28,8 @@ import 'package:intl/intl.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:localstorage/localstorage.dart';
 
+import 'package:flutter_app/models/language_constants.dart';
+
 class FirstPage extends StatefulWidget {
   const FirstPage({super.key});
 
@@ -111,9 +113,9 @@ class _FirstPage extends State<FirstPage> {
       // Location services are not enabled don't continue
       // accessing the position and request users of the
       // App to enable the location services.
-      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-          content: Text(
-              'Location services are disabled. Please enable the services')));
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+          content:
+              Text(translation(context).location_disabled))); //Falta comprob
       return;
     }
 
@@ -126,17 +128,18 @@ class _FirstPage extends State<FirstPage> {
         // Android's shouldShowRequestPermissionRationale
         // returned true. According to Android guidelines
         // your App should show an explanatory UI now.
-        ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(content: Text('Location permissions are denied')));
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+            content: Text(
+                translation(context).location_permissions))); //falta comprobar
         return;
       }
     }
 
     if (permission == LocationPermission.deniedForever) {
       // Permissions are denied forever, handle appropriately.
-      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-          content: Text(
-              'Location permissions are permanently denied, we cannot request permissions.')));
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+          content: Text(translation(context)
+              .location_permissions_permanent))); //falta comprob
       return;
     }
 
@@ -170,13 +173,14 @@ class _FirstPage extends State<FirstPage> {
           child: const Icon(Icons.help_outline),
         ),
         appBar: AppBar(
-          title: const Text("Menu"),
+          title: Text(translation(context).menu), //Falta afegir trans
           actions: <Widget>[
             Visibility(
               visible: userLogged(),
               child: IconButton(
                 icon: const Icon(Icons.video_call),
-                tooltip: 'Initiate a video call',
+                tooltip:
+                    translation(context).iniciate_videocall, //falta comprobar
                 onPressed: () {
                   Navigator.push(context,
                       MaterialPageRoute(builder: (context) => VideocallPage()));
@@ -222,11 +226,11 @@ class _FirstPage extends State<FirstPage> {
                       Flexible(
                         flex: 2,
                         child: TextFieldSearcher(
-                          label: "Start point",
+                          label: translation(context)
+                              .start_point, // falta comprobar
                           apiKey: apiKey,
                           controller: startPointController,
                           getSelectedValue: (value) {
-                            print("lloc es: ${value.textName}");
                             setMarker(value, "start");
                           },
                           currentPos: _currentPosition,
@@ -244,11 +248,11 @@ class _FirstPage extends State<FirstPage> {
                       Flexible(
                         flex: 2,
                         child: TextFieldSearcher(
-                          label: "Start point",
+                          label: translation(context)
+                              .start_point, //falta comprobar
                           apiKey: apiKey,
                           controller: stopPointController,
                           getSelectedValue: (value) {
-                            print("lloc es: ${value.coordinates}");
                             setMarker(value, "start");
                           },
                           currentPos: _currentPosition,
@@ -264,10 +268,10 @@ class _FirstPage extends State<FirstPage> {
                             firstDate: DateTime(1980),
                             lastDate: DateTime(2100),
                             icon: const Icon(Icons.event),
-                            dateLabelText: 'Select date',
+                            dateLabelText: translation(context)
+                                .select_date, // Falta comprobar
                             onChanged: (val) => print(val),
                             validator: (value) {
-                              print(value);
                               return null;
                             },
                             onSaved: (newValue) => print(newValue),
@@ -280,16 +284,14 @@ class _FirstPage extends State<FirstPage> {
                                     startPointController.text,
                                     stopPointController.text,
                                     dateInputController.text);
-                                isEmpty = false;
+                                //isEmpty = false;
                                 setState(() {});
                                 print(routeProvider.listRoute);
 
                                 Navigator.of(context).push(MaterialPageRoute(
-                                    builder: (context) => RouteResult(
-                                        stopPoint: stopPointController.text,
-                                        date: dateInputController.text)));
+                                    builder: (context) => RouteResult()));
                               },
-                              child: const Text("Search")))
+                              child: Text(translation(context).search)))
                     ],
                   ),
                 ),

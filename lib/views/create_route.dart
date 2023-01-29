@@ -11,6 +11,10 @@ import 'package:intl/intl.dart';
 import 'package:logger/logger.dart';
 import 'package:localstorage/localstorage.dart';
 
+import 'package:flutter_app/models/language_constants.dart';
+
+
+
 class CreateRoute extends StatefulWidget {
   const CreateRoute({super.key});
 
@@ -73,7 +77,7 @@ class _CreateRoute extends State<CreateRoute> {
       builder:
           (BuildContext context, AsyncSnapshot<Map<String, dynamic>> snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
-          return Center(child: Text('Please wait its loading...'));
+          return Center(child: Text(translation(context).loading_message)); //Falta comprobar
         } else {
           if (snapshot.hasError) {
             return Center(child: Text('Error: ${snapshot.error}'));
@@ -82,7 +86,7 @@ class _CreateRoute extends State<CreateRoute> {
                 backgroundColor: const Color.fromARGB(195, 159, 191, 198),
                 appBar: AppBar(
                   backgroundColor: const Color(0xFF4cbfa6),
-                  title: const Text("Routes"),
+                  title: Text( translation(context).routes),
                 ),
                 body: SingleChildScrollView(
                   child: Center(
@@ -97,13 +101,13 @@ class _CreateRoute extends State<CreateRoute> {
                                 child: Column(
                                     mainAxisSize: MainAxisSize.min,
                                     children: <Widget>[
-                                      const ListTile(
+                                      ListTile(
                                         leading: Icon(
                                           Icons.route_rounded,
                                           size: 50,
                                         ),
-                                        title: Text('MY ROUTES'),
-                                        subtitle: Text('Routes:'),
+                                        title: Text( translation(context).my_routes ),
+                                        subtitle: Text( translation(context).routes )
                                       ),
                                       SizedBox(
                                         height:
@@ -162,9 +166,9 @@ class _CreateRoute extends State<CreateRoute> {
                                               ),
                                             ),
                                             title:
-                                                const Text('CREATE NEW ROUTE'),
-                                            subtitle: const Text(
-                                                'Insert route information'),
+                                                Text( translation(context).create_new_route ),
+                                            subtitle: 
+                                                Text( translation(context).insert_new_route_info),
                                           ),
                                         ]),
                                   ),
@@ -182,9 +186,9 @@ class _CreateRoute extends State<CreateRoute> {
                                               size: 28,
                                             ),
                                           ),
-                                          title: const Text('CREATE NEW ROUTE'),
-                                          subtitle: const Text(
-                                              'Insert route information'),
+                                          title: Text( translation(context).create_new_route ),
+                                          subtitle: Text(
+                                              translation(context).insert_new_route_info ),
                                         ),
                                         Column(
                                           mainAxisAlignment:
@@ -208,8 +212,8 @@ class _CreateRoute extends State<CreateRoute> {
                                                       mainAxisSize:
                                                           MainAxisSize.min,
                                                       children: <Widget>[
-                                                        const ListTile(
-                                                          title: Text('From'),
+                                                        ListTile(
+                                                          title: Text( translation(context).from), //Trad
                                                         ),
                                                         Container(
                                                           margin:
@@ -223,7 +227,7 @@ class _CreateRoute extends State<CreateRoute> {
                                                                 startPointController,
                                                             decoration: InputDecoration(
                                                                 hintText:
-                                                                    "City",
+                                                                    translation(context).city, //Trad
                                                                 hintStyle: TextStyle(
                                                                     color: Colors
                                                                         .grey,
@@ -252,9 +256,9 @@ class _CreateRoute extends State<CreateRoute> {
                                                       mainAxisSize:
                                                           MainAxisSize.min,
                                                       children: <Widget>[
-                                                        const ListTile(
+                                                        ListTile(
                                                           title: Text(
-                                                              'Destination'),
+                                                              translation(context).destination), //Trad feta
                                                         ),
                                                         Container(
                                                           margin:
@@ -268,7 +272,7 @@ class _CreateRoute extends State<CreateRoute> {
                                                                 endPointController,
                                                             decoration: InputDecoration(
                                                                 hintText:
-                                                                    "City",
+                                                                    translation(context).city, 
                                                                 hintStyle: TextStyle(
                                                                     color: Colors
                                                                         .grey,
@@ -291,8 +295,8 @@ class _CreateRoute extends State<CreateRoute> {
                                                       mainAxisSize:
                                                           MainAxisSize.min,
                                                       children: <Widget>[
-                                                        const ListTile(
-                                                          title: Text('Price'),
+                                                        ListTile(
+                                                          title: Text(translation(context).price), //Trad
                                                         ),
                                                         Container(
                                                           margin:
@@ -345,9 +349,9 @@ class _CreateRoute extends State<CreateRoute> {
                                                               icon: const Icon(Icons
                                                                   .calendar_today), //icon of text field
                                                               labelText:
-                                                                  "Enter Date",
+                                                                  translation(context).enter_date, //Falta comprobar
                                                               errorText: _validate
-                                                                  ? 'Value Can\'t Be Empty'
+                                                                  ? translation(context).empty_value //Falta comprobar
                                                                   : null,
                                                             ),
                                                             readOnly:
@@ -383,7 +387,7 @@ class _CreateRoute extends State<CreateRoute> {
                                                                 });
                                                               } else {
                                                                 logger.e(
-                                                                    "Date is not selected");
+                                                                    translation(context).date_not_selected); //Falta trabnsl
                                                               }
                                                             },
                                                           )),
@@ -415,7 +419,7 @@ class _CreateRoute extends State<CreateRoute> {
                                                           children: <Widget>[
                                                             ListTile(
                                                               title:
-                                                                  Text('Stops'),
+                                                                  Text(translation(context).stops), //Trad
                                                               trailing: Icon(
                                                                   Icons.add),
                                                               onTap: (() {
@@ -445,7 +449,7 @@ class _CreateRoute extends State<CreateRoute> {
                                                                         stopsController,
                                                                     decoration: InputDecoration(
                                                                         hintText:
-                                                                            "City",
+                                                                            translation(context).city, //Trad
                                                                         hintStyle: TextStyle(
                                                                             color:
                                                                                 Colors.grey,
@@ -596,8 +600,8 @@ class _CreateRoute extends State<CreateRoute> {
                                                                     232,
                                                                     139,
                                                                     77)),
-                                                    child: const Text(
-                                                        'CREATE ROUTE'),
+                                                    child: Text(
+                                                        translation(context).create_new_route), //Trad
                                                   ),
                                                 ),
                                               ],
@@ -653,8 +657,10 @@ class LastRoutesCard extends StatelessWidget {
               Random().nextInt(255),
               Random().nextInt(255)),
         ),
-        title: Text("$inicio ➜ $fin"),
-        subtitle: Text("Fecha: ${df.format(date)}"),
+
+        //falta aquests texts mirar com fer
+        title: Text("$inicio ➜ $fin"), 
+        subtitle: Text("Fecha: ${df.format(date)}"), 
         trailing: const Icon(Icons.arrow_forward),
         onTap: (() {
           /*Navigator.of(context).push(

@@ -52,7 +52,7 @@ class RouteServices extends ChangeNotifier {
       String start, String stop, String initDate) async {
     //Map<String,dynamic> result;
     var msg = jsonEncode({"start": start, "stop": stop, "dateInit": initDate});
-    print(msg);
+
     //print(msg);
     var client = http.Client();
     var uri = Uri.parse('http://localhost:5432/api/routes/search');
@@ -60,10 +60,9 @@ class RouteServices extends ChangeNotifier {
         headers: {'content-type': 'application/json'}, body: msg);
     List<Route2> rec = [];
     if (response.statusCode == 200) {
-      print(response.body);
       //var decodedList = (json.decode(response.body) as List<dynamic>);
       _listRoute = routeFromJson(response.body);
-      print(_listRoute);
+
       return {'status': "200", 'data': _listRoute};
     }
     return {'status': "400"};
@@ -110,17 +109,16 @@ class RouteServices extends ChangeNotifier {
     }
   }
 
-  Future<Map<String, dynamic>> createRoute(
-      Route2 nRoute, String userId) async {
+  Future<Map<String, dynamic>> createRoute(Route2 nRoute, String userId) async {
     final Map<String, dynamic> registerData = {
       'creator': userId,
       'startPoint': nRoute.startPoint,
       'endPoint': nRoute.endPoint,
       'stopPoint': nRoute.stopPoint,
       'dateOfBeggining': nRoute.dateOfBeggining.toString(),
-      'price':nRoute.price,
-      'maxParticipants':nRoute.maxParticipants,
-      'duration':nRoute.duration
+      'price': nRoute.price,
+      'maxParticipants': nRoute.maxParticipants,
+      'duration': nRoute.duration
     };
     print(registerData);
     print("${nRoute.startPoint!.coordinates},${nRoute.startPoint!.placeName}");
