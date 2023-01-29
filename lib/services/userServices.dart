@@ -20,6 +20,7 @@ class UserServices extends ChangeNotifier {
   void setUserData(UserClient userData) {
     _userData = userData;
     storage.setItem('userId', userData.id);
+    storage.setItem('userEmail', userData.email);
   }
 
   void setRouteToUser(Route2 route2) {
