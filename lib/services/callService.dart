@@ -4,14 +4,16 @@ import 'package:http/http.dart' as http;
 import 'package:localstorage/localstorage.dart';
 import 'dart:io' show Platform;
 
-class VideocallService{
-  static Future <String> getAgoraToken (String channelName) async {
-  var baseUrl = apiURL + "/api/call/";
-    var res = await http.get(Uri.parse(baseUrl + channelName),
-      headers: {'content-type': 'application/json', 'token': LocalStorage('key').getItem('token')});
+class VideocallService {
+  static Future<String> getAgoraToken(String channelName) async {
+    var baseUrl = apiURL + "/api/call/";
+    var res = await http.get(Uri.parse(baseUrl + channelName), headers: {
+      'content-type': 'application/json',
+      'token': LocalStorage('key').getItem('token')
+    });
     Object data = jsonDecode(res.body);
     return AgoraToken.fromJson(await jsonDecode(res.body)).tokenValue;
-    }
+  }
 }
 
 class AgoraToken {
@@ -26,8 +28,8 @@ class AgoraToken {
       tokenValue: json['rtcToken'] as String,
     );
   }
- 
- @override
+
+  @override
   String toString() {
     return tokenValue;
   }

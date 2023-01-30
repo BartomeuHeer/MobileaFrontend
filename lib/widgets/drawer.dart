@@ -121,6 +121,20 @@ class _DrawerScreen extends State<DrawerScreen> {
                   ),
                   ListTile(
                     leading: const Icon(
+                      Icons.account_circle,
+                      color: Colors.white,
+                      size: 30,
+                    ),
+                    title: const Text('Profile'),
+                    onTap: () {
+                      // To close the Drawer
+                      Navigator.pop(context);
+                      // Navigating to About Page
+                      Navigator.pushNamed(context, profileRoute);
+                    },
+                  ),
+                  ListTile(
+                    leading: const Icon(
                       Icons.chat,
                       color: Colors.white,
                       size: 30,
@@ -159,6 +173,9 @@ class _DrawerScreen extends State<DrawerScreen> {
                       Navigator.pop(context);
                       // Navigating to About Page
                       storage.deleteItem('token');
+                      storage.deleteItem('isLogged');
+                      storage.deleteItem('userEmail');
+                      storage.deleteItem('userId');
                       setState(() {
                         _isSigningOut = true;
                       });

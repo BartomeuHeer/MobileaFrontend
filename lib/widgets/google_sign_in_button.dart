@@ -101,7 +101,7 @@ class _GoogleSignInButtonState extends State<GoogleSignInButton> {
                       SharedPreferences prefs =
                           await SharedPreferences.getInstance();
                       prefs.setString("name", newUser.id!);
-                      //userServicesProvider.setUserData(res['data']);
+                      //userServicesProvider.setUserData(newUser.id!,);
                       print("looggggiiiinn");
                       Navigator.of(context).push(
                         MaterialPageRoute(

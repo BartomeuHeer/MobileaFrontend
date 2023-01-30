@@ -25,6 +25,7 @@ class RouteServices extends ChangeNotifier {
   Route2 get routeData => _routeData;
   final LocalStorage storage = LocalStorage('key');
   void setRouteData(Route2 routeData) {
+    print(routeData);
     _routeData = routeData;
   }
 
@@ -68,10 +69,11 @@ class RouteServices extends ChangeNotifier {
     return {'status': "400"};
   }
 
-  Future<String> newParticipant(Route2 nRoute, String userId) async {
+  Future<Map<String, dynamic>> newParticipant(
+      String routeId, String userId) async {
     final Map<String, dynamic> registerData = {
-      'id': nRoute.id,
-      'participantId': userId
+      'routeId': routeId,
+      'userId': userId
     };
     try {
       Response response = await post(
@@ -79,33 +81,37 @@ class RouteServices extends ChangeNotifier {
         body: json.encode(registerData),
         headers: {'Content-Type': 'application/json'},
       );
-      if (response.statusCode == 200) {
+      if (response.statusCode == 201) {
         //Convert from json List of Map to List of Student
-        return "200";
+        return {'status': "200"};
       } else {
-        return "400";
+        return {'status': "400"};
       }
     } catch (err) {
-      return "300";
+      return {'status': "300"};
     }
   }
 
-  Future<String> newRouteInUser(Route2 nRoute, UserClient part) async {
-    final Map<String, dynamic> registerData = {'id': part.id, 'route': nRoute};
+  Future<Map<String, dynamic>> newRouteInUser(
+      String routeId, String userId) async {
+    final Map<String, dynamic> registerData = {
+      'routeId': routeId,
+      'userId': userId
+    };
     try {
       Response response = await post(
-        Uri.parse('http://localhost:5432/api/routes/newRouteInUser'),
+        Uri.parse('https://localhost:5432/api/routes/newRouteInUser'),
         body: json.encode(registerData),
         headers: {'Content-Type': 'application/json'},
       );
-      if (response.statusCode == 200) {
+      if (response.statusCode == 201) {
         //Convert from json List of Map to List of Student
-        return "200";
+        return {'status': "200"};
       } else {
-        return "400";
+        return {'status': "400"};
       }
     } catch (err) {
-      return "300";
+      return {'status': "300"};
     }
   }
 

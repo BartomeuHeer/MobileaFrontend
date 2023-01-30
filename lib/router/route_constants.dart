@@ -5,3 +5,4 @@ const String firstPageRoute = "firstpage";
 const String chatRoute = "chat";
 const String routeRoute = "rutas";
 const String chatBotRoute = "chatbot";
+const String profileRoute = "profile";

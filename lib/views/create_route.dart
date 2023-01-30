@@ -1,9 +1,8 @@
-import 'dart:math';
+/* import 'dart:math';
 import 'package:flutter_app/models/route.dart';
 import 'package:flutter_app/models/userclient.dart';
 import 'package:flutter_app/services/routeServices.dart';
 import 'package:flutter_app/widgets/drawer.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_app/services/userServices.dart';
 import 'package:provider/provider.dart';
@@ -70,7 +69,6 @@ class _CreateRoute extends State<CreateRoute> {
   Widget build(BuildContext context) {
     UserServices userServices = Provider.of<UserServices>(context);
     RouteServices routeServices = Provider.of<RouteServices>(context);
-    ScreenUtil.init(context);
 
     return FutureBuilder(
       future: downloadData(userServices),
@@ -696,3 +694,4 @@ class StopsCard extends StatelessWidget {
     );
   }
 }
+ */

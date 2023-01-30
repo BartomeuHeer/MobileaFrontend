@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app/services/routeServices.dart';
+import 'package:flutter_app/views/login_page.dart';
 
 import 'package:flutter_app/views/route_info.dart';
 import '../data/constants.dart';
@@ -13,6 +14,7 @@ import '../models/points.dart';
 import '../models/route.dart';
 import '../widgets/drawer.dart';
 import 'package:intl/intl.dart';
+import 'package:localstorage/localstorage.dart';
 import 'package:flutter_app/models/language_constants.dart';
 
 class RouteResult extends StatefulWidget {
@@ -21,6 +23,8 @@ class RouteResult extends StatefulWidget {
   @override
   State<RouteResult> createState() => _RouteResultState();
 }
+
+final LocalStorage storage = LocalStorage('key');
 
 class _RouteResultState extends State<RouteResult> {
   String formatTextbox(List<PointLoc> stopPoints) {
@@ -67,7 +71,6 @@ class _RouteResultState extends State<RouteResult> {
                           itemCount: routeProvider.listRoute.length,
                           itemBuilder: (context, index) {
                             return Card(
-                              elevation: 8,
                               shape: RoundedRectangleBorder(
                                   side: BorderSide(color: mainColor),
                                   borderRadius: BorderRadius.circular(20)),
@@ -119,6 +122,15 @@ class _RouteResultState extends State<RouteResult> {
                                     subtitle: Text(
                                         "${routeProvider.listRoute[index].creator!.name}"),
                                   ),
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                          "${routeProvider.listRoute[index].price}"),
+                                      SizedBox(width: 4),
+                                      Icon(Icons.euro),
+                                    ],
+                                  ),
                                   Padding(
                                     padding: const EdgeInsets.all(10),
                                     child: Row(
@@ -126,13 +138,26 @@ class _RouteResultState extends State<RouteResult> {
                                       children: <Widget>[
                                         TextButton(
                                             onPressed: () => {
-                                                  routeProvider.setRouteData(
-                                                      routeProvider
-                                                          .listRoute[index]),
-                                                  Navigator.of(context).push(
-                                                      MaterialPageRoute(
-                                                          builder: (context) =>
-                                                              const RouteInfo()))
+                                                  if (storage
+                                                          .getItem("token") !=
+                                                      null)
+                                                    {
+                                                      routeProvider.setRouteData(
+                                                          routeProvider
+                                                                  .listRoute[
+                                                              index]),
+                                                      Navigator.of(context).push(
+                                                          MaterialPageRoute(
+                                                              builder: (context) =>
+                                                                  const RouteInfo()))
+                                                    }
+                                                  else
+                                                    {
+                                                      Navigator.of(context).push(
+                                                          MaterialPageRoute(
+                                                              builder: (context) =>
+                                                                  const LoginPage()))
+                                                    }
                                                 },
                                             child: Text('Details')),
                                       ],
