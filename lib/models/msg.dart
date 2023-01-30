@@ -1,10 +1,10 @@
 class MsgModel {
   String type;
   String msg;
-  String sender;
+  String senderName;
   MsgModel({
     required this.msg,
     required this.type,
-    required this.sender,
+    required this.senderName,
   });
 }

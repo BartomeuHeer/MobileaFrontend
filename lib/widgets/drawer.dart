@@ -135,6 +135,20 @@ class _DrawerScreen extends State<DrawerScreen> {
                   ),
                   ListTile(
                     leading: const Icon(
+                      Icons.account_circle,
+                      color: Colors.white,
+                      size: 30,
+                    ),
+                    title: const Text('Profile'),
+                    onTap: () {
+                      // To close the Drawer
+                      Navigator.pop(context);
+                      // Navigating to About Page
+                      Navigator.pushNamed(context, profileRoute);
+                    },
+                  ),
+                  ListTile(
+                    leading: const Icon(
                       Icons.route_rounded,
                       color: Colors.white,
                       size: 30,

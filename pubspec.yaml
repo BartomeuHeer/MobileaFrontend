@@ -51,6 +51,7 @@ dependencies:
   textfield_search: ^0.10.0
   agora_rtc_engine: ^5.2.0
   permission_handler: ^9.2.0
+  web_date_picker: ^1.0.0+3
 
 
 dev_dependencies:

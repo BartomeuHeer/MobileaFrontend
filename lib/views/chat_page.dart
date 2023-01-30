@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_app/models/msg.dart';
 import 'package:flutter_app/models/userclient.dart';
 import 'package:flutter_app/services/routeServices.dart';
+import 'package:flutter_app/services/userServices.dart';
+import 'package:flutter_app/widgets/other_msg.dart';
+import 'package:flutter_app/widgets/own_msg.dart';
 /* import 'package:flutter_app/views/my_profile.dart';
 import 'package:flutter_app/views/result_routes.dart';
 import 'package:flutter_app/views/route_list_page.dart'; */
@@ -9,8 +12,6 @@ import '../models/route.dart';
 import '../widgets/drawer.dart';
 import 'package:intl/intl.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:flutter_app/models/language_constants.dart';
-
 
 import 'package:socket_io_client/socket_io_client.dart' as IO;
 
@@ -24,59 +25,59 @@ class ChatPage extends StatefulWidget {
 class _ChatPageState extends State<ChatPage> {
   IO.Socket? socket;
   List<MsgModel> listMsg = [];
-
+  UserServices serrvice = UserServices();
+  RouteServices routeserv = RouteServices();
   TextEditingController _msgController = TextEditingController();
   @override
   void initState() {
     super.initState();
 
-    print("abans connect"); // Aquests connects he pensat que millor no fer-los
+    print("abans connect");
     connect();
     print("DESP connect");
   }
 
   void connect() {
+    //String routeId = serrvice.storage.getItem('routeId');
     print("CONNECT!!!!");
-    /*socket = IO.io("http://localhost:3000", <String, dynamic>{
-      "transports": ["websockets"],
-      "autoConnect": false,
-    });*/
+    // socket = IO.io("http://localhost:3000", <String, dynamic>{
+    //   "transports": ["websockets"],
+    //   "autoConnect": false,
+    // });
     IO.Socket socket = IO.io('http://localhost:3000');
     print("22222CONNECT!!!!");
 
     socket.connect();
     socket.onConnect((_) {
+      //socket.emit('room', routeId);
       print("onConnect!!!!!");
-      socket.emit('sendMsg',
-          {"type": "ownMsg", "msg": "Hello", "senderName": "HATIM!"});
-
       socket.on("sendMsgServer", (msg) {
-        print(translation(context).message_received); // Fet trad
-        listMsg.add(MsgModel(
-            msg: msg["msg"], type: msg["type"], sender: msg["senderNmae"]));
+        print("REBEM un missatge ");
+        setState(() {
+          listMsg.add(
+            MsgModel(
+                msg: msg["msg"],
+                type: msg["type"],
+                senderName: msg["senderName"]),
+          );
+        });
       });
     });
   }
 
-  void sendMsg(String msg, Function name) {
+  void sendMsg(String msg, String senderName) {
+    String senderName = serrvice.storage.getItem('name');
     MsgModel ownMsg =
-        MsgModel(msg: msg, type: "ownMsg", sender: loadPreferences());
+        MsgModel(msg: msg, type: "ownMsg", senderName: senderName);
     listMsg.add(ownMsg);
+    setState(() {
+      listMsg;
+    });
     socket!.emit('sendMsg', {
       "type": "ownMsg",
       "msg": msg,
-      "senderName": loadPreferences(),
+      "senderName": senderName,
     });
-  }
-
-  // static SharedPreferences _preferences;
-  // static Future init() async =>
-  //     _preferences = await SharedPreferences.getInstance();
-  // static String getUsername() => _preferences.getString("name");
-  loadPreferences() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    String? name = prefs.getString("name");
-    return name;
   }
 
   @override
@@ -84,12 +85,24 @@ class _ChatPageState extends State<ChatPage> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Color(0xFF4cbfa6),
-        title: Text(translation(context).route_chat), // Feta trad
+        title: const Text("Route chat"),
       ),
       body: Column(
         children: [
           Expanded(
-            child: Container(),
+            child: ListView.builder(
+                itemCount: listMsg.length,
+                itemBuilder: (context, index) {
+                  if (listMsg[index].type == "ownMsg") {
+                    return OwnMsgWidget(
+                        msg: listMsg[index].msg,
+                        sender: listMsg[index].senderName);
+                  } else {
+                    return OtherMsgWidget(
+                        msg: listMsg[index].msg,
+                        sender: listMsg[index].senderName);
+                  }
+                }),
           ),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 20),
@@ -99,27 +112,36 @@ class _ChatPageState extends State<ChatPage> {
                   child: TextFormField(
                     controller: _msgController,
                     decoration: InputDecoration(
-                      hintText: translation(context).type_here,
-                      border: OutlineInputBorder(
+                      hintText: "Type here ...",
+                      border: const OutlineInputBorder(
                         borderRadius: BorderRadius.all(Radius.circular(20.0)),
                         borderSide: BorderSide(
                           width: 2,
                         ),
                       ),
-                      // suffixIcon: IconButton(
-                      //   onPressed: () {
-                      //     String msg = _msgController.text;
-                      //     if (msg.isNotEmpty) {
-                      //       sendMsg(msg, loadPreferences());
-                      //       _msgController.clear();
-                      //     }
-                      //   },
-                      //   icon: const Icon(
-                      //     Icons.send,
-                      //     color: Color(0xFF4cbfa6),
-                      //     size: 26,
-                      //   ),
-                      // ),
+                      suffixIcon: IconButton(
+                        onPressed: () {
+                          print(_msgController.text);
+                          print("999999999999999999");
+                          print(serrvice.storage.getItem('id'));
+                          print("0000000000001");
+                          String msg = _msgController.text;
+                          print("11111111111");
+                          String senderName = serrvice.storage.getItem('name');
+                          print("22222222222222222222");
+                          print(senderName);
+                          if (msg.isNotEmpty) {
+                            sendMsg(msg, senderName);
+                            print("3333333333333333333");
+                            _msgController.clear();
+                          }
+                        },
+                        icon: const Icon(
+                          Icons.send,
+                          color: Color(0xFF4cbfa6),
+                          size: 26,
+                        ),
+                      ),
                     ),
                   ),
                 ),

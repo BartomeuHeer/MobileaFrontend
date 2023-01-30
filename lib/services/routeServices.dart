@@ -26,6 +26,7 @@ class RouteServices extends ChangeNotifier {
   final LocalStorage storage = LocalStorage('key');
   void setRouteData(Route2 routeData) {
     _routeData = routeData;
+    storage.setItem('routeId', routeData.id);
   }
 
   List<Route2> _listRoute = [];

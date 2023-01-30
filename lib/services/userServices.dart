@@ -21,6 +21,8 @@ class UserServices extends ChangeNotifier {
     _userData = userData;
     storage.setItem('userId', userId);
     storage.setItem('userEmail', email);
+    storage.setItem('name', userData.name);
+    storage.setItem('email', userData.email);
   }
 
   void setRouteToUser(RoutePopulate route2) {
