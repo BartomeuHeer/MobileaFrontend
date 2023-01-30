@@ -150,17 +150,19 @@ class _LoginPageState extends State<LoginPage> {
                                         await userService.logIn(
                                             usernameController.text,
                                             passwordController.text);
+                                    print(res['status']);
                                     if (res['status'] == "401") {
                                       showAlertDialog(context);
                                       return;
                                     }
-                                    if (res['status'] == "200") {
-                                      SharedPreferences prefs =
+                                    if (res['status'] == 200) {
+                                      print("navega fill de putaa");
+                                      /* SharedPreferences prefs =
                                           await SharedPreferences.getInstance();
                                       prefs.setString(
                                           "name", usernameController.text);
                                       userServicesProvider
-                                          .setUserData(res['data']);
+                                          .setUserData(res['data']); */
                                       Navigator.of(context).push(
                                         MaterialPageRoute(
                                           builder: (context) =>

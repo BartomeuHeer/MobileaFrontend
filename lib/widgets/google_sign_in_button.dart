@@ -101,7 +101,7 @@ class _GoogleSignInButtonState extends State<GoogleSignInButton> {
                       SharedPreferences prefs =
                           await SharedPreferences.getInstance();
                       prefs.setString("name", newUser.id!);
-                      userServicesProvider.setUserData(res['data']);
+                      //userServicesProvider.setUserData(res['data']);
                       print("looggggiiiinn");
                       Navigator.of(context).push(
                         MaterialPageRoute(
@@ -116,7 +116,7 @@ class _GoogleSignInButtonState extends State<GoogleSignInButton> {
                   SharedPreferences prefs =
                       await SharedPreferences.getInstance();
                   prefs.setString("name", newUser.id!);
-                  userServicesProvider.setUserData(res['data']);
+                  //userServicesProvider.setUserData(res['data']);
                   print("looggggiiiinn");
                   Navigator.of(context).push(
                     MaterialPageRoute(
@@ -175,7 +175,6 @@ class _GoogleSignInButtonState extends State<GoogleSignInButton> {
                   //     ),
                   //   );
                   // }
-
                 }
               },
               child: Padding(
@@ -191,7 +190,7 @@ class _GoogleSignInButtonState extends State<GoogleSignInButton> {
                     Padding(
                       padding: const EdgeInsets.only(left: 10),
                       child: Text(
-                         translation(context).sigin_google,
+                        translation(context).sigin_google,
                         style: TextStyle(
                           fontSize: 20,
                           color: Colors.black54,

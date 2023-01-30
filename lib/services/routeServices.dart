@@ -13,8 +13,7 @@ class RouteServices extends ChangeNotifier {
   Route2 _routeData = Route2(
       name: "",
       id: "",
-      creator:
-          UserClient(name: "", id: "", password: "", email: "", admin: false),
+      creator: ClientPopulate(email: "", name: "", id: ""),
       participants: [],
       startPoint: PointLoc(placeName: "", coordinates: []),
       endPoint: PointLoc(placeName: "", coordinates: []),
@@ -60,9 +59,10 @@ class RouteServices extends ChangeNotifier {
         headers: {'content-type': 'application/json'}, body: msg);
     List<Route2> rec = [];
     if (response.statusCode == 200) {
+      print(response.body);
       //var decodedList = (json.decode(response.body) as List<dynamic>);
       _listRoute = routeFromJson(response.body);
-
+      print("sexo duro");
       return {'status': "200", 'data': _listRoute};
     }
     return {'status': "400"};

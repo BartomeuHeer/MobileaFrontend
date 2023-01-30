@@ -7,7 +7,6 @@ import '../models/userclient.dart';
 import '../widgets/drawer.dart';
 import 'package:flutter_app/models/language_constants.dart';
 
-
 class RouteInfo extends StatefulWidget {
   const RouteInfo({super.key});
 
@@ -41,8 +40,8 @@ class _RoutePageState extends State<RouteInfo> {
             SizedBox(
               width: 300,
               height: 100,
-              child: Text(routeProvider.routeData.creator!.name!,
-                  style: const TextStyle(fontSize: 16)),
+              /* child: Text(routeProvider.routeData.creator!.name!,
+                  style: const TextStyle(fontSize: 16)), */
             ),
             SizedBox(
               height: 300,

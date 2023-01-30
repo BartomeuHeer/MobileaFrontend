@@ -28,6 +28,10 @@ class _RouteResultState extends State<RouteResult> {
     stopPoints.forEach((element) {
       text = "$text \n ${element.placeName}";
     });
+    if (text.isEmpty) {
+      return "There are no stops in this route";
+    }
+
     return text;
   }
 
@@ -38,120 +42,107 @@ class _RouteResultState extends State<RouteResult> {
       appBar: AppBar(
         title: Text(translation(context).routes_result), //Traduit
       ),
-      body: Row(
+      body: Column(
         children: [
-          Column(
-            children: [
-              Expanded(
-                flex: 3,
-                child: Container(
-                    padding:
-                        EdgeInsets.symmetric(horizontal: 350, vertical: 60),
-                    color: Colors.white,
-                    child: Visibility(
-                        visible: routeProvider.listRoute.isNotEmpty,
-                        replacement: Center(
-                          child: Text(translation(context).no_routes), //traduit
-                        ),
-                        child: Container(
-                          padding: const EdgeInsets.symmetric(
-                              horizontal: 90, vertical: 40),
-                          decoration: BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: BorderRadius.all(Radius.circular(10)),
-                          ),
-                          child: ListView.separated(
-                              separatorBuilder: (context, index) => SizedBox(
-                                    height: 15,
-                                  ),
-                              itemCount: routeProvider.listRoute.length,
-                              itemBuilder: (context, index) {
-                                return Card(
-                                  elevation: 8,
-                                  shape: RoundedRectangleBorder(
-                                      side: BorderSide(color: mainColor),
-                                      borderRadius: BorderRadius.circular(20)),
-                                  color: mainColor,
-                                  child: Column(
-                                    children: [
-                                      Padding(
-                                        padding: const EdgeInsets.all(10),
-                                        child: ListTile(
-                                          leading: Icon(Icons.route),
-                                          title: Text(
-                                              "${routeProvider.listRoute[index].startPoint!.placeName!} - ${routeProvider.listRoute[index].endPoint!.placeName!}"),
-                                          subtitle: RichText(
-                                              text: const TextSpan(children: [
-                                            TextSpan(
-                                                text: "Stop Point",
-                                                style: TextStyle(
-                                                    fontWeight:
-                                                        FontWeight.bold))
-                                          ])),
+          Expanded(
+            child: Container(
+                padding: EdgeInsets.symmetric(horizontal: 350, vertical: 60),
+                color: Colors.white,
+                child: Visibility(
+                    visible: routeProvider.listRoute.isNotEmpty,
+                    replacement: Center(
+                      child: Text(translation(context).no_routes), //traduit
+                    ),
+                    child: Container(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 90, vertical: 40),
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.all(Radius.circular(10)),
+                      ),
+                      child: ListView.separated(
+                          separatorBuilder: (context, index) => SizedBox(
+                                height: 15,
+                              ),
+                          itemCount: routeProvider.listRoute.length,
+                          itemBuilder: (context, index) {
+                            return Card(
+                              elevation: 8,
+                              shape: RoundedRectangleBorder(
+                                  side: BorderSide(color: mainColor),
+                                  borderRadius: BorderRadius.circular(20)),
+                              color: mainColor,
+                              child: Column(
+                                children: [
+                                  Padding(
+                                    padding: const EdgeInsets.all(10),
+                                    child: ListTile(
+                                      leading: Icon(Icons.route),
+                                      title: Text(
+                                          "${routeProvider.listRoute[index].startPoint!.placeName!} - ${routeProvider.listRoute[index].endPoint!.placeName!}"),
+                                      subtitle: RichText(
+                                          text: TextSpan(children: [
+                                        TextSpan(
+                                            text:
+                                                "Stop Points: \n ${formatTextbox(routeProvider.listRoute[index].stopPoint!)}",
+                                            style: TextStyle(
+                                                fontWeight: FontWeight.bold))
+                                      ])),
 
-                                          //"Stop Points: \n ${formatTextbox(routeProvider.listRoute[index].stopPoint!)}"),
+                                      //"Stop Points: \n ${formatTextbox(routeProvider.listRoute[index].stopPoint!)}"),
 
-                                          /* trailing: SizedBox(
-                                              width: 120,
-                                              child: Row(
-                                                children: <Widget>[
-                                                  Expanded(
-                                                    child: IconButton(
-                                                      icon: const Icon(Icons.article),
-                                                      onPressed: () {
-                                                        routeProvider.setRouteData(
-                                                            routeProvider.listRoute[index]);
-                                                        Navigator.of(context).push(
-                                                            MaterialPageRoute(
-                                                                builder: (context) =>
-                                                                    const RouteInfo()));
-                                                      },
-                                                      tooltip: 'Details',
-                                                    ),
-                                                  ),
-                                                ],
-                                              )), */
-                                        ),
-                                      ),
-                                      Container(
-                                        padding: EdgeInsets.all(15),
-                                        child: Text(formatTextbox(routeProvider
-                                            .listRoute[index].stopPoint!)),
-                                      ),
-                                      ListTile(
-                                        leading: Icon(Icons.account_circle),
-                                        title: Text("The driver is: "),
-                                        subtitle: Text(
-                                            "${routeProvider.listRoute[index].creator!.name}"),
-                                      ),
-                                      Padding(
-                                        padding: const EdgeInsets.all(10),
-                                        child: Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.end,
-                                          children: <Widget>[
-                                            ElevatedButton(
-                                                onPressed: () => {
-                                                      routeProvider.setRouteData(
-                                                          routeProvider
-                                                                  .listRoute[
-                                                              index]),
-                                                      Navigator.of(context).push(
-                                                          MaterialPageRoute(
-                                                              builder: (context) =>
-                                                                  const RouteInfo()))
-                                                    },
-                                                child: Text('Details')),
-                                          ],
-                                        ),
-                                      )
-                                    ],
+                                      /* trailing: SizedBox(
+                                          width: 120,
+                                          child: Row(
+                                            children: <Widget>[
+                                              Expanded(
+                                                child: IconButton(
+                                                  icon: const Icon(Icons.article),
+                                                  onPressed: () {
+                                                    routeProvider.setRouteData(
+                                                        routeProvider.listRoute[index]);
+                                                    Navigator.of(context).push(
+                                                        MaterialPageRoute(
+                                                            builder: (context) =>
+                                                                const RouteInfo()));
+                                                  },
+                                                  tooltip: 'Details',
+                                                ),
+                                              ),
+                                            ],
+                                          )), */
+                                    ),
                                   ),
-                                );
-                              }),
-                        ))),
-              ),
-            ],
+                                  ListTile(
+                                    leading: Icon(Icons.account_circle),
+                                    title: Text("The driver is: "),
+                                    subtitle: Text(
+                                        "${routeProvider.listRoute[index].creator!.name}"),
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.all(10),
+                                    child: Row(
+                                      mainAxisAlignment: MainAxisAlignment.end,
+                                      children: <Widget>[
+                                        TextButton(
+                                            onPressed: () => {
+                                                  routeProvider.setRouteData(
+                                                      routeProvider
+                                                          .listRoute[index]),
+                                                  Navigator.of(context).push(
+                                                      MaterialPageRoute(
+                                                          builder: (context) =>
+                                                              const RouteInfo()))
+                                                },
+                                            child: Text('Details')),
+                                      ],
+                                    ),
+                                  )
+                                ],
+                              ),
+                            );
+                          }),
+                    ))),
           ),
         ],
       ),

@@ -27,8 +27,8 @@ class Route2 {
 
   String? id;
   String? name;
-  UserClient? creator;
-  List<UserClient>? participants;
+  ClientPopulate? creator;
+  List<ClientPopulate>? participants;
   PointLoc? startPoint;
   PointLoc? endPoint;
   List<PointLoc>? stopPoint;
@@ -37,28 +37,30 @@ class Route2 {
   double? price;
   int? duration;
 
-  factory Route2.fromJson(Map<String, dynamic> responseData) {
-    List<UserClient>? tmp1 = responseData["participants"] != null
-        ? List<UserClient>.from(
-            responseData["participants"].map((x) => UserClient.fromJson(x)))
+  factory Route2.fromJson(dynamic responseData) {
+    List<ClientPopulate>? tmp1 = responseData["participants"] != null
+        ? List<ClientPopulate>.from(
+            responseData["participants"].map((x) => ClientPopulate.fromJson(x)))
         : null;
     List<PointLoc>? tmp2 = responseData["stopPoint"] != null
         ? List<PointLoc>.from(
             responseData["stopPoint"].map((x) => PointLoc.fromJson(x)))
         : null;
+    print(tmp2![0].placeName);
 
     return Route2(
-        id: responseData["_id"],
-        name: responseData["name"],
-        creator: UserClient.fromJson(responseData["creator"]),
+        id: responseData["_id"] as String,
+        name: responseData["name"] as String,
+        creator: ClientPopulate.fromJson(responseData["creator"]),
         participants: tmp1,
         startPoint: PointLoc.fromJson(responseData["startPoint"]),
         endPoint: PointLoc.fromJson(responseData["endPoint"]),
         stopPoint: tmp2,
-        dateOfBeggining: DateTime.parse(responseData["dateOfBeggining"]),
-        maxParticipants: responseData["maxParticipants"],
-        price: double.parse(responseData["price"]),
-        duration: int.parse(responseData["duration"]));
+        dateOfBeggining:
+            DateTime.parse(responseData["dateOfBeggining"] as String),
+        maxParticipants: responseData["maxParticipants"] as int,
+        price: responseData["price"] as double,
+        duration: responseData["duration"] as int);
   }
 
   Map<String, dynamic> toJson() => {
@@ -74,4 +76,18 @@ class Route2 {
         "price": price,
         "duration": duration
       };
+}
+
+class ClientPopulate {
+  ClientPopulate({this.id, this.email, this.name});
+  String? id;
+  String? name;
+  String? email;
+
+  factory ClientPopulate.fromJson(dynamic responseData) {
+    return ClientPopulate(
+        id: responseData["_id"] as String,
+        name: responseData['name'] as String,
+        email: responseData['email'] as String);
+  }
 }

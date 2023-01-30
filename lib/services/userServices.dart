@@ -17,17 +17,17 @@ class UserServices extends ChangeNotifier {
 
   final LocalStorage storage = LocalStorage('key');
   var logger = Logger();
-  void setUserData(UserClient userData) {
+  void setUserData(String userId, String email) {
     _userData = userData;
-    storage.setItem('userId', userData.id);
-    storage.setItem('userEmail', userData.email);
+    storage.setItem('userId', userId);
+    storage.setItem('userEmail', email);
   }
 
-  void setRouteToUser(Route2 route2) {
+  void setRouteToUser(RoutePopulate route2) {
     if (_userData.routes != null) {
       _userData.routes!.add(route2);
     } else {
-      List<Route2> newR = [];
+      List<RoutePopulate> newR = [];
       newR.add(route2);
       _userData.routes = newR;
     }
@@ -58,23 +58,11 @@ class UserServices extends ChangeNotifier {
       var token = JWTtoken.fromJson(await jsonDecode(res.body));
       storage.setItem('token', token.toString());
       storage.setItem('isLogged', true);
-      var setUsrData = await http.post(
-          Uri.parse("http://localhost:5432/api/users/getUserData"),
-          headers: {'content-type': 'application/json'},
-          body: msg);
-      if (setUsrData.statusCode == 200) {
-        Map<String, dynamic> responseData = jsonDecode(setUsrData.body);
-        logger.i(responseData);
-        _userData = UserClient.fromJson(responseData);
-        _userData.password = password;
-        result = {'status': "200", 'data': _userData};
-      } else {
-        result = {
-          'status': "400",
-        };
-      }
+      Map<String, dynamic> responseData = jsonDecode(res.body);
+      print(responseData["user"]);
+      setUserData(responseData["userId"], username);
 
-      return result;
+      return result = {'status': 200};
     } else {
       return result = {
         'status': 400,

@@ -8,6 +8,7 @@ import 'package:flutter_app/models/booking.dart';
 import 'package:flutter_app/models/rating.dart';
 import 'package:flutter_app/models/route.dart';
 import 'package:flutter_app/models/vehicle.dart';
+import 'package:flutter_app/models/points.dart';
 
 List<UserClient> userFromJson(String str) =>
     List<UserClient>.from(json.decode(str).map((x) => UserClient.fromJson(x)));
@@ -30,45 +31,33 @@ class UserClient {
       this.routes,
       this.ratings,
       this.bookings,
-      this.vehicle,
       required this.admin});
 
   String? id;
   String? name;
   String? password;
   String? email;
-  String? birthday;
-  List<Route2>? routes;
-  List<Rating>? ratings;
-  List<Booking>? bookings;
-  Vehicle? vehicle;
+  DateTime? birthday;
+  List<RoutePopulate>? routes;
+  List<String>? ratings;
+  List<String>? bookings;
+  //Vehicle? vehicle;
   bool admin;
 
-  factory UserClient.fromJson(Map<String, dynamic> responseData) {
-    List<Route2>? tmp1 = responseData["routes"] != null
-        ? List<Route2>.from(
-            responseData["ratings"].map((x) => Route2.fromJson(x)))
-        : null;
-    List<Rating>? tmp2 = responseData["ratings"] != null
-        ? List<Rating>.from(
-            responseData["ratings"].map((x) => Rating.fromJson(x)))
-        : null;
-    List<Booking>? tmp3 = responseData["bookings"] != null
-        ? List<Booking>.from(
-            responseData["bookings"].map((x) => Booking.fromJson(x)))
-        : null;
-    print(responseData);
+  factory UserClient.fromJson(dynamic responseData) {
     return UserClient(
-        id: responseData["_id"],
-        name: responseData['name'],
-        password: responseData['password'],
-        email: responseData['email'],
-        birthday: responseData['birthday'],
-        routes: tmp1,
-        ratings: tmp2,
-        bookings: tmp3,
+        id: responseData["_id"] as String,
+        name: responseData['name'] as String,
+        password: responseData['password'] as String,
+        email: responseData['email'] as String,
+        birthday: DateTime.parse(
+            (responseData['birthday'] as String).replaceAll("T", " ")),
+        routes: RoutePopulate.fromJson(responseData["route"])
+            as List<RoutePopulate>?,
+        ratings: responseData["ratings"],
+        bookings: responseData["booking"],
         //vehicle: responseData["vehicle"],
-        admin: responseData['admin']);
+        admin: responseData['admin'] as bool);
   }
 
   Map<String, dynamic> toJson() => {
@@ -77,10 +66,53 @@ class UserClient {
         "password": password,
         "email": email,
         "birthday": birthday,
-        "routes": routes,
+        "route": routes,
         "ratings": ratings,
-        "bookings": bookings,
-        "vehicle": vehicle,
+        "booking": bookings,
+        //"vehicle": vehicle,
         "admin": admin
       };
+}
+
+class RoutePopulate {
+  RoutePopulate({
+    //this.id = "", // non nullable but optional with a default value
+    this.id,
+    this.startPoint,
+    this.stopPoint,
+    this.endPoint,
+    this.dateOfBeggining,
+    this.price,
+    this.duration,
+    this.maxParticipants,
+  });
+
+  String? id;
+  PointLoc? startPoint;
+  PointLoc? endPoint;
+  List<PointLoc>? stopPoint;
+  DateTime? dateOfBeggining;
+  int? maxParticipants;
+  double? price;
+  int? duration;
+
+  factory RoutePopulate.fromJson(dynamic responseData) {
+    print("1111111111111111111");
+    print(responseData["stopPoint"]);
+    List<PointLoc>? tmp1 = responseData["stopPoint"] != null
+        ? List<PointLoc>.from(
+            responseData["stopPoint"].map((x) => PointLoc.fromJson(x)))
+        : null;
+    print("00000000000000000000000000000000000000000000");
+    return RoutePopulate(
+        id: responseData["_id"] as String,
+        startPoint: PointLoc.fromJson(responseData["startPoint"]),
+        endPoint: PointLoc.fromJson(responseData["endPoint"]),
+        stopPoint: tmp1,
+        dateOfBeggining:
+            DateTime.parse(responseData["dateOfBeggining"] as String),
+        maxParticipants: int.parse(responseData["maxParticipants"]),
+        price: double.parse(responseData["price"]),
+        duration: int.parse(responseData["duration"]));
+  }
 }

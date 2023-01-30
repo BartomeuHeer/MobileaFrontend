@@ -5,6 +5,7 @@ import 'package:flutter_app/views/login_page.dart';
 import 'package:date_time_picker/date_time_picker.dart';
 
 import 'package:flutter_app/models/language_constants.dart';
+import 'package:intl/intl.dart';
 
 import '../models/userclient.dart';
 
@@ -101,7 +102,8 @@ class _RegisterPageState extends State<RegisterPage> {
                                   TextFormField(
                                     validator: (value) {
                                       if (value == null || value.isEmpty) {
-                                        return translation(context).invalid_username; //Falta trad
+                                        return translation(context)
+                                            .invalid_username; //Falta trad
                                       }
                                       return null;
                                     },
@@ -144,7 +146,8 @@ class _RegisterPageState extends State<RegisterPage> {
                                   TextFormField(
                                     validator: (value) {
                                       if (value == null || value.isEmpty) {
-                                        return translation(context).introduce_password; // Falta comprobar
+                                        return translation(context)
+                                            .introduce_password; // Falta comprobar
                                       }
                                       return null;
                                     },
@@ -197,7 +200,8 @@ class _RegisterPageState extends State<RegisterPage> {
                                     firstDate: DateTime(1900),
                                     lastDate: DateTime(2100),
                                     icon: const Icon(Icons.event),
-                                    dateLabelText: translation(context).enter_date,  // Ja traduit
+                                    dateLabelText: translation(context)
+                                        .enter_date, // Ja traduit
                                     onChanged: (val) => print(val),
                                     /* validator: (value) {
                                   return validateAge(value!);
@@ -246,8 +250,9 @@ class _RegisterPageState extends State<RegisterPage> {
                                                       passwordController.text,
                                                   email: emailController.text,
                                                   admin: false,
-                                                  birthday:
-                                                      dateInputController.text);
+                                                  birthday: DateFormat().parse(
+                                                      dateInputController
+                                                          .text));
                                               var res = await userService
                                                   .createUser(newUser);
                                               if (res == "400") {
@@ -300,7 +305,7 @@ class _RegisterPageState extends State<RegisterPage> {
     if ((pass1 == pass2) || (pass1 == "") || (pass2 == "")) {
       return null;
     } else {
-      return translation(context).passwords_different;  // Falta comprob
+      return translation(context).passwords_different; // Falta comprob
     }
   }
 
